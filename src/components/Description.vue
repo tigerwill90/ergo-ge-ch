@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid>
-    <v-timeline :dense="$vuetify.breakpoint.xs">
+  <FlexContainer>
+    <v-timeline :dense="$vuetify.breakpoint.smAndDown">
       <v-timeline-item v-for="(item, i) in items" :key="i" class="timeline-item" :color="item.color" large>
         <span slot="opposite">
           <v-img :src="item.src" aspect-ratio="3" content></v-img>
@@ -12,14 +12,14 @@
         </v-card>
       </v-timeline-item>
     </v-timeline>
-  </v-container>
+  </FlexContainer>
 </template>
 
 <script>
 const pdfName = 'demarche'
 export default {
   name: 'Description',
-  data() {
+  data () {
     return {
       items:
       [

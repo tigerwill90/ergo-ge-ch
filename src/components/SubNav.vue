@@ -20,7 +20,7 @@
         </template>
       </div>
       <div class="nav-links" :class="{fixed: navIsFixed}">
-        <v-btn v-for="link in links" :key="link.id" flat exact @click="goTo('#' + link.to)">{{link.title}}</v-btn>
+        <v-btn v-for="(link, i) in links" :key="i" flat exact @click="goTo('#' + link.to)">{{link.title}}</v-btn>
       </div>
     </div>
     <div class="main-content">
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   name: 'Sub-Nav',
   data () {
@@ -69,7 +70,8 @@ export default {
   },
   methods: {
     onScroll (e) {
-      this.offsetTop = window.pageYOffset || document.documentElement.scollTop
+      store.setScrollHeight(window.pageYOffset || document.documentElement.scollTop)
+      this.offsetTop = store.state.scrollHeight
       console.log(this.offsetTop)
       if (this.windowSize.x > 495) {
         if (this.subClass === 'main') {
@@ -96,7 +98,8 @@ export default {
       }
     },
     onResize () {
-      this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+      store.setWindowsSize(window.innerWidth, window.innerHeight)
+      this.windowSize = { x: store.state.windowSize.x, y: store.state.windowSize.y }
       console.log(this.windowSize.x)
     },
     goTo (link) {
@@ -108,7 +111,7 @@ export default {
       return this.windowSize.x > 495
     }
   },
-  mounted() {
+  mounted () {
     this.onResize()
   }
 }

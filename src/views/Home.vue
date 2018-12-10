@@ -4,7 +4,7 @@
     <v-divider></v-divider>
     <Actuality :id="links[1].to"/>
     <v-divider></v-divider>
-    <Agenda :id="links[2].to"/>
+    <Agenda v-if="links[2]" :id="links[2].to"/>
   </SubNav>
 </template>
 
@@ -13,6 +13,7 @@ import SubNav from '../components/SubNav'
 import Description from '../components/Description'
 import Agenda from '../components/Agenda'
 import Actuality from '../components/Actuality'
+import store from '../store'
 export default {
   name: 'Home',
   components: {
@@ -25,11 +26,23 @@ export default {
     return {
       title: 'Ergotherapie-ge.ch',
       subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes !',
-      links: [
-        { id: 0, to: 'desc', title: 'L\'ergothérapie' },
-        { id: 1, to: 'actu', title: 'Actualité' },
-        { id: 2, to: 'agenda', title: 'Agenda' }
-      ]
+      sharedState: store.state
+    }
+  },
+  computed: {
+    links () {
+      if (this.sharedState.windowSize.x > 500) {
+        return [
+          { to: 'desc', title: 'L\'ergothérapie' },
+          { to: 'actu', title: 'Actualité' },
+          { to: 'agenda', title: 'Agenda' }
+        ]
+      } else {
+        return [
+          { to: 'desc', title: 'L\'ergothérapie' },
+          { to: 'actu', title: 'Actualité' }
+        ]
+      }
     }
   }
 }

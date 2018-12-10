@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <Nav/>
     <Toolbar/>
     <v-content class="main">
       <router-view></router-view>
@@ -10,12 +11,14 @@
 
 <script>
 import Toolbar from './components/Toolbar'
+import Nav from './components/Nav'
 import Footer from './components/Footer'
 export default {
   name: 'App',
   components: {
     Toolbar,
-    Footer
+    Footer,
+    Nav
   }
 }
 </script>
