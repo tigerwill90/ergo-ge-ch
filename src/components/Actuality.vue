@@ -1,0 +1,21 @@
+<template>
+    <div class="actuality-main">
+      <h1 class="display-4">Feed d'actualité</h1>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'Actuality'
+}
+</script>
+
+<style scoped>
+  .actuality-main {
+    display: flex;
+    background-color: cornsilk;
+    min-height: 500px;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
