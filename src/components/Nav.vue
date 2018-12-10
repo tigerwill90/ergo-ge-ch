@@ -21,7 +21,7 @@ export default {
         store.setDrawer(newState)
       }
     },
-    forceHide() {
+    forceHide () {
       return this.sharedStore.windowSize.x < 830
     }
   }
