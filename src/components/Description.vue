@@ -1,13 +1,19 @@
 <template>
   <FlexContainer>
     <v-timeline :dense="$vuetify.breakpoint.smAndDown">
-      <v-timeline-item v-for="(item, i) in items" :key="i" class="timeline-item" :color="item.color" large>
+      <v-timeline-item v-for="(item, i) in items" :key="i" :color="item.color" large>
         <span slot="opposite">
           <v-img :src="item.src" aspect-ratio="3" content></v-img>
         </span>
         <v-card class="elevation-2">
           <v-card-title class="title">{{item.title}}</v-card-title>
-          <v-card-text class="white" v-html="item.description"></v-card-text>
+          <v-card-text>{{item.description}}</v-card-text>
+          <div class="desc-link-content" v-if="item.download">
+            <a :href="item.download" target="_blank">Démarche de l'ergothérapie</a>
+            <v-btn icon :href="item.download + '?disposition=download'">
+              <v-icon color="green">cloud_download</v-icon>
+            </v-btn>
+          </div>
           <v-card-text v-if="item.ref" class="card-sub-ref">{{item.ref}}</v-card-text>
         </v-card>
       </v-timeline-item>
@@ -16,7 +22,6 @@
 </template>
 
 <script>
-const pdfName = 'demarche'
 export default {
   name: 'Description',
   data () {
@@ -27,11 +32,11 @@ export default {
           title: 'Qu\'est-ce que l\'ergothérapie ?',
           ref: 'Selon la définition de l\'ASE, mai 2011',
           color: 'blue lighten-2',
+          download: process.env.VUE_APP_PDF_PROCEDURE_URL,
           description: `
                 L'ergothérapie est une profession centrée sur le développement et le maintien de la capacité d'agir des personnes.
                 Elle contribue à l'amélioration de la santé et de la qualité de la vie.
-                Elle facilite la participation des individus à la société en leur permettant de prendre part aux activités qui s'y déroulent.
-                <br/> <a href="http://localhost/documents/${pdfName}" target="_blank">La démarche de l'ergothérapie</a>`,
+                Elle facilite la participation des individus à la société en leur permettant de prendre part aux activités qui s'y déroulent.`,
           src: 'https://picsum.photos/510/300?random'
         },
         {
@@ -62,11 +67,13 @@ export default {
 </script>
 
 <style scoped>
-  .timeline-item {
-
-  }
-
   .card-sub-ref {
     color: blue;
+  }
+
+  .desc-link-content {
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
   }
 </style>

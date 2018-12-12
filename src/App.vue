@@ -2,7 +2,7 @@
   <v-app>
     <Nav/>
     <Toolbar/>
-    <v-content class="main">
+    <v-content class="app-main">
       <router-view></router-view>
     </v-content>
     <Footer/>
@@ -22,8 +22,8 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .main {
+<style>
+  .app-main {
     padding-top: 64px!important;
   }
 </style>

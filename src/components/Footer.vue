@@ -20,7 +20,7 @@
         </div>
       </v-card-title>
       <v-card-actions class="grey darken-3 justify-center">
-        &copy;2018 — <strong>www.ergotherapie-ge.ch</strong>
+        &copy;2018 —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
       </v-card-actions>
     </v-card>
   </v-footer>

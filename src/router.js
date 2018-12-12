@@ -11,7 +11,8 @@ const router = new Router({
       name: 'home',
       component: Home,
       meta: {
-        title: 'Accueil - Bienvenue sur le portail ASE'
+        title: 'Accueil - Bienvenue sur le portail ASE',
+        header: 'Accueil'
       }
     },
     {
@@ -22,7 +23,8 @@ const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/Section.vue'),
       meta: {
-        title: 'La section Genevoise'
+        title: 'La section Genevoise',
+        header: 'Section Genevoise'
       }
     },
     {
@@ -30,7 +32,8 @@ const router = new Router({
       name: 'therapist',
       component: () => import('./views/Therapist.vue'),
       meta: {
-        title: 'Où trouver les ergothérapeutes'
+        title: 'Où trouver les ergothérapeutes',
+        header: 'Où trouver les ergothérapeutes'
       }
     },
     {
@@ -38,7 +41,8 @@ const router = new Router({
       name: 'contact',
       component: () => import('./views/Contact.vue'),
       meta: {
-        title: 'Nous contacter'
+        title: 'Nous contacter',
+        header: 'Contacte'
       }
     },
     {
@@ -46,10 +50,8 @@ const router = new Router({
       redirect: '/'
     }
   ],
-  scrollBehavior () {
-    return {
-      x: 0, y: 0
-    }
+  scrollBehavior: function(to, from, savedPosition) {
+    return { x: 0, y: 0 }
   }
 })
 

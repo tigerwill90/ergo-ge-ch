@@ -1,5 +1,5 @@
 <template>
-  <SubNav :links="links" :title="title" :subtitle="subtitle" sub-class="main" @go-to="(target, options) => $vuetify.goTo(target, options)">
+  <SubNav :selector="selector" :links="links" :title="title" :subtitle="subtitle" sub-class="extended">
     <Description :id="links[0].to"/>
     <v-divider></v-divider>
     <Actuality :id="links[1].to"/>
@@ -26,12 +26,18 @@ export default {
     return {
       title: 'Ergotherapie-ge.ch',
       subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes !',
-      sharedState: store.state
+      sharedStore: store.state,
+      mounted: false,
+      options: {
+        duration: 200,
+        offset: 50,
+        easing: 'easeInOutCubic'
+      }
     }
   },
   computed: {
     links () {
-      if (this.sharedState.windowSize.x > 500) {
+      if (this.sharedStore.windowSize.x > 500) {
         return [
           { to: 'desc', title: 'L\'ergothérapie' },
           { to: 'actu', title: 'Actualité' },
@@ -43,7 +49,21 @@ export default {
           { to: 'actu', title: 'Actualité' }
         ]
       }
+    },
+    selector () {
+      if (this.mounted) {
+        if (this.sharedStore.currentSelector !== null) {
+          this.$vuetify.goTo(this.sharedStore.currentSelector, this.options)
+        }
+      }
+      return null
     }
+  },
+  mounted () {
+    this.mounted = true
+  },
+  updated () {
+    this.options.offset = -100
   }
 }
 </script>

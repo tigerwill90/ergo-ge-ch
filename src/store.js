@@ -5,7 +5,8 @@ export default {
       y: 0
     },
     scrollHeight: 0,
-    drawer: false
+    drawer: false,
+    currentSelector: null
   },
   setWindowsSize (x, y) {
     this.state.windowSize.x = x
@@ -16,5 +17,8 @@ export default {
   },
   setDrawer (newState) {
     this.state.drawer = newState
+  },
+  setCurrentSelector (selector) {
+    this.state.currentSelector = selector
   }
 }

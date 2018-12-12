@@ -1,5 +1,5 @@
 <template>
-  <SubNav class="therapist-main"  :links="links" :title="title" sub-class="content" @go-to="(target, options) => $vuetify.goTo(target, options)">
+  <SubNav :selector="selector" class="therapist-main"  :links="links" :title="title" sub-class="reduced">
     <div class="therapist-content">
       <h1 :id="links[0].to" class="headline">{{links[0].title}}</h1>
       <TherapistCard domain="Pédiatrie" office="A 2 mains"/>
@@ -14,6 +14,7 @@
 <script>
 import SubNav from '../components/SubNav'
 import TherapistCard from '../components/TherapistCard'
+import store from '../store'
 export default {
   name: 'Therapist',
   components: {
@@ -27,8 +28,31 @@ export default {
         { id: 0, to: 'pediatrics', title: 'Pédiatrie' },
         { id: 1, to: 'mental', title: 'Santé mentale' },
         { id: 2, to: 'physical', title: 'Médecine physique' }
-      ]
+      ],
+      sharedStore: store.state,
+      mounted: false,
+      options: {
+        duration: 200,
+        offset: 50,
+        easing: 'easeInOutCubic'
+      }
     }
+  },
+  computed: {
+    selector () {
+      if (this.mounted) {
+        if (this.sharedStore.currentSelector !== null) {
+          this.$vuetify.goTo(this.sharedStore.currentSelector, this.options)
+        }
+      }
+      return null
+    }
+  },
+  mounted () {
+    this.mounted = true
+  },
+  updated () {
+    this.options.offset = -100
   }
 }
 </script>

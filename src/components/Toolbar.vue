@@ -1,17 +1,31 @@
 <template>
-  <v-toolbar dark class="teal lighten-2 toolbar" app height="64">
-    <v-toolbar-side-icon v-if="hideMenu" @click="handleMenuClick"></v-toolbar-side-icon>
+  <v-toolbar dark class="teal lighten-2 toolbar" fixed height="64">
+    <template  v-if="showMenu">
+      <v-toolbar-side-icon @click="handleMenuClick"></v-toolbar-side-icon>
+      <v-toolbar-title v-if="!searchBar" class="toolbar-title">{{header}}</v-toolbar-title>
+    </template>
     <template v-else>
       <router-link :to="{name: 'home'}" exact tag="div" class="toolbar-img-container">
         <img src="../assets/img/ase.svg" alt="ase" class="toolbar-img"/>
       </router-link>
-      <v-toolbar-items class="toolbar-item">
-        <v-btn v-for="link in links" :key="link.id" :to="{name: link.name}" flat exact ripple>{{link.text}}</v-btn>
+      <v-toolbar-items v-if="!searchBar" class="toolbar-item">
+        <v-btn v-for="link in links" :key="link.id" @click="goTo(link.name)" flat exact ripple>{{link.text}}</v-btn>
       </v-toolbar-items>
     </template>
-    <v-spacer></v-spacer>
+    <v-spacer v-if="!searchBar"></v-spacer>
+    <v-autocomplete v-if="searchBar"
+                    autofocus
+                    color="white"
+                    flat
+                    clearable
+                    :loading="false"
+                    hide-details
+                    style="margin-left: 20px"
+    >
+
+    </v-autocomplete>
     <v-btn icon>
-      <v-icon>search</v-icon>
+      <v-icon @click="showSearchBar">search</v-icon>
     </v-btn>
     <v-btn icon :to="{name: 'contact'}">
       <v-icon>perm_identity</v-icon>
@@ -30,17 +44,29 @@ export default {
         { id: 2, name: 'section', text: 'Section Genevoise' },
         { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes' }
       ],
-      sharedStore: store.state
+      sharedStore: store.state,
+      searchBar: false
     }
   },
   methods: {
     handleMenuClick () {
       store.setDrawer(!this.sharedStore.drawer)
+    },
+    showSearchBar () {
+      this.searchBar = !this.searchBar
+    },
+    goTo (link, to) {
+      this.$router.push({ name: link })
+      console.log(to === undefined ? null : '#' + to)
+      store.setCurrentSelector(to === undefined ? null : '#' + to)
     }
   },
   computed: {
-    hideMenu () {
+    showMenu () {
       return this.sharedStore.windowSize.x < 830
+    },
+    header () {
+      return this.$route.meta.header
     }
   }
 }
@@ -49,6 +75,12 @@ export default {
 <style scoped>
   .toolbar {
     z-index: 1000;
+  }
+
+  @media screen and (max-width: 495px) {
+    .toolbar-title {
+      display: none;
+    }
   }
 
   .toolbar-item {
