@@ -3,7 +3,7 @@
       <v-card>
         <div class="card-main">
           <div class="card-container-img">
-            <img src="../assets/img/geneva.svg.png" class="card-img" alt="geneva">
+            <img src="../assets/img/geneva.svg" class="card-img" alt="geneva">
           </div>
           <div class="card-desc">
             La section genevoise de l’ASE est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association

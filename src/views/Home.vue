@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       title: 'Ergotherapie-ge.ch',
-      subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes !',
+      subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
       sharedStore: store.state,
       mounted: false,
       options: {
@@ -51,9 +51,9 @@ export default {
       }
     },
     selector () {
-      if (this.mounted) {
-        if (this.sharedStore.currentSelector !== null) {
-          this.$vuetify.goTo(this.sharedStore.currentSelector, this.options)
+      if (this.mounted && this.sharedStore.selector.routeName === 'home') {
+        if (this.sharedStore.selector.hash !== null) {
+          return this.$vuetify.goTo(this.sharedStore.selector.hash, this.options)
         }
       }
       return null

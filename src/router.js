@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './views/Home'
 
 Vue.use(Router)
+// TODO lifecycle and lazyloading
 
 const router = new Router({
   routes: [
@@ -21,7 +22,7 @@ const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Section.vue'),
+      component: () => import('./views/Section'),
       meta: {
         title: 'La section Genevoise',
         header: 'Section Genevoise'
@@ -30,7 +31,7 @@ const router = new Router({
     {
       path: '/therapist',
       name: 'therapist',
-      component: () => import('./views/Therapist.vue'),
+      component: () => import('./views/Therapist'),
       meta: {
         title: 'Où trouver les ergothérapeutes',
         header: 'Où trouver les ergothérapeutes'
@@ -50,7 +51,7 @@ const router = new Router({
       redirect: '/'
     }
   ],
-  scrollBehavior: function(to, from, savedPosition) {
+  scrollBehavior () {
     return { x: 0, y: 0 }
   }
 })

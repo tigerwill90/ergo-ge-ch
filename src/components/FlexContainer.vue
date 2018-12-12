@@ -1,5 +1,5 @@
 <template>
-    <div :class="'flex-container ' + direction" :style="{ backgroundColor: backgroundColor }">
+    <div :style="{padding: padTop + 'px ' + padRight + 'px ' + padBottom + 'px ' + padLeft + 'px', backgroundColor: backgroundColor}" :class="'flex-container ' + direction">
       <slot/>
     </div>
 </template>
@@ -15,6 +15,22 @@ export default {
     backgroundColor: {
       type: String,
       default: 'white'
+    },
+    padTop: {
+      type: Number,
+      default: 50
+    },
+    padBottom: {
+      type: Number,
+      default: 50
+    },
+    padLeft: {
+      type: Number,
+      default: 24
+    },
+    padRight: {
+      type: Number,
+      default: 24
     }
   }
 }
@@ -23,7 +39,6 @@ export default {
 <style scoped>
   .flex-container {
     display: flex;
-    padding: 50px 24px 50px 24px;
   }
 
   .flex-container.row {

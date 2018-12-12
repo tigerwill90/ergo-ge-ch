@@ -25,6 +25,13 @@
         <v-btn color="white" v-for="(link, i) in links" :key="i" flat exact @click="goTo('#' + link.to)">{{link.title}}</v-btn>
       </div>
     </div>
+    <div v-else class="sub-nav-header tiny teal lighten-2">
+      <div class="sub-nav-content">
+        <div class="sub-nav-title-only display-1">
+          {{title}}
+        </div>
+      </div>
+    </div>
     <!-- MAIN## -->
     <div class="main-content">
       <slot/>
@@ -50,11 +57,6 @@ export default {
         'fixed-links': false
       },
       offsetTop: 0,
-      options: {
-        duration: 500,
-        offset: -100,
-        easing: 'easeInOutCubic'
-      },
       windowSize: {
         x: 0,
         y: 0
@@ -87,7 +89,6 @@ export default {
       /** State : normal to scrolled */
       store.setScrollHeight(window.pageYOffset || document.documentElement.scrollTop)
       this.offsetTop = store.state.scrollHeight
-      console.log(this.offsetTop)
       if (this.windowSize.x > mobileWidth) {
         if (this.extendedHeader) {
           if (this.windowSize.x > desktopExtendedHeaderWidth) {
@@ -126,8 +127,8 @@ export default {
       this.windowSize = { x: store.state.windowSize.x, y: store.state.windowSize.y }
     },
     goTo (link) {
-      //this.$emit('go-to', link, this.options)
-      store.setCurrentSelector(link)
+      store.setHashSelector(link)
+      store.setRouteSelector(this.$router.currentRoute.name)
     }
   },
   computed: {
@@ -181,12 +182,17 @@ export default {
     min-height: 170px;
   }
 
+  .sub-nav-header.tiny {
+    min-height: 120px;
+  }
+
   .sub-nav-title {
     margin-top: 50px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
   }
+
   .sub-nav-subtitle {
     margin-bottom: 20px;
     display: flex;

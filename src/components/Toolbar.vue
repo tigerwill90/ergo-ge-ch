@@ -57,8 +57,8 @@ export default {
     },
     goTo (link, to) {
       this.$router.push({ name: link })
-      console.log(to === undefined ? null : '#' + to)
-      store.setCurrentSelector(to === undefined ? null : '#' + to)
+      store.setRouteSelector(link)
+      store.setHashSelector(to === undefined ? null : '#' + to)
     }
   },
   computed: {

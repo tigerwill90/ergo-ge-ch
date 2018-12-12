@@ -25,9 +25,9 @@ export default {
     return {
       title: 'Les indépendants',
       links: [
-        { id: 0, to: 'pediatrics', title: 'Pédiatrie' },
-        { id: 1, to: 'mental', title: 'Santé mentale' },
-        { id: 2, to: 'physical', title: 'Médecine physique' }
+        { to: 'pediatrics', title: 'Pédiatrie' },
+        { to: 'mental', title: 'Santé mentale' },
+        { to: 'physical', title: 'Médecine physique' }
       ],
       sharedStore: store.state,
       mounted: false,
@@ -40,9 +40,9 @@ export default {
   },
   computed: {
     selector () {
-      if (this.mounted) {
-        if (this.sharedStore.currentSelector !== null) {
-          this.$vuetify.goTo(this.sharedStore.currentSelector, this.options)
+      if (this.mounted && this.sharedStore.selector.routeName === 'therapist') {
+        if (this.sharedStore.selector.hash !== null) {
+          return this.$vuetify.goTo(this.sharedStore.selector.hash, this.options)
         }
       }
       return null

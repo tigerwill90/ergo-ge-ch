@@ -26,9 +26,9 @@ export default {
     return {
       title: 'La Section Genevoise',
       links: [
-        { id: 0, to: 'geneva', title: 'Section Genevoise' },
-        { id: 1, to: 'conseil', title: 'Comité' },
-        { id: 2, to: 'groupe', title: 'Groupes de travail' }
+        { to: 'geneva', title: 'Section Genevoise' },
+        { to: 'conseil', title: 'Comité' },
+        { to: 'groupe', title: 'Groupes de travail' }
       ],
       sharedStore: store.state,
       mounted: false,
@@ -41,9 +41,9 @@ export default {
   },
   computed: {
     selector () {
-      if (this.mounted) {
-        if (this.sharedStore.currentSelector !== null) {
-          this.$vuetify.goTo(this.sharedStore.currentSelector, this.options)
+      if (this.mounted && this.sharedStore.selector.routeName === 'section') {
+        if (this.sharedStore.selector.hash !== null) {
+          return this.$vuetify.goTo(this.sharedStore.selector.hash, this.options)
         }
       }
       return null
@@ -57,6 +57,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-
-</style>

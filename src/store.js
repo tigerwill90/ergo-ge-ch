@@ -6,7 +6,10 @@ export default {
     },
     scrollHeight: 0,
     drawer: false,
-    currentSelector: null
+    selector: {
+      hash: null,
+      routeName: null
+    }
   },
   setWindowsSize (x, y) {
     this.state.windowSize.x = x
@@ -18,7 +21,10 @@ export default {
   setDrawer (newState) {
     this.state.drawer = newState
   },
-  setCurrentSelector (selector) {
-    this.state.currentSelector = selector
+  setHashSelector (hash) {
+    this.state.selector.hash = hash
+  },
+  setRouteSelector (routeName) {
+    this.state.selector.routeName = routeName
   }
 }

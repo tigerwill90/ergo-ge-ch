@@ -23,6 +23,11 @@ export default {
 }
 </script>
 <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
   .app-main {
     padding-top: 64px!important;
   }

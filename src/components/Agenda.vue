@@ -1,5 +1,5 @@
 <template>
-  <FlexContainer v-resize="onResize" class="hide">
+  <FlexContainer :pad-left="40" :pad-right="40" v-resize="onResize" class="hide">
     <full-calendar ref="calendar" :events="events" :config="config" @event-selected="eventSelected"></full-calendar>
   </FlexContainer>
 </template>
