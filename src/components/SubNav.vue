@@ -3,7 +3,7 @@
     <div v-if="displayNav" class="teal lighten-2" :class="'sub-nav-header ' + subClass">
       <div class="sub-nav-content">
         <!-- HEADER## -->
-        <template v-if="extendedHeader">
+        <div v-show="extendedHeader">
           <div class="sub-nav-title">
             <span class="display-2 center-text">{{title}}</span>
           </div>
@@ -13,12 +13,12 @@
           <div class="sub-nav-button">
             <v-btn :to="{name: 'contact'}">Contactez nous</v-btn>
           </div>
-        </template>
-        <template v-else>
+        </div>
+        <div v-show="!extendedHeader">
           <div class="sub-nav-title-only display-2">
             {{title}}
           </div>
-        </template>
+        </div>
       </div>
       <!-- ##HEADER -->
       <div class="sub-nav-links" :class="linksClass" v-if="showLinks">
@@ -42,7 +42,6 @@
 
 <script>
 // TODO implements STATE PATTERN
-import store from '../store'
 const mobileWidth = 495
 const desktopExtendedHeaderWidth = 580
 const extendedScrollTrigger = 252
@@ -61,7 +60,7 @@ export default {
         x: 0,
         y: 0
       },
-      sharedStore: store.state
+      sharedStore: this.$store.state
     }
   },
   props: {
@@ -87,8 +86,8 @@ export default {
   methods: {
     onScroll () {
       /** State : normal to scrolled */
-      store.setScrollHeight(window.pageYOffset || document.documentElement.scrollTop)
-      this.offsetTop = store.state.scrollHeight
+      this.$store.setScrollHeight(window.pageYOffset || document.documentElement.scrollTop)
+      this.offsetTop = this.$store.state.scrollHeight
       if (this.windowSize.x > mobileWidth) {
         if (this.extendedHeader) {
           if (this.windowSize.x > desktopExtendedHeaderWidth) {
@@ -123,12 +122,12 @@ export default {
       }
     },
     onResize () {
-      store.setWindowsSize(window.innerWidth, window.innerHeight)
-      this.windowSize = { x: store.state.windowSize.x, y: store.state.windowSize.y }
+      this.$store.setWindowsSize(window.innerWidth, window.innerHeight)
+      this.windowSize = { x: this.$store.state.windowSize.x, y: this.$store.state.windowSize.y }
     },
     goTo (link) {
-      store.setHashSelector(link)
-      store.setRouteSelector(this.$router.currentRoute.name)
+      this.$store.setHashSelector(link)
+      this.$store.setRouteSelector(this.$router.currentRoute.name)
     }
   },
   computed: {
@@ -139,7 +138,7 @@ export default {
       return this.subClass === 'extended'
     },
     showLinks () {
-      return !store.state.drawer || !this.linksClass['fixed-links']
+      return !this.$store.state.drawer || !this.linksClass['fixed-links']
     }
   },
   mounted () {

@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from './views/Home'
 
 Vue.use(Router)
-// TODO lifecycle and lazyloading
 
 const router = new Router({
   routes: [

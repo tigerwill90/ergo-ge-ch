@@ -44,51 +44,32 @@
         <a class="nav-ref" v-for="(link, i) in links" :href="link.url" :key="i" target="_blank">{{link.title}}</a>
       </div>
     </div>
+    <v-divider></v-divider>
     <footer class="nav-footer">
-      <div class="nav-bottom">
-        <v-bottom-nav
-          :value="true"
-          color="teal lighten-2"
+      <div class="nav-bottom-connexion">
+        <v-btn
+          color="red"
+          outline
+          class="white--text"
+          disabled
         >
-          <v-btn
-            color="white"
-            flat
-            value="recent"
-          >
-            <span>Contacte</span>
-            <v-icon>contact_mail</v-icon>
-          </v-btn>
-
-          <v-btn
-            color="white"
-            flat
-            value="favorites"
-          >
-            <span>Connexion</span>
-            <v-icon>account_circle</v-icon>
-          </v-btn>
-
-          <v-btn
-            color="white"
-            flat
-            value="nearby"
-          >
-            <span>Nearby</span>
-            <v-icon>place</v-icon>
-          </v-btn>
-        </v-bottom-nav>
+          Connexion
+          <v-icon right dark>account_circle</v-icon>
+        </v-btn>
+      </div>
+      <div class="nav-bottom-footer">
+          <span>&copy;2018 —&nbsp;<strong>www.ergo-ge-independants.ch</strong></span>
       </div>
     </footer>
   </v-navigation-drawer>
 </template>
 
 <script>
-import store from '../store'
 export default {
   name: 'Nav',
   data () {
     return {
-      sharedStore: store.state,
+      sharedStore: this.$store.state,
       links: [
         {
           url: process.env.VUE_APP_PDF_PROCEDURE_URL,
@@ -114,8 +95,8 @@ export default {
       this.$router.push({ name: link })
       const hash = to === undefined ? null : '#' + to
       console.log(hash)
-      store.setHashSelector(hash)
-      store.setRouteSelector(link)
+      this.$store.setHashSelector(hash)
+      this.$store.setRouteSelector(link)
     }
   },
   computed: {
@@ -124,7 +105,7 @@ export default {
         return this.sharedStore.drawer
       },
       set: function (newState) {
-        store.setDrawer(newState)
+        this.$store.setDrawer(newState)
       }
     },
     forceHide () {
@@ -163,7 +144,7 @@ export default {
           ]
         }
       ]
-    },
+    }
   }
 }
 </script>
@@ -202,6 +183,7 @@ export default {
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
+    margin-bottom: 20px;
   }
 
   .nav-list-title {
@@ -228,21 +210,25 @@ export default {
 
   .nav-footer {
     display: flex;
-    align-items: flex-end;
-    flex-shrink: 0;
-    height: 100px;
-  }
-
-  .nav-bottom {
-    display: flex;
-    justify-content: space-around;
-    flex: 1;
-  }
-
-  .nav-button {
-    display: flex;
     flex-direction: column;
+    flex-shrink: 0;
+    height: 125px;
+  }
+
+  .nav-bottom-connexion {
+    display: flex;
     align-items: center;
-    padding-bottom: 10px;
+    flex: 1;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+
+  .nav-bottom-footer {
+    background-color: #424242;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0 8px 0;
   }
 </style>

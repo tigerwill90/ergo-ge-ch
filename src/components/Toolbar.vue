@@ -24,8 +24,8 @@
     >
 
     </v-autocomplete>
-    <v-btn icon>
-      <v-icon @click="showSearchBar">search</v-icon>
+    <v-btn icon @click="showSearchBar">
+      <v-icon>search</v-icon>
     </v-btn>
     <v-btn icon :to="{name: 'contact'}">
       <v-icon>perm_identity</v-icon>
@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import store from '../store'
 export default {
   name: 'Toolbar',
   data () {
@@ -44,21 +43,21 @@ export default {
         { id: 2, name: 'section', text: 'Section Genevoise' },
         { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes' }
       ],
-      sharedStore: store.state,
+      sharedStore: this.$store.state,
       searchBar: false
     }
   },
   methods: {
     handleMenuClick () {
-      store.setDrawer(!this.sharedStore.drawer)
+      this.$store.setDrawer(!this.sharedStore.drawer)
     },
     showSearchBar () {
       this.searchBar = !this.searchBar
     },
     goTo (link, to) {
       this.$router.push({ name: link })
-      store.setRouteSelector(link)
-      store.setHashSelector(to === undefined ? null : '#' + to)
+      this.$store.setRouteSelector(link)
+      this.$store.setHashSelector(to === undefined ? null : '#' + to)
     }
   },
   computed: {

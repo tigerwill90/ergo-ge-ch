@@ -1,25 +1,23 @@
 <template>
   <SubNav :selector="selector" :title="title" :links="links" sub-class="reduced">
     <Geneva :id="links[0].to"/>
-    <Conseil :id="links[1].to"/>
+    <v-divider></v-divider>
+    <Council :id="links[1].to"/>
+    <v-divider></v-divider>
     <Group :id="links[2].to"/>
-    <FlexContainer background-color="red">
-      hello
-    </FlexContainer>
   </SubNav>
 </template>
 <script>
 import SubNav from '../components/SubNav'
 import Geneva from '../components/Geneva'
-import Conseil from '../components/Conseil'
+import Council from '../components/Council'
 import Group from '../components/Group'
-import store from '../store'
 export default {
   name: 'Section',
   components: {
     SubNav,
     Geneva,
-    Conseil,
+    Council,
     Group
   },
   data () {
@@ -30,30 +28,23 @@ export default {
         { to: 'conseil', title: 'Comité' },
         { to: 'groupe', title: 'Groupes de travail' }
       ],
-      sharedStore: store.state,
-      mounted: false,
-      options: {
-        duration: 200,
-        offset: 50,
-        easing: 'easeInOutCubic'
-      }
+      sharedStore: this.$store.state,
+      updated: false
     }
   },
-  computed: {
+  asyncComputed: {
     selector () {
-      if (this.mounted && this.sharedStore.selector.routeName === 'section') {
+      if (this.updated && this.sharedStore.selector.routeName === 'section') {
         if (this.sharedStore.selector.hash !== null) {
-          return this.$vuetify.goTo(this.sharedStore.selector.hash, this.options)
+          this.$vuetify.goTo(this.sharedStore.selector.hash, this.sharedStore.selector.options(this.sharedStore.windowSize.x)).then(() => {
+            this.$store.setHashSelector(null)
+          })
         }
       }
-      return null
     }
   },
-  mounted () {
-    this.mounted = true
-  },
   updated () {
-    this.options.offset = -100
+    this.updated = true
   }
 }
 </script>

@@ -1,16 +1,22 @@
 <template>
-    <div class="card-main-content">
-      <v-card>
-        <div class="card-main">
-          <div class="card-container-img">
-            <img src="../assets/img/geneva.svg" class="card-img" alt="geneva">
-          </div>
-          <div class="card-desc">
-            La section genevoise de l’ASE est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
-          </div>
-        </div>
-      </v-card>
+  <FlexContainer>
+    <v-card v-if="!$vuetify.breakpoint.xs" class="card-main">
+      <div class="card-container-img">
+        <img src="../assets/img/geneva.svg" class="card-img" alt="geneva" />
+      </div>
+      <div class="card-desc">
+        La section genevoise de l’ASE est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
+      </div>
+    </v-card>
+    <div v-else class="section">
+      <p>
+        La section genevoise de l’ASE est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
+      </p>
+      <div class="card-container-img">
+        <img src="../assets/img/geneva.svg" class="card-img" alt="geneva">
+      </div>
     </div>
+  </FlexContainer>
 </template>
 
 <script>
@@ -23,26 +29,30 @@ export default {
   .card-main {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: auto;
+    justify-content: left;
+    width: 100%;
   }
 
   .card-container-img {
-    display: block;
-    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 10px;
   }
 
   .card-img {
-    display: inline-block;
-    vertical-align: middle;
-    width: 40%;
+    max-height: 200px;
+    min-height: 200px;
+    width: auto;
   }
 
   .card-desc {
-    flex: 2;
+    padding: 0 10px 0 30px;
   }
 
-  .card-main-content {
-    padding: 50px 24px 50px 24px;
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+
 </style>

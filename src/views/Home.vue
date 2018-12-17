@@ -13,7 +13,6 @@ import SubNav from '../components/SubNav'
 import Description from '../components/Description'
 import Agenda from '../components/Agenda'
 import Actuality from '../components/Actuality'
-import store from '../store'
 export default {
   name: 'Home',
   components: {
@@ -24,15 +23,10 @@ export default {
   },
   data () {
     return {
-      title: 'Ergotherapie-ge.ch',
+      title: 'Ergo-ge-independants.ch',
       subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
-      sharedStore: store.state,
-      mounted: false,
-      options: {
-        duration: 200,
-        offset: 50,
-        easing: 'easeInOutCubic'
-      }
+      sharedStore: this.$store.state,
+      updated: false
     }
   },
   computed: {
@@ -49,21 +43,21 @@ export default {
           { to: 'actu', title: 'Actualité' }
         ]
       }
-    },
-    selector () {
-      if (this.mounted && this.sharedStore.selector.routeName === 'home') {
-        if (this.sharedStore.selector.hash !== null) {
-          return this.$vuetify.goTo(this.sharedStore.selector.hash, this.options)
-        }
-      }
-      return null
     }
   },
-  mounted () {
-    this.mounted = true
+  asyncComputed: {
+    selector () {
+      if (this.updated && this.sharedStore.selector.routeName === 'home') {
+        if (this.sharedStore.selector.hash !== null) {
+          this.$vuetify.goTo(this.sharedStore.selector.hash, this.sharedStore.selector.options(this.sharedStore.windowSize.x)).then(() => {
+            this.$store.setHashSelector(null)
+          })
+        }
+      }
+    }
   },
   updated () {
-    this.options.offset = -100
+    this.updated = true
   }
 }
 </script>

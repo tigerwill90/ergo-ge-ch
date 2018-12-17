@@ -1,15 +1,15 @@
 <template>
-  <div class="conseil-main">
+  <div class="council-main">
     <div class="conseil-desc">
       <p style="margin: 0">
         Le comité de la section est élu par l’Assemblée Générale. Tous les membres de la section peuvent se présenter à cette élection. Idéalement, le comité de la section est composé d’au moins 5 membres, qui se répartissent les secteurs de l’ergothérapie et le suivi des dossiers selon leurs propres domaines de pratique. Le comité de la section s’occupe des affaires courantes de la vie de la section et assure, quand c’est nécessaire, le lien entre le comité central de l’ASE et les membres genevois. Le comité de la section est également l’interlocuteur des instances cantonales pour les questions qui concernent l’ergothérapie.
       </p>
     </div>
     <div class="conseil-card">
-      <v-card v-for="conseil in conseils" :key="conseil.id" class="card">
+      <v-card v-for="(council, i) in councils" :key="i" class="card">
         <div class="conseil-card-title">
-          <div class="subheading">{{conseil.name}}</div>
-          <div class="body-2">{{conseil.title}}</div>
+          <div class="subheading">{{council.name}}</div>
+          <div class="body-2">{{council.title}}</div>
         </div>
         <div class="conseil-card-icon">
           <v-avatar
@@ -27,26 +27,38 @@
 
 <script>
 export default {
-  name: 'Conseil',
+  name: 'Council',
   data () {
     return {
-      conseils: [
-        { id: 0, name: 'Stéphanie Muller', title: 'Présidente' },
-        { id: 1, name: 'Myriam Fonjallaz', title: 'Trésorière' },
-        { id: 2, name: 'Sandra Pereira', title: 'Secrétaire' },
-        { id: 3, name: 'Alison Borda', title: 'Membre' }
-      ]
+      councils: [
+        { name: 'Stéphanie Muller', title: 'Présidente' },
+        { name: 'Myriam Fonjallaz', title: 'Trésorière' },
+        { name: 'Sandra Pereira', title: 'Secrétaire' },
+        { name: 'Alison Borda', title: 'Membre' }
+      ],
+      sharedStore: this.$store.state
     }
   }
 }
 </script>
 
 <style scoped>
-  .conseil-main {
+
+  .council-main {
     display: flex;
+    align-items: center;
     background-color: #f0f8ff;
     padding: 50px 24px 50px 24px;
-    height: auto;
+  }
+
+  @media screen and (max-width: 800px) {
+    .council-main {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      background-color: #f0f8ff;
+      padding: 50px 24px 50px 24px;
+    }
   }
 
   .conseil-card {
@@ -54,6 +66,7 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     flex: 1;
+    width: 100%;
   }
 
   .conseil-desc {
@@ -62,6 +75,16 @@ export default {
     justify-content: center;
     padding-right: 20px;
     flex: 1;
+  }
+
+  @media screen and (max-width: 800px){
+    .conseil-desc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      flex: 1;
+    }
   }
 
   .card {

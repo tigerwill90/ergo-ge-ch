@@ -8,7 +8,19 @@ export default {
     drawer: false,
     selector: {
       hash: null,
-      routeName: null
+      routeName: null,
+      options: width => {
+        const options = {
+          duration: 250,
+          easing: 'easeInOutCubic'
+        }
+        if (width < 496) {
+          options.offset = -64
+          return options
+        }
+        options.offset = -110
+        return options
+      }
     }
   },
   setWindowsSize (x, y) {

@@ -14,7 +14,6 @@
 <script>
 import SubNav from '../components/SubNav'
 import TherapistCard from '../components/TherapistCard'
-import store from '../store'
 export default {
   name: 'Therapist',
   components: {
@@ -29,30 +28,23 @@ export default {
         { to: 'mental', title: 'Santé mentale' },
         { to: 'physical', title: 'Médecine physique' }
       ],
-      sharedStore: store.state,
-      mounted: false,
-      options: {
-        duration: 200,
-        offset: 50,
-        easing: 'easeInOutCubic'
-      }
+      sharedStore: this.$store.state,
+      updated: false
     }
   },
-  computed: {
+  asyncComputed: {
     selector () {
-      if (this.mounted && this.sharedStore.selector.routeName === 'therapist') {
+      if (this.updated && this.sharedStore.selector.routeName === 'therapist') {
         if (this.sharedStore.selector.hash !== null) {
-          return this.$vuetify.goTo(this.sharedStore.selector.hash, this.options)
+          this.$vuetify.goTo(this.sharedStore.selector.hash, this.sharedStore.selector.options(this.sharedStore.windowSize.x)).then(() => {
+            this.$store.setHashSelector(null)
+          })
         }
       }
-      return null
     }
   },
-  mounted () {
-    this.mounted = true
-  },
   updated () {
-    this.options.offset = -100
+    this.updated = true
   }
 }
 </script>
