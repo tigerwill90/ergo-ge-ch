@@ -12,6 +12,7 @@ import SubNav from '../components/SubNav'
 import Geneva from '../components/Geneva'
 import Council from '../components/Council'
 import Group from '../components/Group'
+import Scrolling from '../mixins/scrolling'
 export default {
   name: 'Section',
   components: {
@@ -20,6 +21,7 @@ export default {
     Council,
     Group
   },
+  mixins: [Scrolling('section')],
   data () {
     return {
       title: 'La Section Genevoise',
@@ -27,24 +29,8 @@ export default {
         { to: 'geneva', title: 'Section Genevoise' },
         { to: 'conseil', title: 'Comité' },
         { to: 'groupe', title: 'Groupes de travail' }
-      ],
-      sharedStore: this.$store.state,
-      updated: false
+      ]
     }
-  },
-  asyncComputed: {
-    selector () {
-      if (this.updated && this.sharedStore.selector.routeName === 'section') {
-        if (this.sharedStore.selector.hash !== null) {
-          this.$vuetify.goTo(this.sharedStore.selector.hash, this.sharedStore.selector.options(this.sharedStore.windowSize.x)).then(() => {
-            this.$store.setHashSelector(null)
-          })
-        }
-      }
-    }
-  },
-  updated () {
-    this.updated = true
   }
 }
 </script>

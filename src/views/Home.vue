@@ -13,6 +13,7 @@ import SubNav from '../components/SubNav'
 import Description from '../components/Description'
 import Agenda from '../components/Agenda'
 import Actuality from '../components/Actuality'
+import Scrolling from '../mixins/scrolling'
 export default {
   name: 'Home',
   components: {
@@ -21,12 +22,11 @@ export default {
     Agenda,
     Actuality
   },
+  mixins: [Scrolling('home')],
   data () {
     return {
       title: 'Ergo-ge-independants.ch',
-      subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
-      sharedStore: this.$store.state,
-      updated: false
+      subtitle: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!'
     }
   },
   computed: {
@@ -44,20 +44,6 @@ export default {
         ]
       }
     }
-  },
-  asyncComputed: {
-    selector () {
-      if (this.updated && this.sharedStore.selector.routeName === 'home') {
-        if (this.sharedStore.selector.hash !== null) {
-          this.$vuetify.goTo(this.sharedStore.selector.hash, this.sharedStore.selector.options(this.sharedStore.windowSize.x)).then(() => {
-            this.$store.setHashSelector(null)
-          })
-        }
-      }
-    }
-  },
-  updated () {
-    this.updated = true
   }
 }
 </script>

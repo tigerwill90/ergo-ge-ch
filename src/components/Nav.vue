@@ -6,9 +6,7 @@
     </header>
     <v-divider></v-divider>
     <div class="nav-content">
-      <div class="nav-list-title">
-        <span>Information</span>
-      </div>
+      <v-subheader>Information</v-subheader>
       <v-list class="nav-list" expand>
         <v-list-group v-for="item in items" :key="item.title" :prepend-icon="item.icon" no-action>
 
@@ -37,9 +35,7 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <div class="nav-list-title">
-        <span>Liens utiles</span>
-      </div>
+      <v-subheader>Liens utiles</v-subheader>
       <div class="nav-link">
         <a class="nav-ref" v-for="(link, i) in links" :href="link.url" :key="i" target="_blank">{{link.title}}</a>
       </div>
@@ -184,14 +180,6 @@ export default {
     flex-direction: column;
     flex: 1 0 auto;
     margin-bottom: 20px;
-  }
-
-  .nav-list-title {
-    padding-left: 15px;
-    font-size: 1.3em;
-    margin: 15px 0 15px 0;
-    color: #9e9e9e;
-    font-weight: 400;
   }
 
   .nav-list {

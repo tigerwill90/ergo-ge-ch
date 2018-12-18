@@ -14,12 +14,14 @@
 <script>
 import SubNav from '../components/SubNav'
 import TherapistCard from '../components/TherapistCard'
+import Scrolling from '../mixins/scrolling'
 export default {
   name: 'Therapist',
   components: {
     SubNav,
     TherapistCard
   },
+  mixins: [Scrolling('therapist')],
   data () {
     return {
       title: 'Les indépendants',
@@ -27,24 +29,8 @@ export default {
         { to: 'pediatrics', title: 'Pédiatrie' },
         { to: 'mental', title: 'Santé mentale' },
         { to: 'physical', title: 'Médecine physique' }
-      ],
-      sharedStore: this.$store.state,
-      updated: false
+      ]
     }
-  },
-  asyncComputed: {
-    selector () {
-      if (this.updated && this.sharedStore.selector.routeName === 'therapist') {
-        if (this.sharedStore.selector.hash !== null) {
-          this.$vuetify.goTo(this.sharedStore.selector.hash, this.sharedStore.selector.options(this.sharedStore.windowSize.x)).then(() => {
-            this.$store.setHashSelector(null)
-          })
-        }
-      }
-    }
-  },
-  updated () {
-    this.updated = true
   }
 }
 </script>
