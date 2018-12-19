@@ -1,5 +1,18 @@
 <template>
-    <div :style="{padding: padTop + 'px ' + padRight + 'px ' + padBottom + 'px ' + padLeft + 'px', backgroundColor: backgroundColor}" :class="'flex-container ' + direction">
+    <div
+      :style="{
+        padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
+        'background-color': backgroundColor,
+        'align-items': alignItems,
+        'justify-content' : justifyContent,
+        height: height,
+        'min-height': minHeight
+        }"
+      :class="{
+        'flex-container-direction': column
+      }"
+      class="flex-container"
+    >
       <slot/>
     </div>
 </template>
@@ -8,29 +21,47 @@
 export default {
   name: 'FlexContainer',
   props: {
-    direction: {
-      type: String,
-      default: 'row'
+    column: {
+      type: Boolean,
+      default: false
     },
     backgroundColor: {
       type: String,
       default: 'white'
     },
-    padTop: {
-      type: Number,
-      default: 50
+    paddingTop: {
+      type: String,
+      default: '60px'
     },
-    padBottom: {
-      type: Number,
-      default: 50
+    paddingBottom: {
+      type: String,
+      default: '60px'
     },
-    padLeft: {
-      type: Number,
-      default: 24
+    paddingLeft: {
+      type: String,
+      default: '24px'
     },
-    padRight: {
-      type: Number,
-      default: 24
+    paddingRight: {
+      type: String,
+      default: '24px'
+    },
+    alignItems: {
+      type: String,
+      validator: function (value) {
+        return ['flex-start', 'flex-end', 'center', 'stretch', 'baseline'].indexOf(value) !== -1
+      }
+    },
+    justifyContent: {
+      type: String,
+      validator: function (value) {
+        return ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'].indexOf(value) !== -1
+      }
+    },
+    minHeight: {
+      type: String
+    },
+    height: {
+      type: String
     }
   }
 }
@@ -41,11 +72,7 @@ export default {
     display: flex;
   }
 
-  .flex-container.row {
-    flex-direction: row;
-  }
-
-  .flex-container.column {
+  .flex-container-direction {
     flex-direction: column;
   }
 </style>

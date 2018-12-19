@@ -170,13 +170,6 @@ export default {
     max-height: 300px;
   }
 
-  @media screen and (max-width: 580px){
-    .sub-nav-header.extended {
-      height: 200px;
-      max-height: 200px;
-    }
-  }
-
   .sub-nav-header.reduced {
     min-height: 170px;
   }
@@ -198,12 +191,6 @@ export default {
     justify-content: center;
   }
 
-  @media screen and (max-width: 580px) {
-    .sub-nav-subtitle {
-      display: none;
-    }
-  }
-
   .sub-nav-title-only {
     padding-left: 20px;
     margin-top: 50px;
@@ -213,12 +200,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  @media screen and (max-width: 745px) {
-    .sub-nav-button {
-      display: none;
-    }
   }
 
   .main-content {
@@ -245,5 +226,22 @@ export default {
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 0px 0 rgba(0,0,0,.12);
     width: 100%;
     left: 0;
+  }
+
+  @media screen and (max-width: 580px){
+    .sub-nav-header.extended {
+      height: 200px;
+      max-height: 200px;
+    }
+
+    .sub-nav-subtitle {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 745px) {
+    .sub-nav-button {
+      display: none;
+    }
   }
 </style>

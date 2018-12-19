@@ -11,7 +11,8 @@
       <v-card-title class="teal lighten-2">
         <div class="footer">
           <div class="footer-version">
-            <strong class="subheading">Version 0.0.1</strong>
+            <span class="text-xs-center">Version 0.0.1</span>
+            <a class="text-xs-center footer-link" href="https://www.sylvainmuller.ch" target="_blank"><strong>www.sylvainmuller.ch</strong></a>
           </div>
           <div class="footer-desc">
             <span class="text-xs-center">Accosciation Suisse des Ergothérapeutes ASE</span>
@@ -36,28 +37,44 @@ export default {
 <style scoped>
   .footer {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex: 1;
   }
 
-  @media screen and (max-width: 650px) {
-    .footer {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      flex: 1;
-    }
-  }
-
   .footer-version {
-    flex: 2;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
   }
 
   .footer-desc {
     display: flex;
-    align-items: center;
-    flex: 1;
+    align-items: flex-end;
+    justify-content: center;
     flex-direction: column;
+    flex: 1;
+  }
+
+  .footer-link {
+    text-decoration: none;
+    color: white;
+  }
+
+  @media screen and (max-width: 650px) {
+    .footer {
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .footer-version {
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .footer-desc {
+      align-items: center;
+    }
   }
 </style>

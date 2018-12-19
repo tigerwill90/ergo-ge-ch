@@ -1,7 +1,7 @@
 <template>
   <FlexContainer>
     <v-timeline v-if="!$vuetify.breakpoint.xs" :dense="$vuetify.breakpoint.smAndDown">
-      <v-timeline-item v-for="(item, i) in items" :key="i" :color="item.color" large>
+      <v-timeline-item v-for="(item, i) in items" :key="i" :color="item.color" large class="align-timeline">
         <span slot="opposite">
           <v-img :src="item.img" aspect-ratio="3" content></v-img>
         </span>
@@ -89,6 +89,10 @@ export default {
     color: blue;
   }
 
+  .align-timeline {
+    align-items: center;
+  }
+
   .desc-link-content {
     display: flex;
     align-items: center;
@@ -114,6 +118,6 @@ export default {
   }
 
   .section-img {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 </style>

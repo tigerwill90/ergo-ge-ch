@@ -23,12 +23,5 @@ export default {
 }
 </script>
 <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-
-  .app-main {
-    padding-top: 64px!important;
-  }
+  @import './assets/css/global.css';
 </style>

@@ -1,5 +1,6 @@
 <template>
-  <FlexContainer :pad-left="40" :pad-right="40" v-resize="onResize" class="hide">
+  <FlexContainer padding-left="50px" padding-right="50px" v-resize="onResize" class="hide" column>
+    <h1 class="app-section-title title-1 center">Calendrier</h1>
     <full-calendar ref="calendar" :events="events" :config="config" @event-selected="eventSelected"></full-calendar>
   </FlexContainer>
 </template>
@@ -27,7 +28,7 @@ export default {
         header: {
           left: 'prev, next, today',
           center: 'title',
-          right: 'month, agendaWeek, agendaDay'
+          right: 'month, agendaWeek, listWeek'
         }
       }
     }
@@ -38,29 +39,29 @@ export default {
     },
     fetchEvent () {
       return [
-        { title: 'Réunion ASE', start: '2018-12-10 12:00', end: '2018-12-10 13:30', color: 'green' },
-        { title: 'Web app ASE -> prod', start: '2018-12-15', end: '2018-12-15' }
+        { title: 'Réunion ASE', start: '2018-12-22 12:00', end: '2018-12-22 13:30', color: 'green' },
+        { title: 'Web app ASE -> prod', start: '2018-12-24', end: '2018-12-24' }
       ]
     },
     onResize () {
       // adapt calendar layout
       if (window.innerWidth < 800) {
         this.$refs.calendar.fireMethod('option', {
-          defaultView: 'agendaDay',
+          defaultView: 'listWeek',
           header: {
             left: 'prev, next, today',
             center: 'title',
-            right: 'agendaDay'
+            right: 'listWeek'
           }
         })
-        this.$refs.calendar.fireMethod('changeView', 'agendaDay')
+        this.$refs.calendar.fireMethod('changeView', 'listWeek')
       } else {
         this.$refs.calendar.fireMethod('option', {
           defaultView: 'month',
           header: {
             left: 'prev, next, today',
             center: 'title',
-            right: 'month, agendaWeek, agendaDay'
+            right: 'month, agendaWeek, listWeek'
           }
         })
       }

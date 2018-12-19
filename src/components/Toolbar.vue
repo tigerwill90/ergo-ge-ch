@@ -76,12 +76,6 @@ export default {
     z-index: 1000;
   }
 
-  @media screen and (max-width: 495px) {
-    .toolbar-title {
-      display: none;
-    }
-  }
-
   .toolbar-item {
     display: flex;
   }
@@ -94,5 +88,11 @@ export default {
 
   .toolbar-img {
     max-height: 40px;
+  }
+
+  @media screen and (max-width: 495px) {
+    .toolbar-title {
+      display: none;
+    }
   }
 </style>
