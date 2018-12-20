@@ -43,7 +43,7 @@ export default {
                 if (error.response !== undefined) {
                   data = error.response.data
                 }
-                self.$store.addNetworkError('Impossible de télécharger les évènements du calendrier google', data)
+                self.$store.addAlert('Impossible de télécharger les évènements du calendrier google', 'error', data)
                 self.loading = false
               })
           }
@@ -104,7 +104,7 @@ export default {
   mounted () {
     this.intervalId = setInterval(() => this.$refs.calendar.fireMethod('refetchEvents'), 300000)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     clearInterval(this.intervalId)
   }
 }

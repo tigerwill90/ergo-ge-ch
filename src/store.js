@@ -22,21 +22,25 @@ export default {
         return options
       }
     },
-    error: {
-      activeNotification: localStorage.getItem('err_notifications'),
+    messages: {
+      activeNotification: localStorage.getItem('notifications'),
       get notification () {
-        if (this.activeNotification === null || this.activeNotification === 'active') {
+        if (this.activeNotification === null) {
+          localStorage.setItem('notifications', 'active')
           return true
         }
-        console.log('yolo')
+
+        if (this.activeNotification === 'active') {
+          return true
+        }
         return false
       },
       set notification (newValue) {
         this.activeNotification = newValue
-        localStorage.setItem('err_notifications', newValue)
+        localStorage.setItem('notifications', newValue)
       },
-      networkId: 0,
-      networks: []
+      alertId: 0,
+      alerts: []
     }
   },
   setWindowsSize (x, y) {
@@ -55,28 +59,29 @@ export default {
   setRouteSelector (routeName) {
     this.state.selector.routeName = routeName
   },
-  addNetworkError (userMessage, logs, active = true) {
+  addAlert (userMessage, type, logs, active = true) {
     const error = {
-      id: this.state.error.networkId++,
+      id: this.state.messages.alertId++,
       active: active,
+      type: type,
       log: logs,
       message: userMessage
     }
-    this.state.error.networks.push(error)
+    this.state.messages.alerts.push(error)
   },
-  deleteNetworkError (id) {
-    const pos = this.state.error.networks.map(network => { return network.id }).indexOf(id)
+  deleteAlert (id) {
+    const pos = this.state.messages.alerts.map(alert => { return alert.id }).indexOf(id)
     if (pos !== -1) {
-      this.state.error.networks.splice(pos, 1)
+      this.state.messages.alerts.splice(pos, 1)
     }
   },
-  deleteAllErrors () {
-    this.state.error.networks = []
+  deleteAllAlerts () {
+    this.state.messages.alerts = []
   },
-  disableErrorNotification () {
-    this.state.error.notification = 'inactive'
+  disableAlertNotification () {
+    this.state.messages.notification = 'inactive'
   },
-  enableErrorNotification () {
-    this.state.error.notification = 'active'
+  enableAlertNotification () {
+    this.state.messages.notification = 'active'
   }
 }

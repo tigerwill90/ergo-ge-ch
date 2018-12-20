@@ -11,7 +11,7 @@
       <v-card-title class="teal lighten-2">
         <div class="footer">
           <div class="footer-version">
-            <span class="text-xs-center">Version 0.0.1</span>
+            <span class="text-xs-center">Version 0.0.2</span>
             <a class="text-xs-center footer-link" href="https://www.sylvainmuller.ch" target="_blank"><strong>www.sylvainmuller.ch</strong></a>
           </div>
           <div class="footer-desc">
@@ -30,7 +30,12 @@
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  data () {
+    return {
+      sharedStore: this.$store.state
+    }
+  }
 }
 </script>
 

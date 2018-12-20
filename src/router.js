@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
+import Therapist from './views/Therapist'
+import Section from './views/Section'
+import Contact from './views/Contact'
 
 Vue.use(Router)
 
@@ -21,7 +24,7 @@ const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('./views/Section'),
+      component: Section,
       meta: {
         title: 'La section Genevoise',
         header: 'Section Genevoise'
@@ -30,7 +33,7 @@ const router = new Router({
     {
       path: '/therapist',
       name: 'therapist',
-      component: () => import('./views/Therapist'),
+      component: Therapist,
       meta: {
         title: 'Où trouver les ergothérapeutes',
         header: 'Où trouver les ergothérapeutes'
@@ -39,7 +42,7 @@ const router = new Router({
     {
       path: '/contact',
       name: 'contact',
-      component: () => import('./views/Contact.vue'),
+      component: Contact,
       meta: {
         title: 'Nous contacter',
         header: 'Contacte'
