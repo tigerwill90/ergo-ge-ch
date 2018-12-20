@@ -1,0 +1,36 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    border-left: 3px solid teal;
+}
+
+.app-main {
+    padding-top: 64px!important;
+}
+
+.app-section-title {
+    font-weight: 400;
+    margin: 0 0 18px 0;
+    padding: 0;
+    color: rgba(0,0,0,.54);
+}
+
+.app-section-title.title-1 {
+    font-size: 26px;
+}
+
+.app-section-title.title-2 {
+    font-size: 20px;
+}
+
+.app-section-title.title-3 {
+    font-size: 14px;
+}
+
+.app-section-title.center {
+    text-align: center;
+}
