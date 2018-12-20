@@ -35,6 +35,32 @@
     <!-- MAIN## -->
     <div class="main-content">
       <slot/>
+      <div v-if="showErrors" class="alert">
+        <div class="alert-management">
+          <div class="alert-button-management">
+            <v-btn @click="$store.deleteAllErrors()" color="error" fab dark>
+              <v-icon>delete_forever</v-icon>
+            </v-btn>
+            <v-btn @click="$store.disableErrorNotification()" fab dark>
+              <v-icon>remove</v-icon>
+            </v-btn>
+          </div>
+          <div class="alert-management-info">
+            <strong>{{ nbErrors }}</strong>
+          </div>
+        </div>
+        <v-alert
+          v-for="error in networkErrors"
+          :key="error.id"
+          :value="error.active"
+          type="error"
+          dismissible
+          class="alert-container"
+          @input="$store.deleteNetworkError(error.id)"
+        >
+          {{ error.message }}
+        </v-alert>
+      </div>
     </div>
     <!-- ##MAIN -->
   </div>
@@ -139,6 +165,15 @@ export default {
     },
     showLinks () {
       return !this.$store.state.drawer || !this.linksClass['fixed-links']
+    },
+    networkErrors () {
+      return this.sharedStore.error.networks.slice(0, 3)
+    },
+    showErrors () {
+      return this.sharedStore.error.networks.length > 0 && this.sharedStore.error.notification
+    },
+    nbErrors () {
+      return this.sharedStore.error.networks.length
     }
   },
   mounted () {
@@ -226,6 +261,41 @@ export default {
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 0px 0 rgba(0,0,0,.12);
     width: 100%;
     left: 0;
+  }
+
+  .alert {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: #424242;
+    padding-top: 10px;
+  }
+
+  .alert-container {
+    position: relative;
+  }
+
+  .alert-management {
+    display: flex;
+    align-items: center;
+  }
+
+  .alert-button-management {
+    flex: 1;
+  }
+
+  .alert-management-info {
+    border-radius: 50%;
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: red;
   }
 
   @media screen and (max-width: 580px){
