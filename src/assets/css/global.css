@@ -8,6 +8,10 @@ ul {
     border-left: 3px solid teal;
 }
 
+p {
+    width: 100%;
+}
+
 .app-main {
     padding-top: 64px!important;
 }

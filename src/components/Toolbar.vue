@@ -22,7 +22,6 @@
                     hide-details
                     style="margin-left: 20px"
     >
-
     </v-autocomplete>
     <v-btn icon @click="showSearchBar">
       <v-icon>search</v-icon>
@@ -43,26 +42,25 @@ export default {
         { id: 2, name: 'section', text: 'Section Genevoise' },
         { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes' }
       ],
-      sharedStore: this.$store.state,
       searchBar: false
     }
   },
   methods: {
     handleMenuClick () {
-      this.$store.setDrawer(!this.sharedStore.drawer)
+      this.$store.commit('toggleDrawer')
     },
     showSearchBar () {
       this.searchBar = !this.searchBar
     },
     goTo (link, to) {
       this.$router.push({ name: link })
-      this.$store.setRouteSelector(link)
-      this.$store.setHashSelector(to === undefined ? null : '#' + to)
+      this.$storage.setRouteSelector(link)
+      this.$storage.setHashSelector(to === undefined ? null : '#' + to)
     }
   },
   computed: {
     showMenu () {
-      return this.sharedStore.windowSize.x < 830
+      return this.$storage.state.windowSize.x < 830
     },
     header () {
       return this.$route.meta.header

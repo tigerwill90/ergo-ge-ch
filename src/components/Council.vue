@@ -43,7 +43,7 @@ export default {
         { name: 'Alison Borda', title: 'Membre' }
       ],
       img: 'https://picsum.photos/510/300?random',
-      sharedStore: this.$store.state
+      sharedStore: this.$storage.state
     }
   }
 }

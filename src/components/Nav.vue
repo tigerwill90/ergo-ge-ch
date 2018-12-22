@@ -65,7 +65,7 @@ export default {
   name: 'Nav',
   data () {
     return {
-      sharedStore: this.$store.state,
+      sharedStore: this.$storage.state,
       links: [
         {
           url: process.env.VUE_APP_PDF_PROCEDURE_URL,
@@ -91,17 +91,17 @@ export default {
       this.$router.push({ name: link })
       const hash = to === undefined ? null : '#' + to
       console.log(hash)
-      this.$store.setHashSelector(hash)
-      this.$store.setRouteSelector(link)
+      this.$storage.setHashSelector(hash)
+      this.$storage.setRouteSelector(link)
     }
   },
   computed: {
     drawer: {
       get: function () {
-        return this.sharedStore.drawer
+        return this.$store.getters.drawer
       },
       set: function (newState) {
-        this.$store.setDrawer(newState)
+        this.$store.commit('drawer', newState)
       }
     },
     forceHide () {

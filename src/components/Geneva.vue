@@ -5,12 +5,12 @@
         <img src="../assets/img/geneva.svg" class="card-img" alt="geneva" />
       </div>
       <div class="card-desc">
-        <strong style="color: teal">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
+        <strong style="color: teal; width: 100%">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
       </div>
     </v-card>
     <div v-else class="section">
       <p>
-        La section genevoise de l’ASE est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
+        <strong style="color: teal; width: 100%">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
       </p>
       <div class="card-container-img">
         <img src="../assets/img/geneva.svg" class="card-img" alt="geneva">
@@ -47,6 +47,7 @@ export default {
 
   .card-desc {
     padding: 0 10px 0 30px;
+    width: 100%;
   }
 
   .section {

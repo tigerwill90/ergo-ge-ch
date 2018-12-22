@@ -5,7 +5,7 @@
         <!-- HEADER## -->
         <div v-show="extendedHeader">
           <div class="sub-nav-title">
-            <span class="display-2 center-text">{{title}}</span>
+            <span class="display-2 center-text test">{{ title }}</span>
           </div>
           <div class="sub-nav-subtitle">
             <span class="headline center-text">{{subtitle}}</span>
@@ -60,7 +60,7 @@ export default {
         x: 0,
         y: 0
       },
-      sharedStore: this.$store.state
+      sharedStore: this.$storage.state
     }
   },
   props: {
@@ -86,8 +86,8 @@ export default {
   methods: {
     onScroll () {
       /** State : normal to scrolled */
-      this.$store.setScrollHeight(window.pageYOffset || document.documentElement.scrollTop)
-      this.offsetTop = this.$store.state.scrollHeight
+      this.$storage.setScrollHeight(window.pageYOffset || document.documentElement.scrollTop)
+      this.offsetTop = this.$storage.state.scrollHeight
       if (this.windowSize.x > mobileWidth) {
         if (this.extendedHeader) {
           if (this.windowSize.x > desktopExtendedHeaderWidth) {
@@ -122,12 +122,13 @@ export default {
       }
     },
     onResize () {
-      this.$store.setWindowsSize(window.innerWidth, window.innerHeight)
-      this.windowSize = { x: this.$store.state.windowSize.x, y: this.$store.state.windowSize.y }
+      this.$storage.setWindowsSize(window.innerWidth, window.innerHeight)
+      this.$store.commit('windowSize', { x: window.innerWidth, y: window.innerHeight })
+      this.windowSize = { x: this.$storage.state.windowSize.x, y: this.$storage.state.windowSize.y }
     },
     goTo (link) {
-      this.$store.setHashSelector(link)
-      this.$store.setRouteSelector(this.$router.currentRoute.name)
+      this.$storage.setHashSelector(link)
+      this.$storage.setRouteSelector(this.$router.currentRoute.name)
     }
   },
   computed: {
@@ -138,7 +139,7 @@ export default {
       return this.subClass === 'extended'
     },
     showLinks () {
-      return !this.$store.state.drawer || !this.linksClass['fixed-links']
+      return !this.$store.getters.drawer || !this.linksClass['fixed-links']
     }
   },
   mounted () {

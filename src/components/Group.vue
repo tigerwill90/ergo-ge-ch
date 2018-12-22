@@ -20,7 +20,9 @@
         </div>
         <div class="group-private">
           <h1 class="app-section-title title-2">Secteur privé</h1>
-          Les ergothérapeutes qui s'installent à leur compte développent en principe une pratique indépendante dans l'un des domaines de l'ergothérapie en particulier (par exemple : la pédiatrie, la psychiatrie, la gériatrie ou encore la médecine physique...).
+          <p>
+            Les ergothérapeutes qui s'installent à leur compte développent en principe une pratique indépendante dans l'un des domaines de l'ergothérapie en particulier (par exemple : la pédiatrie, la psychiatrie, la gériatrie ou encore la médecine physique...).
+          </p>
         </div>
       </div>
     </FlexContainer>
@@ -36,6 +38,7 @@ export default {
 
   .group-desc {
     margin-bottom: 40px;
+    width: 100%;
   }
 
   .group-list {

@@ -1,6 +1,6 @@
 export default {
   install (Vue, store) {
-    Object.defineProperty(Vue.prototype, '$store', {
+    Object.defineProperty(Vue.prototype, '$storage', {
       get: () => store
     })
   }

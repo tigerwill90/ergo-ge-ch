@@ -1,5 +1,5 @@
 <template>
-  <FlexContainer padding-left="50px" padding-right="50px" v-resize="onResize" class="calendar" column>
+  <FlexContainer v-resize="onResize" class="calendar" column>
     <h1 class="app-section-title title-1 center">Calendrier</h1>
     <v-progress-circular
       :size="70"
@@ -16,7 +16,6 @@
 <script>
 import { FullCalendar } from 'vue-full-calendar'
 import 'fullcalendar/dist/locale/fr'
-import axios from 'axios'
 import 'moment'
 
 let self
@@ -32,7 +31,7 @@ export default {
         {
           events (start, end, timezone, callback) {
             self.loading = true
-            axios
+            self.$http
               .get(`${process.env.VUE_APP_API_URL}/events?start=${start.format()}&end=${end.format()}`)
               .then(response => {
                 self.loading = false
@@ -43,7 +42,7 @@ export default {
                 if (error.response !== undefined) {
                   data = error.response.data
                 }
-                self.$store.addAlert('Impossible de télécharger les évènements du calendrier google', 'error', data)
+                self.$storage.addAlert('Impossible de télécharger les évènements du calendrier google', 'error', data)
                 self.loading = false
               })
           }
@@ -65,7 +64,7 @@ export default {
           right: 'month, agendaWeek, listWeek'
         }
       },
-      sharedStore: this.$store.state,
+      sharedStore: this.$storage.state,
       intervalId: null
     }
   },

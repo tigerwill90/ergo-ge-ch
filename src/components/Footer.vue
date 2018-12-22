@@ -33,7 +33,7 @@ export default {
   name: 'Footer',
   data () {
     return {
-      sharedStore: this.$store.state
+      sharedStore: this.$storage.state
     }
   }
 }

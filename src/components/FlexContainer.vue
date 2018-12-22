@@ -70,6 +70,7 @@ export default {
 <style scoped>
   .flex-container {
     display: flex;
+    width: 100%;
   }
 
   .flex-container-direction {
