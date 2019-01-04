@@ -65,7 +65,6 @@ export default {
   name: 'Nav',
   data () {
     return {
-      sharedStore: this.$storage.state,
       links: [
         {
           url: process.env.VUE_APP_PDF_PROCEDURE_URL,
@@ -90,9 +89,7 @@ export default {
     goTo (link, to) {
       this.$router.push({ name: link })
       const hash = to === undefined ? null : '#' + to
-      console.log(hash)
-      this.$storage.setHashSelector(hash)
-      this.$storage.setRouteSelector(link)
+      this.$store.commit('selector', { hash: hash, routeName: link })
     }
   },
   computed: {
@@ -105,7 +102,7 @@ export default {
       }
     },
     forceHide () {
-      return this.sharedStore.windowSize.x < 830
+      return this.$store.getters.windowSize.x < 830
     },
     items () {
       return [
@@ -116,7 +113,7 @@ export default {
           items: [
             { to: 'desc', title: 'L\'ergothérapie', active: false },
             { to: 'actu', title: 'Actualité', active: false },
-            { to: 'agenda', title: 'Agenda', active: this.sharedStore.windowSize.x < 500 }
+            { to: 'agenda', title: 'Agenda', active: this.$store.getters.windowSize.x < 500 }
           ]
         },
         {

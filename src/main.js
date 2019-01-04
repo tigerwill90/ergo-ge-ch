@@ -3,11 +3,9 @@ import { detect } from 'detect-browser'
 import Vue from 'vue'
 import './plugins/vuetify'
 import './global-components'
-import VueState from './plugins/vuestate'
 import VueAxios from './plugins/vueaxios'
 import axios from 'axios'
 import store from './store'
-import storeBackup from './backup_store'
 import './plugins/asyncComputed'
 import router from './router'
 import App from './App.vue'
@@ -32,7 +30,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.config.productionTip = false
-Vue.use(VueState, storeBackup)
 Vue.use(VueAxios, axios)
 
 new Vue({

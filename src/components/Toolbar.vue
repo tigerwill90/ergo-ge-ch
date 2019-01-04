@@ -54,13 +54,12 @@ export default {
     },
     goTo (link, to) {
       this.$router.push({ name: link })
-      this.$storage.setRouteSelector(link)
-      this.$storage.setHashSelector(to === undefined ? null : '#' + to)
+      this.$store.commit('selector', { hash: to === undefined ? null : '#' + to, routeName: link })
     }
   },
   computed: {
     showMenu () {
-      return this.$storage.state.windowSize.x < 830
+      return this.$store.getters.windowSize.x < 830
     },
     header () {
       return this.$route.meta.header

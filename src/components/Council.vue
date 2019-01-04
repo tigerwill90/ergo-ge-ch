@@ -42,8 +42,7 @@ export default {
         { name: 'Sandra Pereira', title: 'Secrétaire' },
         { name: 'Alison Borda', title: 'Membre' }
       ],
-      img: 'https://picsum.photos/510/300?random',
-      sharedStore: this.$storage.state
+      img: 'https://picsum.photos/510/300?random'
     }
   }
 }

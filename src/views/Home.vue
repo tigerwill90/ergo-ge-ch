@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     links () {
-      if (this.sharedStore.windowSize.x > 500) {
+      if (this.$store.getters.windowSize.x > 500) {
         return [
           { to: 'desc', title: 'L\'ergothérapie' },
           { to: 'actu', title: 'Actualité' },

@@ -42,7 +42,7 @@ export default {
                 if (error.response !== undefined) {
                   data = error.response.data
                 }
-                self.$storage.addAlert('Impossible de télécharger les évènements du calendrier google', 'error', data)
+                self.$store.commit('addNotification', { active: true, type: 'error', logs: data, userMessage: 'Impossible de télécharger les évènements du calendrier google' })
                 self.loading = false
               })
           }
@@ -64,7 +64,6 @@ export default {
           right: 'month, agendaWeek, listWeek'
         }
       },
-      sharedStore: this.$storage.state,
       intervalId: null
     }
   },

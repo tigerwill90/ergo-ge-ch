@@ -30,12 +30,7 @@
 
 <script>
 export default {
-  name: 'Footer',
-  data () {
-    return {
-      sharedStore: this.$storage.state
-    }
-  }
+  name: 'Footer'
 }
 </script>
 

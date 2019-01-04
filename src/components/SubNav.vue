@@ -55,12 +55,7 @@ export default {
         'absolute-links': true,
         'fixed-links': false
       },
-      offsetTop: 0,
-      windowSize: {
-        x: 0,
-        y: 0
-      },
-      sharedStore: this.$storage.state
+      offsetTop: 0
     }
   },
   props: {
@@ -86,11 +81,10 @@ export default {
   methods: {
     onScroll () {
       /** State : normal to scrolled */
-      this.$storage.setScrollHeight(window.pageYOffset || document.documentElement.scrollTop)
-      this.offsetTop = this.$storage.state.scrollHeight
-      if (this.windowSize.x > mobileWidth) {
+      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+      if (this.$store.getters.windowSize.x > mobileWidth) {
         if (this.extendedHeader) {
-          if (this.windowSize.x > desktopExtendedHeaderWidth) {
+          if (this.$store.getters.windowSize.x > desktopExtendedHeaderWidth) {
             if (this.offsetTop > extendedScrollTrigger) {
               this.linksClass['absolute-links'] = false
               this.linksClass['fixed-links'] = true
@@ -122,18 +116,15 @@ export default {
       }
     },
     onResize () {
-      this.$storage.setWindowsSize(window.innerWidth, window.innerHeight)
       this.$store.commit('windowSize', { x: window.innerWidth, y: window.innerHeight })
-      this.windowSize = { x: this.$storage.state.windowSize.x, y: this.$storage.state.windowSize.y }
     },
     goTo (link) {
-      this.$storage.setHashSelector(link)
-      this.$storage.setRouteSelector(this.$router.currentRoute.name)
+      this.$store.commit('selector', { hash: link, routeName: this.$router.currentRoute.name })
     }
   },
   computed: {
     displayNav () {
-      return this.windowSize.x > mobileWidth
+      return this.$store.getters.windowSize.x > mobileWidth
     },
     extendedHeader () {
       return this.subClass === 'extended'
