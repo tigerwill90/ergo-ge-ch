@@ -7,14 +7,14 @@
         </span>
         <v-card class="elevation-2">
           <v-card-title class="title">{{item.title}}</v-card-title>
-          <v-card-text>{{item.description}}</v-card-text>
-          <div class="desc-link-content" v-if="item.download">
-            <a :href="item.download" target="_blank">{{item.downloadName}}</a>
-            <v-btn icon :href="item.download + '?disposition=download'">
+          <v-card-text class="subheading">{{item.description}}</v-card-text>
+          <div class="desc-link-content subheading" v-for="(download, i) in item.downloads" :key="i">
+            <a :href="download.url" target="_blank">{{download.name}}</a>
+            <v-btn icon :href="download.url + '?disposition=download'">
               <v-icon color="green">cloud_download</v-icon>
             </v-btn>
           </div>
-          <v-card-text v-if="item.ref" class="card-sub-ref">{{item.ref}}</v-card-text>
+          <v-card-text v-if="item.ref" class="card-sub-ref subheading">{{item.ref}}</v-card-text>
         </v-card>
       </v-timeline-item>
     </v-timeline>
@@ -26,9 +26,9 @@
         <div :class="{'section-content': !item.download}">
           {{item.description}}
         </div>
-        <div v-if="item.download">
-          <a :href="item.download" target="_blank">{{item.downloadName}}</a>
-          <v-btn icon :href="item.download + '?disposition=download'">
+        <div v-for="(download, i) in item.downloads" :key="i">
+          <a :href="download.url" target="_blank">{{download.name}}</a>
+          <v-btn icon :href="download.url + '?disposition=download'">
             <v-icon color="green">cloud_download</v-icon>
           </v-btn>
         </div>
@@ -49,8 +49,10 @@ export default {
           title: 'Qu\'est-ce que l\'ergothérapie\xa0?',
           ref: 'Selon la définition de l\'ASE, mai 2011',
           color: 'blue lighten-2',
-          download: process.env.VUE_APP_PDF_PROCEDURE_URL,
-          downloadName: 'Démarche de l\'ergothérapie (pdf)',
+          downloads: [
+            { url: process.env.VUE_APP_PDF_PROCEDURE_URL, name: 'Démarche de l\'ergothérapie (pdf)' },
+            { url: process.env.VUE_APP_PDF_DEFINITION_URL, name: 'Ergothérapie : définition (pdf)' }
+          ],
           description: `
                 L'ergothérapie est une profession centrée sur le développement et le maintien de la capacité d'agir des personnes.
                 Elle contribue à l'amélioration de la santé et de la qualité de la vie.

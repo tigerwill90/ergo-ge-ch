@@ -1,16 +1,16 @@
 <template>
-    <FlexContainer column>
+    <FlexContainer column align-items="center">
       <div class="app-section-title title-1 center">
         Où travaillent les ergothérapeutes ?
       </div>
-      <div class="group-desc">
-        Les ergothérapeutes travaillent dans des institutions du secteur public, dans le secteur subventionné, mais également dans le privé.
+      <p class="group-desc headline text-xs-center">
+        Les ergothérapeutes travaillent dans des institutions <strong style="color: teal">du secteur public, dans le secteur subventionné, mais également dans le privé</strong>.
         Selon l'organisation des services auxquels ils sont rattachés, les ergothérapeutes ont donc à faire à des populations très diversifiées.
-      </div>
+      </p>
       <div class="group-list">
         <div class="group-public">
-          <h1 class="app-section-title title-2">Secteur public et semi-public (subventionné)</h1>
-          <ul class="group-ul">
+          <h1 class="app-section-title title-1">Secteur public et semi-public (subventionné)</h1>
+          <ul class="group-ul headline">
             <li>Hôpitaux Universitaires de Genève</li>
             <li>Institutions spécialisées</li>
             <li>Fondation des Services d'Aides et de Soins à Domicile (FSASD)</li>
@@ -19,8 +19,8 @@
           </ul>
         </div>
         <div class="group-private">
-          <h1 class="app-section-title title-2">Secteur privé</h1>
-          <p>
+          <h1 class="app-section-title title-1">Secteur privé</h1>
+          <p class="headline paragraph">
             Les ergothérapeutes qui s'installent à leur compte développent en principe une pratique indépendante dans l'un des domaines de l'ergothérapie en particulier (par exemple : la pédiatrie, la psychiatrie, la gériatrie ou encore la médecine physique...).
           </p>
         </div>
@@ -37,8 +37,8 @@ export default {
 <style scoped>
 
   .group-desc {
-    margin-bottom: 40px;
-    width: 100%;
+    margin-bottom: 100px;
+    max-width: 70%;
   }
 
   .group-list {
@@ -46,18 +46,36 @@ export default {
   }
 
   .group-public {
-    flex: 2;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
   }
 
   .group-private {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     flex: 1;
-    text-align: left;
   }
 
-  @media screen and (max-width: 800px) {
+  .paragraph {
+    max-width: 80%;
+  }
+
+  @media screen and (max-width: 1175px) {
     .group-list {
       flex-direction: column;
+      align-items: center;
+    }
+
+    .group-public {
+      margin-bottom: 50px;
+    }
+
+    .group-private {
+      text-align: center;
     }
 
     .group-ul {

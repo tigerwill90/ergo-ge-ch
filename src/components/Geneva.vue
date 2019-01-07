@@ -1,19 +1,19 @@
 <template>
-  <FlexContainer>
-    <v-card v-if="!$vuetify.breakpoint.xs" class="card-main">
-      <div class="card-container-img">
-        <img src="../assets/img/geneva.svg" class="card-img" alt="geneva" />
+  <FlexContainer justify-content="center">
+    <div v-if="!$vuetify.breakpoint.smAndDown" class="section">
+      <div class="container-img">
+        <img src="../assets/img/geneva.svg" class="image" alt="geneva" />
       </div>
-      <div class="card-desc">
-        <strong style="color: teal; width: 100%">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
-      </div>
-    </v-card>
-    <div v-else class="section">
-      <p>
-        <strong style="color: teal; width: 100%">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
+      <p class="headline paragraph">
+        <strong style="color: teal;">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
       </p>
-      <div class="card-container-img">
-        <img src="../assets/img/geneva.svg" class="card-img" alt="geneva">
+    </div>
+    <div v-else class="section column">
+      <p class="text-xs-center headline">
+        <strong style="color: teal;">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de l’Association
+      </p>
+      <div class="container-img">
+        <img src="../assets/img/geneva.svg" class="image" alt="geneva">
       </div>
     </div>
   </FlexContainer>
@@ -26,34 +26,31 @@ export default {
 </script>
 
 <style scoped>
-  .card-main {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: 100%;
-  }
-
-  .card-container-img {
+  .container-img {
     display: flex;
     align-items: center;
     padding: 10px;
   }
 
-  .card-img {
+  .image {
     height: 200px;
     min-height: 200px;
     width: auto;
   }
 
-  .card-desc {
-    padding: 0 10px 0 30px;
-    width: 100%;
-  }
-
   .section {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    max-width: 70%;
+  }
+
+  .section.column {
+    flex-direction: column;
+    max-width: 80%;
+  }
+
+  .paragraph {
+    padding-left: 20px;
   }
 
 </style>

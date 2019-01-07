@@ -6,7 +6,9 @@
         'align-items': alignItems,
         'justify-content' : justifyContent,
         height: height,
-        'min-height': minHeight
+        'min-height': minHeight,
+        width: width,
+        'max-width': maxWidth
         }"
       :class="{
         'flex-container-direction': column
@@ -31,11 +33,11 @@ export default {
     },
     paddingTop: {
       type: String,
-      default: '60px'
+      default: '100px'
     },
     paddingBottom: {
       type: String,
-      default: '60px'
+      default: '100px'
     },
     paddingLeft: {
       type: String,
@@ -62,6 +64,13 @@ export default {
     },
     height: {
       type: String
+    },
+    width: {
+      type: String,
+      default: '100%'
+    },
+    maxWidth: {
+      type: String
     }
   }
 }
@@ -70,7 +79,6 @@ export default {
 <style scoped>
   .flex-container {
     display: flex;
-    width: 100%;
   }
 
   .flex-container-direction {

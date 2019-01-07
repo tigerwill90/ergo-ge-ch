@@ -54,7 +54,7 @@
         </v-btn>
       </div>
       <div class="nav-bottom-footer">
-          <span>&copy;2018 —&nbsp;<strong>www.ergo-ge-independants.ch</strong></span>
+          <span>&copy;{{date.getFullYear()}} —&nbsp;<strong>www.ergo-ge-independants.ch</strong></span>
       </div>
     </footer>
   </v-navigation-drawer>
@@ -68,11 +68,11 @@ export default {
       links: [
         {
           url: process.env.VUE_APP_PDF_PROCEDURE_URL,
-          title: 'Démarche de l\'ergothérapie'
+          title: 'Démarche de l\'ergothérapie (pdf)'
         },
         {
-          url: process.env.VUE_APP_PDF_COMMITTEE_URL,
-          title: 'Le comité'
+          url: process.env.VUE_APP_PDF_DEFINITION_URL,
+          title: 'La définition (pdf)'
         },
         {
           url: 'https://www.ergotherapie.ch/page-dacceuil',
@@ -82,7 +82,8 @@ export default {
           url: 'https://www.eesp.ch/',
           title: 'École d\'ergothérapie Lausanne, EESP'
         }
-      ]
+      ],
+      date: new Date()
     }
   },
   methods: {

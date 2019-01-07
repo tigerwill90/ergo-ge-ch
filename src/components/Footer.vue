@@ -22,7 +22,7 @@
         </div>
       </v-card-title>
       <v-card-actions class="grey darken-3 justify-center">
-        &copy;2018 —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
+        &copy;{{date.getFullYear()}} —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
       </v-card-actions>
     </v-card>
   </v-footer>
@@ -30,7 +30,12 @@
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  data () {
+    return {
+      date: new Date()
+    }
+  }
 }
 </script>
 
