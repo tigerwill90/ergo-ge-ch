@@ -9,8 +9,8 @@
       </p>
       <div class="group-list">
         <div class="group-public">
-          <h1 class="app-section-title title-1">Secteur public et semi-public (subventionné)</h1>
-          <ul class="group-ul headline">
+          <h1 class="app-section-title title-2">Secteur public et semi-public (subventionné)</h1>
+          <ul class="group-ul subheading">
             <li>Hôpitaux Universitaires de Genève</li>
             <li>Institutions spécialisées</li>
             <li>Fondation des Services d'Aides et de Soins à Domicile (FSASD)</li>
@@ -19,8 +19,8 @@
           </ul>
         </div>
         <div class="group-private">
-          <h1 class="app-section-title title-1">Secteur privé</h1>
-          <p class="headline paragraph">
+          <h1 class="app-section-title title-2">Secteur privé</h1>
+          <p class="subheading paragraph">
             Les ergothérapeutes qui s'installent à leur compte développent en principe une pratique indépendante dans l'un des domaines de l'ergothérapie en particulier (par exemple : la pédiatrie, la psychiatrie, la gériatrie ou encore la médecine physique...).
           </p>
         </div>
@@ -64,7 +64,7 @@ export default {
     max-width: 80%;
   }
 
-  @media screen and (max-width: 1175px) {
+  @media screen and (max-width: 1025px) {
     .group-list {
       flex-direction: column;
       align-items: center;

@@ -10,7 +10,7 @@
           <v-card-text class="subheading">{{item.description}}</v-card-text>
           <div class="desc-link-content subheading" v-for="(download, i) in item.downloads" :key="i">
             <a :href="download.url" target="_blank">{{download.name}}</a>
-            <v-btn icon :href="download.url + '?disposition=download'">
+            <v-btn small icon :href="download.url + '?disposition=download'">
               <v-icon color="green">cloud_download</v-icon>
             </v-btn>
           </div>
@@ -23,14 +23,16 @@
         <div class="section-title">
           <span class="title text-xs-center">{{item.title}}</span>
         </div>
-        <div :class="{'section-content': !item.download}">
+        <div :class="{'section-content': !item.download}" class="subheading">
           {{item.description}}
         </div>
-        <div v-for="(download, i) in item.downloads" :key="i">
-          <a :href="download.url" target="_blank">{{download.name}}</a>
-          <v-btn icon :href="download.url + '?disposition=download'">
-            <v-icon color="green">cloud_download</v-icon>
-          </v-btn>
+        <div class="desc_link_content_mobile">
+          <div v-for="(download, i) in item.downloads" :key="i">
+            <a :href="download.url" target="_blank">{{download.name}}</a>
+            <v-btn small icon :href="download.url + '?disposition=download'">
+              <v-icon color="green">cloud_download</v-icon>
+            </v-btn>
+          </div>
         </div>
         <v-img :src="item.img" aspect-ratio="3" content :class="{'section-img': i < items.length - 1}"></v-img>
       </div>
@@ -121,5 +123,9 @@ export default {
 
   .section-img {
     margin-bottom: 30px;
+  }
+
+  .desc_link_content_mobile {
+    margin-bottom: 10px;
   }
 </style>

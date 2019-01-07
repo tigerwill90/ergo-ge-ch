@@ -16,7 +16,7 @@ export default new Vuex.Store({
       routeName: null,
       options: width => {
         const options = {
-          duration: 250,
+          duration: 300,
           easing: 'easeInOutCubic'
         }
         if (width < 496) {
