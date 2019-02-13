@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <Nav/>
-    <Toolbar/>
+    <Nav />
+    <Toolbar />
     <v-content class="app-main">
       <router-view></router-view>
     </v-content>
-    <Footer/>
+    <Footer />
   </v-app>
 </template>
 
@@ -23,5 +23,5 @@ export default {
 }
 </script>
 <style>
-  @import './assets/css/global.css';
+@import './assets/css/global.css';
 </style>

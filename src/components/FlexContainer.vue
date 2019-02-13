@@ -1,22 +1,22 @@
 <template>
-    <div
-      :style="{
-        padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
-        'background-color': backgroundColor,
-        'align-items': alignItems,
-        'justify-content' : justifyContent,
-        height: height,
-        'min-height': minHeight,
-        width: width,
-        'max-width': maxWidth
-        }"
-      :class="{
-        'flex-container-direction': column
-      }"
-      class="flex-container"
-    >
-      <slot/>
-    </div>
+  <div
+    :style="{
+      padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
+      'background-color': backgroundColor,
+      'align-items': alignItems,
+      'justify-content': justifyContent,
+      height: height,
+      'min-height': minHeight,
+      width: width,
+      'max-width': maxWidth
+    }"
+    :class="{
+      'flex-container-direction': column
+    }"
+    class="flex-container"
+  >
+    <slot />
+  </div>
 </template>
 
 <script>
@@ -49,14 +49,16 @@ export default {
     },
     alignItems: {
       type: String,
-      validator: function (value) {
+      validator: function(value) {
         return ['flex-start', 'flex-end', 'center', 'stretch', 'baseline'].indexOf(value) !== -1
       }
     },
     justifyContent: {
       type: String,
-      validator: function (value) {
-        return ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'].indexOf(value) !== -1
+      validator: function(value) {
+        return (
+          ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'].indexOf(value) !== -1
+        )
       }
     },
     minHeight: {
@@ -77,11 +79,11 @@ export default {
 </script>
 
 <style scoped>
-  .flex-container {
-    display: flex;
-  }
+.flex-container {
+  display: flex;
+}
 
-  .flex-container-direction {
-    flex-direction: column;
-  }
+.flex-container-direction {
+  flex-direction: column;
+}
 </style>

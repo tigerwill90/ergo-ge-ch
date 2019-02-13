@@ -50,7 +50,7 @@ const router = new Router({
       redirect: '/'
     }
   ],
-  scrollBehavior () {
+  scrollBehavior() {
     return { x: 0, y: 0 }
   }
 })

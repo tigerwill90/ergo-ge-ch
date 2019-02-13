@@ -6,35 +6,35 @@
           <v-img :src="item.img" aspect-ratio="3" content></v-img>
         </span>
         <v-card class="elevation-2">
-          <v-card-title class="title">{{item.title}}</v-card-title>
-          <v-card-text class="subheading">{{item.description}}</v-card-text>
+          <v-card-title class="title">{{ item.title }}</v-card-title>
+          <v-card-text class="subheading">{{ item.description }}</v-card-text>
           <div class="desc-link-content subheading" v-for="(download, i) in item.downloads" :key="i">
-            <a :href="download.url" target="_blank">{{download.name}}</a>
+            <a :href="download.url" target="_blank">{{ download.name }}</a>
             <v-btn small icon :href="download.url + '?disposition=download'">
               <v-icon color="green">cloud_download</v-icon>
             </v-btn>
           </div>
-          <v-card-text v-if="item.ref" class="card-sub-ref subheading">{{item.ref}}</v-card-text>
+          <v-card-text v-if="item.ref" class="card-sub-ref subheading">{{ item.ref }}</v-card-text>
         </v-card>
       </v-timeline-item>
     </v-timeline>
     <div v-else class="section-container">
       <div class="section" v-for="(item, i) in items" :key="i">
         <div class="section-title">
-          <span class="title text-xs-center">{{item.title}}</span>
+          <span class="title text-xs-center">{{ item.title }}</span>
         </div>
-        <div :class="{'section-content': !item.download}" class="subheading">
-          {{item.description}}
+        <div :class="{ 'section-content': !item.download }" class="subheading">
+          {{ item.description }}
         </div>
         <div class="desc_link_content_mobile">
           <div v-for="(download, i) in item.downloads" :key="i">
-            <a :href="download.url" target="_blank">{{download.name}}</a>
+            <a :href="download.url" target="_blank">{{ download.name }}</a>
             <v-btn small icon :href="download.url + '?disposition=download'">
               <v-icon color="green">cloud_download</v-icon>
             </v-btn>
           </div>
         </div>
-        <v-img :src="item.img" aspect-ratio="3" content :class="{'section-img': i < items.length - 1}"></v-img>
+        <v-img :src="item.img" aspect-ratio="3" content :class="{ 'section-img': i < items.length - 1 }"></v-img>
       </div>
     </div>
   </FlexContainer>
@@ -43,17 +43,22 @@
 <script>
 export default {
   name: 'Description',
-  data () {
+  data() {
     return {
-      items:
-      [
+      items: [
         {
-          title: 'Qu\'est-ce que l\'ergothérapie\xa0?',
-          ref: 'Selon la définition de l\'ASE, mai 2011',
+          title: "Qu'est-ce que l'ergothérapie\xa0?",
+          ref: "Selon la définition de l'ASE, mai 2011",
           color: 'blue lighten-2',
           downloads: [
-            { url: process.env.VUE_APP_PDF_PROCEDURE_URL, name: 'Démarche de l\'ergothérapie (pdf)' },
-            { url: process.env.VUE_APP_PDF_DEFINITION_URL, name: 'Ergothérapie : définition (pdf)' }
+            {
+              url: process.env.VUE_APP_PDF_PROCEDURE_URL,
+              name: "Démarche de l'ergothérapie (pdf)"
+            },
+            {
+              url: process.env.VUE_APP_PDF_DEFINITION_URL,
+              name: 'Ergothérapie : définition (pdf)'
+            }
           ],
           description: `
                 L'ergothérapie est une profession centrée sur le développement et le maintien de la capacité d'agir des personnes.
@@ -75,7 +80,7 @@ export default {
           img: 'https://picsum.photos/510/300?random'
         },
         {
-          title: 'A qui s\'adresse l\'ergothérapie\xa0?',
+          title: "A qui s'adresse l'ergothérapie\xa0?",
           color: 'green lighten-2',
           description: `L'ergothérapie s'adresse aux personnes de tout âge, aux prises avec des difficultés à agir de manière autonome dans les activités de la vie quotidienne,
           que ce soit pour leurs soins personnels, les activités sociales, professionnelles, de formation ou de loisirs. Les interventions d'ergothérapie peuvent consister en des traitements lors
@@ -89,43 +94,43 @@ export default {
 </script>
 
 <style scoped>
-  .card-sub-ref {
-    color: blue;
-  }
+.card-sub-ref {
+  color: blue;
+}
 
-  .align-timeline {
-    align-items: center;
-  }
+.align-timeline {
+  align-items: center;
+}
 
-  .desc-link-content {
-    display: flex;
-    align-items: center;
-    padding-left: 16px;
-  }
+.desc-link-content {
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
 
-  .section-container {
-    display: flex;
-    flex-direction: column;
-  }
+.section-container {
+  display: flex;
+  flex-direction: column;
+}
 
-  .section {
-    display: flex;
-    flex-direction: column;
-  }
+.section {
+  display: flex;
+  flex-direction: column;
+}
 
-  .section-title {
-    padding-bottom: 20px;
-  }
+.section-title {
+  padding-bottom: 20px;
+}
 
-  .section-content {
-    padding-bottom: 20px;
-  }
+.section-content {
+  padding-bottom: 20px;
+}
 
-  .section-img {
-    margin-bottom: 30px;
-  }
+.section-img {
+  margin-bottom: 30px;
+}
 
-  .desc_link_content_mobile {
-    margin-bottom: 10px;
-  }
+.desc_link_content_mobile {
+  margin-bottom: 10px;
+}
 </style>

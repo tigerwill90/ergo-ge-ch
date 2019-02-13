@@ -1,5 +1,5 @@
 <template>
-  <FlexContainer v-resize="onResize" class="calendar" column>
+  <FlexContainer v-resize="onResize" class="calendar" column padding-top="50px">
     <h1 class="app-section-title title-1 center">Calendrier</h1>
     <v-progress-circular
       :size="70"
@@ -9,7 +9,14 @@
       class="calendar-progress"
       v-if="loading"
     ></v-progress-circular>
-    <full-calendar ref="calendar" :event-sources="eventSources" :config="config" @event-selected="eventSelected" :editable="false" :selectable="false"></full-calendar>
+    <full-calendar
+      ref="calendar"
+      :event-sources="eventSources"
+      :config="config"
+      @event-selected="eventSelected"
+      :editable="false"
+      :selectable="false"
+    ></full-calendar>
   </FlexContainer>
 </template>
 
@@ -25,11 +32,11 @@ export default {
   components: {
     FullCalendar
   },
-  data () {
+  data() {
     return {
       eventSources: [
         {
-          events (start, end, timezone, callback) {
+          events(start, end, timezone, callback) {
             self.loading = true
             self.$http
               .get(`${process.env.VUE_APP_API_URL}/events?start=${start.format()}&end=${end.format()}`)
@@ -42,7 +49,12 @@ export default {
                 if (error.response !== undefined) {
                   data = error.response.data
                 }
-                self.$store.commit('addNotification', { active: true, type: 'error', logs: data, userMessage: 'Impossible de télécharger les évènements du calendrier google' })
+                self.$store.commit('addNotification', {
+                  active: true,
+                  type: 'error',
+                  logs: data,
+                  userMessage: 'Impossible de télécharger les évènements du calendrier google'
+                })
                 self.loading = false
               })
           }
@@ -68,10 +80,10 @@ export default {
     }
   },
   methods: {
-    eventSelected (event) {
+    eventSelected(event) {
       this.selectedEvent = event
     },
-    onResize () {
+    onResize() {
       // adapt calendar layout
       if (window.innerWidth < 800) {
         this.$refs.calendar.fireMethod('option', {
@@ -96,29 +108,31 @@ export default {
       this.$refs.calendar.fireMethod('render')
     }
   },
-  created () {
+  created() {
     self = this
   },
-  mounted () {
+  mounted() {
     this.intervalId = setInterval(() => this.$refs.calendar.fireMethod('refetchEvents'), 300000)
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.intervalId)
   }
 }
 </script>
 <style scoped>
-  @import '~fullcalendar/dist/fullcalendar.css';
+@import '~fullcalendar/dist/fullcalendar.css';
 
-  .calendar {
-    position: relative;
-  }
+.calendar {
+  position: relative;
+}
 
-  .calendar-progress {
-    margin: auto;
-    position: absolute;
-    top: 20%; left: 0; bottom: 0; right: 0;
-    z-index: 1000;
-  }
-
+.calendar-progress {
+  margin: auto;
+  position: absolute;
+  top: 20%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+}
 </style>

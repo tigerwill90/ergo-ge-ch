@@ -1,32 +1,33 @@
 <template>
   <v-toolbar dark class="teal lighten-2 toolbar" fixed height="64">
-    <template  v-if="showMenu">
+    <template v-if="showMenu">
       <v-toolbar-side-icon @click="handleMenuClick"></v-toolbar-side-icon>
-      <v-toolbar-title v-if="!searchBar" class="toolbar-title">{{header}}</v-toolbar-title>
+      <v-toolbar-title v-if="!searchBar" class="toolbar-title">{{ header }}</v-toolbar-title>
     </template>
     <template v-else>
-      <router-link :to="{name: 'home'}" exact tag="div" class="toolbar-img-container">
-        <img src="../assets/img/ase.svg" alt="ase" class="toolbar-img"/>
+      <router-link :to="{ name: 'home' }" exact tag="div" class="toolbar-img-container">
+        <img src="../assets/img/ase.svg" alt="ase" class="toolbar-img" />
       </router-link>
       <v-toolbar-items v-if="!searchBar" class="toolbar-item">
-        <v-btn v-for="link in links" :key="link.id" @click="goTo(link.name)" flat exact ripple>{{link.text}}</v-btn>
+        <v-btn v-for="link in links" :key="link.id" @click="goTo(link.name)" flat exact ripple>{{ link.text }}</v-btn>
       </v-toolbar-items>
     </template>
     <v-spacer v-if="!searchBar"></v-spacer>
-    <v-autocomplete v-if="searchBar"
-                    autofocus
-                    color="white"
-                    flat
-                    clearable
-                    :loading="false"
-                    hide-details
-                    style="margin-left: 20px"
+    <v-autocomplete
+      v-if="searchBar"
+      autofocus
+      color="white"
+      flat
+      clearable
+      :loading="false"
+      hide-details
+      style="margin-left: 20px"
     >
     </v-autocomplete>
     <v-btn icon @click="showSearchBar">
       <v-icon>search</v-icon>
     </v-btn>
-    <v-btn icon :to="{name: 'contact'}">
+    <v-btn icon :to="{ name: 'contact' }">
       <v-icon>perm_identity</v-icon>
     </v-btn>
   </v-toolbar>
@@ -35,7 +36,7 @@
 <script>
 export default {
   name: 'Toolbar',
-  data () {
+  data() {
     return {
       links: [
         { id: 1, name: 'home', text: 'Accueil' },
@@ -46,22 +47,25 @@ export default {
     }
   },
   methods: {
-    handleMenuClick () {
+    handleMenuClick() {
       this.$store.commit('toggleDrawer')
     },
-    showSearchBar () {
+    showSearchBar() {
       this.searchBar = !this.searchBar
     },
-    goTo (link, to) {
+    goTo(link, to) {
       this.$router.push({ name: link })
-      this.$store.commit('selector', { hash: to === undefined ? null : '#' + to, routeName: link })
+      this.$store.commit('selector', {
+        hash: to === undefined ? null : '#' + to,
+        routeName: link
+      })
     }
   },
   computed: {
-    showMenu () {
+    showMenu() {
       return this.$store.getters.windowSize.x < 830
     },
-    header () {
+    header() {
       return this.$route.meta.header
     }
   }
@@ -69,27 +73,27 @@ export default {
 </script>
 
 <style scoped>
-  .toolbar {
-    z-index: 1000;
-  }
+.toolbar {
+  z-index: 1000;
+}
 
-  .toolbar-item {
-    display: flex;
-  }
+.toolbar-item {
+  display: flex;
+}
 
-  .toolbar-img-container {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-  }
+.toolbar-img-container {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
 
-  .toolbar-img {
-    max-height: 40px;
-  }
+.toolbar-img {
+  max-height: 40px;
+}
 
-  @media screen and (max-width: 495px) {
-    .toolbar-title {
-      display: none;
-    }
+@media screen and (max-width: 495px) {
+  .toolbar-title {
+    display: none;
   }
+}
 </style>

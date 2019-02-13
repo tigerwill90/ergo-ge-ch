@@ -24,8 +24,9 @@ if (browser) {
 if (process.env.NODE_ENV === 'production') {
   console.log(
     '%cAttention ! En utilisant cette console, vous vous exposez au risque que des personnes malveillantes ' +
-    'se fassent passer pour vous et volent vos informations grâce à une attaque appelée Self-XSS. ' +
-    'Ne saisissez pas et ne copiez pas du code que vous ne comprenez pas.', 'color: red; font-size: 20px'
+      'se fassent passer pour vous et volent vos informations grâce à une attaque appelée Self-XSS. ' +
+      'Ne saisissez pas et ne copiez pas du code que vous ne comprenez pas.',
+    'color: red; font-size: 20px'
   )
 }
 

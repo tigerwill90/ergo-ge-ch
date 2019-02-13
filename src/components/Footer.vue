@@ -1,13 +1,6 @@
 <template>
-  <v-footer
-    dark
-    height="auto"
-  >
-    <v-card
-      class="flex"
-      flat
-      tile
-    >
+  <v-footer dark height="auto">
+    <v-card class="flex" flat tile>
       <v-card-title class="teal lighten-2">
         <div class="footer">
           <div class="footer-version">
@@ -25,7 +18,7 @@
         </div>
       </v-card-title>
       <v-card-actions class="grey darken-3 justify-center">
-        &copy;{{date.getFullYear()}} —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
+        &copy;{{ date.getFullYear() }} —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
       </v-card-actions>
     </v-card>
   </v-footer>
@@ -34,7 +27,7 @@
 <script>
 export default {
   name: 'Footer',
-  data () {
+  data() {
     return {
       date: new Date()
     }
@@ -43,46 +36,46 @@ export default {
 </script>
 
 <style scoped>
+.footer {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+}
+
+.footer-version {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.footer-desc {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: white;
+}
+
+@media screen and (max-width: 650px) {
   .footer {
-    display: flex;
-    align-items: stretch;
-    flex: 1;
+    align-items: center;
+    flex-direction: column;
   }
 
   .footer-version {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    flex: 1;
+    align-items: center;
+    margin-bottom: 10px;
   }
 
   .footer-desc {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    flex-direction: column;
-    flex: 1;
+    align-items: center;
   }
-
-  .footer-link {
-    text-decoration: none;
-    color: white;
-  }
-
-  @media screen and (max-width: 650px) {
-    .footer {
-      align-items: center;
-      flex-direction: column;
-    }
-
-    .footer-version {
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .footer-desc {
-      align-items: center;
-    }
-  }
+}
 </style>
