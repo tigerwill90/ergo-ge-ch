@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-resize="onResize">
     <Nav />
     <Toolbar />
     <v-content class="app-main">
@@ -19,6 +19,17 @@ export default {
     Toolbar,
     Footer,
     Nav
+  },
+  methods: {
+    onResize() {
+      this.$store.commit('windowSize', {
+        x: window.innerWidth,
+        y: window.innerHeight
+      })
+    }
+  },
+  mounted() {
+    this.onResize()
   }
 }
 </script>

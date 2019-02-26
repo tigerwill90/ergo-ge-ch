@@ -1,5 +1,5 @@
 <template>
-  <div v-scroll="onScroll" v-resize="onResize" class="sub-nav-main">
+  <div v-scroll="onScroll" class="sub-nav-main">
     <div v-if="displayNav" class="teal lighten-2" :class="'sub-nav-header ' + subClass">
       <div class="sub-nav-content">
         <!-- HEADER## -->
@@ -117,12 +117,6 @@ export default {
         this.linksClass['fixed-links'] = false
       }
     },
-    onResize() {
-      this.$store.commit('windowSize', {
-        x: window.innerWidth,
-        y: window.innerHeight
-      })
-    },
     goTo(link) {
       this.$store.commit('selector', {
         hash: link,
@@ -140,9 +134,6 @@ export default {
     showLinks() {
       return !this.$store.getters.drawer || !this.linksClass['fixed-links']
     }
-  },
-  mounted() {
-    this.onResize()
   }
 }
 </script>

@@ -27,7 +27,17 @@
           </v-list-tile>
         </v-list-group>
       </v-list>
-      <v-list>
+      <v-list class="nav-list">
+        <v-list-tile @click="goTo('therapist')">
+          <v-list-tile-action>
+            <v-icon>place</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Ergothérapeute</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+      <v-list class="nav-list">
         <v-list-tile @click="goTo('contact')">
           <v-list-tile-action>
             <v-icon>phone</v-icon>
@@ -56,7 +66,6 @@
     </footer>
   </v-navigation-drawer>
 </template>
-
 <script>
 export default {
   name: 'Nav',
@@ -126,16 +135,6 @@ export default {
             { to: 'geneva', title: 'Section Genevoise', active: false },
             { to: 'conseil', title: 'Comité', active: false },
             { to: 'groupe', title: 'Groupes de travail', active: false }
-          ]
-        },
-        {
-          title: 'Ergothérapeute',
-          icon: 'place',
-          link: 'therapist',
-          items: [
-            { to: 'pediatrics', title: 'Pédiatrie', active: false },
-            { to: 'mental', title: 'Santé mentale', active: false },
-            { to: 'physical', title: 'Médecine physique', active: false }
           ]
         }
       ]

@@ -1,36 +1,40 @@
 <template>
-  <SubNav :selector="selector" class="therapist-main" :links="links" :title="title" sub-class="reduced">
-    <div class="therapist-content">
-      <h1 :id="links[0].to" class="headline">{{ links[0].title }}</h1>
-      <TherapistCard domain="Pédiatrie" office="A 2 mains" />
-      <h1 :id="links[1].to" class="headline">{{ links[1].title }}</h1>
-      <TherapistCard domain="Santé mentale" office="Arcade84" />
-      <h1 :id="links[2].to" class="headline">{{ links[2].title }}</h1>
-      <TherapistCard domain="Médecine physique" office="Ergohelp" />
-    </div>
-  </SubNav>
+  <div class="therapist-content">
+    <OfficeCard v-for="(office, i) in offices" :office="office" :key="i" />
+  </div>
 </template>
 
 <script>
-import SubNav from '../components/SubNav'
-import TherapistCard from '../components/TherapistCard'
-import Scrolling from '../mixins/scrolling'
+import OfficeCard from '../components/OfficeCard'
 export default {
   name: 'Therapist',
   components: {
-    SubNav,
-    TherapistCard
+    OfficeCard
   },
-  mixins: [Scrolling('therapist')],
   data() {
     return {
       title: 'Les indépendants',
-      links: [
-        { to: 'pediatrics', title: 'Pédiatrie' },
-        { to: 'mental', title: 'Santé mentale' },
-        { to: 'physical', title: 'Médecine physique' }
-      ]
+      offices: []
     }
+  },
+  mounted() {
+    this.$http
+      .get(`${process.env.VUE_APP_API_URL}/offices`)
+      .then(response => {
+        this.offices = response.data.data
+      })
+      .catch(error => {
+        let data = null
+        if (error.response !== undefined) {
+          data = error.response.data
+        }
+        this.$store.commit('addNotification', {
+          active: true,
+          type: 'error',
+          logs: data,
+          userMessage: "Impossible de télécharger la liste des cabinets d'ergothérapie"
+        })
+      })
   }
 }
 </script>

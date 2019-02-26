@@ -20,10 +20,10 @@ export default new Vuex.Store({
           easing: 'easeInOutCubic'
         }
         if (width < 496) {
-          options.offset = -64
+          options.offset = 64
           return options
         }
-        options.offset = -110
+        options.offset = 110
         return options
       }
     },
