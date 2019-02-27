@@ -1,20 +1,43 @@
 <template>
   <div class="therapist-content">
-    <OfficeCard v-for="(office, i) in offices" :office="office" :key="i" />
+    <OfficesFilter @sort-office="sort" @filter-categories="filter" />
+    <v-divider></v-divider>
+    <OfficeCard v-for="(office, i) in offices" :office="office" :filtered-category="categories" :key="i" />
   </div>
 </template>
 
 <script>
 import OfficeCard from '../components/OfficeCard'
+import OfficesFilter from '../components/OfficesFilter'
 export default {
   name: 'Therapist',
   components: {
-    OfficeCard
+    OfficeCard,
+    OfficesFilter
   },
   data() {
     return {
       title: 'Les indépendants',
-      offices: []
+      offices: [],
+      order: true,
+      categories: []
+    }
+  },
+  methods: {
+    sort(key) {
+      this.offices.sort((a, b) => {
+        this.order = !this.order
+        if (a[key] < b[key]) {
+          return this.order ? -1 : 1
+        } else if (a[key] > b[key]) {
+          return this.order ? 1 : -1
+        } else {
+          return 0
+        }
+      })
+    },
+    filter(categories) {
+      this.categories = categories
     }
   },
   mounted() {
@@ -45,6 +68,6 @@ export default {
 }
 
 .therapist-content {
-  padding: 24px;
+  padding: 0 24px 24px 24px;
 }
 </style>

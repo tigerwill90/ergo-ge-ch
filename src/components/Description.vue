@@ -64,7 +64,7 @@ export default {
                 L'ergothérapie est une profession centrée sur le développement et le maintien de la capacité d'agir des personnes.
                 Elle contribue à l'amélioration de la santé et de la qualité de la vie.
                 Elle facilite la participation des individus à la société en leur permettant de prendre part aux activités qui s'y déroulent.`,
-          img: 'http://localhost/images/adn'
+          img: `${process.env.VUE_APP_API_URL}/images/adn`
         },
         {
           title: 'Une autre réponse\xa0?',
@@ -77,7 +77,7 @@ export default {
                 lors de la réalisation d'activités significatives pour elles dans les domaines des soins personnels, de la productivité et des loisirs. L'ergothérapie utilise des activités spécifiques,
                 l'adaptation à l'environnement et le conseil de manière ciblée et orientée vers les ressources. Ceci permet au client d'améliorer sa capacité d'action dans le quotidien, sa participation
                 sociale, sa sensation de qualité de vie et sa satisfaction.`,
-          img: 'http://localhost/images/treatment'
+          img: `${process.env.VUE_APP_API_URL}/images/treatment`
         },
         {
           title: "A qui s'adresse l'ergothérapie\xa0?",
@@ -85,7 +85,7 @@ export default {
           description: `L'ergothérapie s'adresse aux personnes de tout âge, aux prises avec des difficultés à agir de manière autonome dans les activités de la vie quotidienne,
           que ce soit pour leurs soins personnels, les activités sociales, professionnelles, de formation ou de loisirs. Les interventions d'ergothérapie peuvent consister en des traitements lors
           de phases aigues, mais également être des traitements de longue durée. Les interventions en lien avec des actions de prévention et de promotion de la santé sont aussi possibles.`,
-          img: 'http://localhost/images/flowers'
+          img: `${process.env.VUE_APP_API_URL}/images/flowers`
         }
       ]
     }

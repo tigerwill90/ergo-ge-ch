@@ -8,7 +8,10 @@
       height: height,
       'min-height': minHeight,
       width: width,
-      'max-width': maxWidth
+      'max-width': maxWidth,
+      transform: `skewY(${transformSkewY})`,
+      'z-index': zIndex,
+      position: position
     }"
     :class="{
       'flex-container-direction': column
@@ -26,6 +29,12 @@ export default {
     column: {
       type: Boolean,
       default: false
+    },
+    transformSkewY: {
+      type: String
+    },
+    zIndex: {
+      type: String
     },
     backgroundColor: {
       type: String,
@@ -52,6 +61,10 @@ export default {
       validator: function(value) {
         return ['flex-start', 'flex-end', 'center', 'stretch', 'baseline'].indexOf(value) !== -1
       }
+    },
+    position: {
+      type: String,
+      validator: value => ['relative', 'absolute', 'fixed'].indexOf(value) !== -1
     },
     justifyContent: {
       type: String,

@@ -145,7 +145,7 @@ export default {
 }
 
 .sub-nav-header {
-  background-color: #f5f5f5;
+  background-color: white;
   min-width: 100%;
   position: relative;
   color: white;
@@ -194,7 +194,7 @@ export default {
 }
 
 .main-content {
-  background-color: #f5f5f5;
+  background-color: white;
 }
 
 .center-text {

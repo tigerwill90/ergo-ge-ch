@@ -1,8 +1,6 @@
-html,
-body {
+html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Roboto Condensed', sans-serif;
 }
 
 ul {
@@ -37,10 +35,57 @@ p {
   font-size: 1.5rem;
 }
 
+.app-section-title.title-4 {
+  font-size: 1.2rem;
+}
+
 .app-section-title.center {
   text-align: center;
 }
 
 .app-section-title.cWhite {
   color: white;
+}
+
+.app-section-title.font-600 {
+  font-weight: 600;
+}
+
+.app-section-title.no-margin {
+  margin: 0;
+}
+
+.app-section-subtitle {
+  font-weight: 400;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.app-section-subtitle.title-1 {
+  font-size: 1.2rem;
+}
+
+.app-section-subtitle.title-2 {
+  font-size: 1rem;
+}
+
+.app-section-subtitle.font-600 {
+  font-weight: 600;
+}
+
+.app-section-subtitle.cWhite {
+  color: white;
+}
+
+.app-section-subtitle.cBlack {
+  color: black;
+}
+
+.app-section-subtitle.no-margin {
+  margin: 0;
+}
+
+.app-section-subtitle.flex-1 {
+  flex: 1;
 }

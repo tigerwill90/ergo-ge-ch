@@ -32,7 +32,7 @@
         </div>
         <div class="council-card-icon">
           <v-avatar :tile="false" size="70px" color="grey lighten-4" style="margin-right: 5px">
-            <img src="https://picsum.photos/510/300?random" alt="avatar" />
+            <img :src="council.imageUrl" alt="avatar" />
           </v-avatar>
         </div>
       </v-card>
@@ -46,12 +46,12 @@ export default {
   data() {
     return {
       councils: [
-        { name: 'Alison Borda' },
-        { name: 'Myriam Fonjallaz' },
-        { name: 'Séverine Fries' },
-        { name: 'Sandra Pereira' }
+        { name: 'Alison Borda', imageUrl: `${process.env.VUE_APP_API_URL}/images/ironman` },
+        { name: 'Myriam Fonjallaz', imageUrl: `${process.env.VUE_APP_API_URL}/images/hulk` },
+        { name: 'Séverine Fries', imageUrl: `${process.env.VUE_APP_API_URL}/images/thor` },
+        { name: 'Sandra Pereira', imageUrl: `${process.env.VUE_APP_API_URL}/images/blackwidow` }
       ],
-      img: 'https://picsum.photos/510/300?random'
+      img: `${process.env.VUE_APP_API_URL}/images/avengers`
     }
   }
 }

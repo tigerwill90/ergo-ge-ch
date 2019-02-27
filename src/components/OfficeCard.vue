@@ -1,7 +1,7 @@
 <template>
-  <v-card class="office-card" elevation="5">
+  <v-card class="office-card" elevation="5" v-if="showCard">
     <div class="office-card-title">
-      <span>{{ categories }}</span>
+      <span class="subheading">{{ flatCategories }}</span>
     </div>
     <div class="office-content">
       <div class="office-title">
@@ -10,15 +10,16 @@
       </div>
       <div class="office-bloc">
         <v-icon class="icon">location_city</v-icon>
-        <div class="list">
+        <div class="list subheading">
           <span>{{ office.address }}</span>
           <span>{{ office.npa }} {{ office.city }}</span>
+          <span v-if="office.district">Quartier : {{ office.district }}</span>
           <span v-if="office.cp">c.p. : {{ office.cp }}</span>
         </div>
       </div>
       <div class="office-bloc">
         <v-icon class="icon">contact_phone</v-icon>
-        <div class="list" v-if="office.phone || office.fax">
+        <div class="list subheading" v-if="office.phone || office.fax">
           <span v-if="office.phone">tél: {{ office.phone }}</span>
           <span v-if="office.fax">fax: {{ office.fax }}</span>
         </div>
@@ -26,7 +27,7 @@
     </div>
     <v-expansion-panel class="expansion-panel">
       <v-expansion-panel-content lazy>
-        <div slot="header">Plus de détails</div>
+        <div slot="header" class="expansion-panel-title">Plus de détails</div>
         <TherapistTab :id="office.id" />
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -42,20 +43,32 @@ export default {
   },
   data() {
     return {
-      categories: ''
+      categories: [],
+      flatCategories: ''
     }
   },
   props: {
     office: {
       type: Object,
       required: true
+    },
+    filteredCategory: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    showCard() {
+      if (this.filteredCategory.length <= 0) return true
+      return this.categories.some(cat => this.filteredCategory.find(el => cat.name === el))
     }
   },
   mounted() {
     this.$http
       .get(`${process.env.VUE_APP_API_URL}/offices/${this.office.id}/categories`)
       .then(response => {
-        this.categories = response.data.data.map(cat => cat.name).join(', ')
+        this.categories = response.data.data
+        this.flatCategories = this.categories.map(cat => cat.name).join(', ')
       })
       .catch(error => {
         let data = null
@@ -132,5 +145,11 @@ export default {
   border: none;
   box-shadow: none;
   padding: 0 5px 0 5px;
+}
+
+.expansion-panel-title {
+  font-weight: 600;
+  font-size: 1.2em;
+  color: #424242;
 }
 </style>
