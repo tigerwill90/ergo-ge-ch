@@ -1,12 +1,16 @@
 <template>
-  <v-card class="office-card" elevation="5" v-if="showCard">
+  <v-card
+    class="office-card"
+    elevation="5"
+    v-if="showCard"
+  >
     <div class="office-card-title">
       <span class="subheading">{{ flatCategories }}</span>
     </div>
     <div class="office-content">
       <div class="office-title">
         <h2 class="title">{{ office.name }}</h2>
-        <h3 class="subheading">{{ office.email }}</h3>
+        <h3 class="subheading">{{ office.email }} show: {{ showCard }}</h3>
       </div>
       <div class="office-bloc">
         <v-icon class="icon">location_city</v-icon>
@@ -19,7 +23,10 @@
       </div>
       <div class="office-bloc">
         <v-icon class="icon">contact_phone</v-icon>
-        <div class="list subheading" v-if="office.phone || office.fax">
+        <div
+          class="list subheading"
+          v-if="office.phone || office.fax"
+        >
           <span v-if="office.phone">tél: {{ office.phone }}</span>
           <span v-if="office.fax">fax: {{ office.fax }}</span>
         </div>
@@ -27,7 +34,10 @@
     </div>
     <v-expansion-panel class="expansion-panel">
       <v-expansion-panel-content lazy>
-        <div slot="header" class="expansion-panel-title">Plus de détails</div>
+        <div
+          slot="header"
+          class="expansion-panel-title"
+        >Plus de détails</div>
         <TherapistTab :id="office.id" />
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -58,9 +68,11 @@ export default {
     }
   },
   computed: {
+    // TODO, correct filter bug when reverse sorting
     showCard() {
       if (this.filteredCategory.length <= 0) return true
-      return this.categories.some(cat => this.filteredCategory.find(el => cat.name === el))
+      const res = this.categories.some(cat => this.filteredCategory.find(el => cat.name === el))
+      return res
     }
   },
   mounted() {

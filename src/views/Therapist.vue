@@ -19,22 +19,26 @@ export default {
     return {
       title: 'Les indépendants',
       offices: [],
-      order: true,
+      currentOrderKey: 'name',
       categories: []
     }
   },
   methods: {
     sort(key) {
-      this.offices.sort((a, b) => {
-        this.order = !this.order
-        if (a[key] < b[key]) {
-          return this.order ? -1 : 1
-        } else if (a[key] > b[key]) {
-          return this.order ? 1 : -1
-        } else {
-          return 0
-        }
-      })
+      if (this.currentOrderKey === key) {
+        this.offices.reverse()
+      } else {
+        this.offices.sort((a, b) => {
+          if (a[key] < b[key]) {
+            return -1
+          } else if (a[key] > b[key]) {
+            return 1
+          } else {
+            return 0
+          }
+        })
+      }
+      this.currentOrderKey = key
     },
     filter(categories) {
       this.categories = categories

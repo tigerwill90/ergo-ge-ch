@@ -114,31 +114,38 @@ export default {
             if (this.offsetTop > extendedScrollTrigger) {
               this.linksClass['absolute-links'] = false
               this.linksClass['fixed-links'] = true
+              this.$store.commit('flatToolbar', true)
             } else {
               this.linksClass['absolute-links'] = true
               this.linksClass['fixed-links'] = false
+              this.$store.commit('flatToolbar', false)
             }
           } else {
             if (this.offsetTop > minExtendedScrollTrigger) {
               this.linksClass['absolute-links'] = false
               this.linksClass['fixed-links'] = true
+              this.$store.commit('flatToolbar', true)
             } else {
               this.linksClass['absolute-links'] = true
               this.linksClass['fixed-links'] = false
+              this.$store.commit('flatToolbar', false)
             }
           }
         } else {
           if (this.offsetTop > minimizedScrollTrigger) {
             this.linksClass['absolute-links'] = false
             this.linksClass['fixed-links'] = true
+            this.$store.commit('flatToolbar', true)
           } else {
             this.linksClass['absolute-links'] = true
             this.linksClass['fixed-links'] = false
+            this.$store.commit('flatToolbar', false)
           }
         }
       } else {
         this.linksClass['absolute-links'] = true
         this.linksClass['fixed-links'] = false
+        this.$store.commit('flatToolbar', false)
       }
     },
     goTo(link, i) {

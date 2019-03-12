@@ -1,40 +1,94 @@
 <template>
   <FlexContainer>
-    <v-timeline v-if="!$vuetify.breakpoint.xs" :dense="$vuetify.breakpoint.smAndDown">
-      <v-timeline-item v-for="(item, i) in items" :key="i" :color="item.color" large class="align-timeline">
+    <v-timeline
+      v-if="!$vuetify.breakpoint.xs"
+      :dense="$vuetify.breakpoint.smAndDown"
+    >
+      <v-timeline-item
+        v-for="(item, i) in items"
+        :key="i"
+        :color="item.color"
+        large
+        class="align-timeline"
+      >
         <span slot="opposite">
-          <v-img :src="item.img" aspect-ratio="3" content></v-img>
+          <v-img
+            :src="item.img"
+            aspect-ratio="3"
+            content
+          ></v-img>
         </span>
         <v-card class="elevation-2">
           <v-card-title class="title">{{ item.title }}</v-card-title>
-          <v-card-text class="subheading">{{ item.description }}</v-card-text>
-          <div class="desc-link-content subheading" v-for="(download, i) in item.downloads" :key="i">
-            <a :href="download.url" target="_blank">{{ download.name }}</a>
-            <v-btn small icon :href="download.url + '?disposition=download'">
+          <v-card-text :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">{{ item.description }}</v-card-text>
+          <div
+            class="desc-link-content"
+            :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+            v-for="(download, i) in item.downloads"
+            :key="i"
+          >
+            <a
+              :href="download.url"
+              target="_blank"
+            >{{ download.name }}</a>
+            <v-btn
+              small
+              icon
+              :href="download.url + '?disposition=download'"
+            >
               <v-icon color="green">cloud_download</v-icon>
             </v-btn>
           </div>
-          <v-card-text v-if="item.ref" class="card-sub-ref subheading">{{ item.ref }}</v-card-text>
+          <v-card-text
+            v-if="item.ref"
+            class="card-sub-ref"
+            :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+          >{{ item.ref }}</v-card-text>
         </v-card>
       </v-timeline-item>
     </v-timeline>
-    <div v-else class="section-container">
-      <div class="section" v-for="(item, i) in items" :key="i">
+    <div
+      v-else
+      class="section-container"
+    >
+      <div
+        class="section"
+        v-for="(item, i) in items"
+        :key="i"
+      >
         <div class="section-title">
           <span class="title text-xs-center">{{ item.title }}</span>
         </div>
-        <div :class="{ 'section-content': !item.download }" class="subheading">
+        <div
+          :class="{ 'section-content': !item.download }"
+          class="subheading"
+        >
           {{ item.description }}
         </div>
         <div class="desc_link_content_mobile">
-          <div v-for="(download, i) in item.downloads" :key="i">
-            <a :href="download.url" target="_blank">{{ download.name }}</a>
-            <v-btn small icon :href="download.url + '?disposition=download'">
+          <div
+            v-for="(download, i) in item.downloads"
+            :key="i"
+          >
+            <a
+              :href="download.url"
+              target="_blank"
+            >{{ download.name }}</a>
+            <v-btn
+              small
+              icon
+              :href="download.url + '?disposition=download'"
+            >
               <v-icon color="green">cloud_download</v-icon>
             </v-btn>
           </div>
         </div>
-        <v-img :src="item.img" aspect-ratio="3" content :class="{ 'section-img': i < items.length - 1 }"></v-img>
+        <v-img
+          :src="item.img"
+          aspect-ratio="3"
+          content
+          :class="{ 'section-img': i < items.length - 1 }"
+        ></v-img>
       </div>
     </div>
   </FlexContainer>

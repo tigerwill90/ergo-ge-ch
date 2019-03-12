@@ -9,10 +9,16 @@
     padding-right="50px"
   >
     <div class="council-desc">
-      <div class="app-section-title title-1 cWhite">
+      <div
+        class="app-section-title cWhite"
+        :style="{'font-size': (2 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+      >
         Les membres du comité
       </div>
-      <p class="subheading cWhite">
+      <p
+        class="cWhite"
+        :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+      >
         Le comité de la section est élu par l’Assemblée Générale. Tous les membres de la section peuvent se présenter à
         cette élection. Idéalement, le comité de la section est composé d’au
         <strong>moins 5 membres</strong>, qui se répartissent les secteurs de l’ergothérapie et le suivi des dossiers
@@ -22,17 +28,34 @@
         également l’interlocuteur des instances cantonales pour les questions qui concernent l’ergothérapie.
       </p>
       <div class="council-desc-img">
-        <v-img :src="img" aspect-ratio="3" content> </v-img>
+        <v-img
+          :src="img"
+          aspect-ratio="3"
+          content
+        > </v-img>
       </div>
     </div>
     <div class="council-card">
-      <v-card v-for="(council, i) in councils" :key="i" class="card" :class="{ 'no-margin': i < councils.length - 1 }">
+      <v-card
+        v-for="(council, i) in councils"
+        :key="i"
+        class="card"
+        :class="{ 'no-margin': i < councils.length - 1 }"
+      >
         <div class="council-card-title">
-          <div class="subheading">{{ council.name }}</div>
+          <div :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">{{ council.name }}</div>
         </div>
         <div class="council-card-icon">
-          <v-avatar :tile="false" size="70px" color="grey lighten-4" style="margin-right: 5px">
-            <img :src="council.imageUrl" alt="avatar" />
+          <v-avatar
+            :tile="false"
+            size="70px"
+            color="grey lighten-4"
+            style="margin-right: 5px"
+          >
+            <img
+              :src="council.imageUrl"
+              alt="avatar"
+            />
           </v-avatar>
         </div>
       </v-card>

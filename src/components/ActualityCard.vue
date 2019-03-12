@@ -1,14 +1,26 @@
 <template>
   <v-card class="actuality-card">
-    <v-img :src="imageUrl" max-height="200" />
+    <v-img
+      :src="imageUrl"
+      max-height="200"
+    />
     <div class="actuality-content">
-      <span class="title-box app-section-subtitle title-1 font-600">
+      <span
+        class="title-box app-section-subtitle font-600"
+        :style="{'font-size': (1 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+      >
         {{ title }}
       </span>
-      <span class="subtitle-box app-section-subtitle title-2">
+      <span
+        class="subtitle-box app-section-subtitle"
+        :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+      >
         {{ subtitle }}
       </span>
-      <div class="description-box">
+      <div
+        class="description-box"
+        :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+      >
         {{ description }}
       </div>
       <v-card-actions>

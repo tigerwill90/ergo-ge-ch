@@ -11,6 +11,8 @@ export default new Vuex.Store({
       y: 0
     },
     drawer: false,
+    fontSizeMultiplier: 40,
+    flatToolbar: false,
     selector: {
       hash: null,
       routeName: null,
@@ -28,6 +30,7 @@ export default new Vuex.Store({
         return options
       }
     },
+    // TODO delete notification stuff
     notifications: {
       active: () => {
         const alert = localStorage.getItem(process.env.VUE_APP_LOCAL_STORAGE_ALERT)
@@ -64,6 +67,12 @@ export default new Vuex.Store({
     setRouteName: (state, routeName) => {
       state.selector.routeName = routeName
     },
+    fontSizeMultiplier: (state, value) => {
+      state.fontSizeMultiplier = value
+    },
+    flatToolbar: (state, value) => {
+      state.flatToolbar = value
+    },
     enableNotifications: state => {
       state.notifications.active = true
       localStorage.setItem(process.env.VUE_APP_LOCAL_STORAGE_ALERT, 'ACTIVE')
@@ -98,6 +107,8 @@ export default new Vuex.Store({
     windowSize: state => state.windowSize,
     drawer: state => state.drawer,
     selector: state => state.selector,
-    notifications: state => state.notifications
+    notifications: state => state.notifications,
+    fontSizeMultiplier: state => state.fontSizeMultiplier,
+    flatToolbar: state => state.flatToolbar
   }
 })

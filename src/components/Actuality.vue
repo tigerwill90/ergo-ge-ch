@@ -217,7 +217,6 @@ export default {
 .item {
   display: flex;
   align-items: center;
-  height: 500px;
   justify-content: center;
 }
 

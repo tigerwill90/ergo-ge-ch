@@ -4,6 +4,8 @@
     class="teal lighten-2 toolbar"
     fixed
     height="64"
+    id="toolbar"
+    :flat="$store.getters.flatToolbar"
   >
     <template v-if="showMenu">
       <v-toolbar-side-icon @click="handleMenuClick"></v-toolbar-side-icon>
@@ -59,6 +61,49 @@
     >
       <v-icon>search</v-icon>
     </v-btn>
+    <v-menu
+      bottom
+      left
+      offset-y
+      :close-on-content-click="false"
+      attach="#toolbar"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          icon
+          v-on="on"
+        >
+          <v-icon>accessibility_new</v-icon>
+        </v-btn>
+      </template>
+      <v-card class="accessiblity-card">
+        <div class="accessiblity-title">
+          <v-icon class="accessiblity-icon">accessibility</v-icon>
+          <span class="title">Paramètres d'accessibilité</span>
+        </div>
+        <v-divider></v-divider>
+        <div class="accessiblity-content">
+          <div class="accessiblity-box">
+            <v-slider
+              v-model="sliderValue"
+              thumb-color="red"
+              thumb-label="always"
+              step="10"
+              :min="10"
+              ticks="always"
+              tick-size="2"
+              :thumb-size="24"
+              class="format-size-slider"
+              prepend-icon="format_size"
+              @change="onSliderChange"
+            ></v-slider>
+          </div>
+          <div class="accessiblity-box">
+            <v-switch value input-value="true" prepend-icon="brightness_medium"></v-switch>
+          </div>
+        </div>
+      </v-card>
+    </v-menu>
     <v-btn
       icon
       :to="{ name: 'contact' }"
@@ -76,9 +121,10 @@ export default {
       links: [
         { id: 1, name: 'home', text: 'Accueil' },
         { id: 2, name: 'section', text: 'Section Genevoise' },
-        { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes' }
+        { id: 3, name: 'therapist', text: 'Ou trouver les érgothérapeutes' }
       ],
-      searchBar: false
+      searchBar: false,
+      sliderValue: this.$store.getters.fontSizeMultiplier
     }
   },
   methods: {
@@ -92,6 +138,9 @@ export default {
       this.$router.push({ name: link.name })
       this.$store.commit('setHashSelector', null)
       this.$store.commit('setActiveLinkIndex', null)
+    },
+    onSliderChange(value) {
+      this.$store.commit('fontSizeMultiplier', value)
     }
   },
   computed: {
@@ -107,7 +156,7 @@ export default {
 
 <style scoped>
 .toolbar {
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .toolbar-item {
@@ -126,6 +175,41 @@ export default {
 
 .currentLink {
   color: #d81b60;
+}
+
+.accessiblity-card {
+  display: flex;
+  width: 300px;
+  height: 190px;
+  flex-direction: column;
+}
+
+.accessiblity-title {
+  display: flex;
+  height: 50px;
+  margin: 0 5px 0 5px;
+  align-items: center;
+}
+
+.accessiblity-icon {
+  margin-right: 5px;
+}
+
+.accessiblity-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 5px 0 5px;
+  justify-content: flex-end;
+}
+
+.accessiblity-box {
+  display: flex;
+  align-items: center;
+}
+
+.format-size-slider {
+  max-width: 250px;
 }
 
 @media screen and (max-width: 495px) {
