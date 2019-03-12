@@ -67,8 +67,8 @@ export default {
         themeSystem: 'standard',
         nowIndicator: true,
         titleFormat: 'D MMMM YYYY',
-        minTime: '06:00:00',
-        maxTime: '20:00:00',
+        minTime: '08:00:00',
+        maxTime: '22:00:00',
         defaultView: 'month',
         header: {
           left: 'prev, next, today',

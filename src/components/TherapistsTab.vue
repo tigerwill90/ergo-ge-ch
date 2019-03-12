@@ -6,19 +6,26 @@
       :key="i"
     >{{ therapist.title }} {{ therapist.lastname }}</v-tab>
     <v-tabs-items>
-      <v-tab-item v-for="(therapist, i) in therapists" :key="i">
+      <v-tab-item
+        v-for="(therapist, i) in therapists"
+        :key="i"
+      >
         <div class="therapist-content">
           <div class="therapist-title">
-            <span
-              class="app-section-subtitle title-1 font-600 no-margin flex-1"
-            >{{ therapist.title }} {{ therapist.firstname }} {{ therapist.lastname }}</span>
+            <span class="app-section-subtitle title-1 font-600 no-margin">{{ therapist.title }} {{ therapist.firstname }} {{ therapist.lastname }}</span>
             <div class="therapist-title-home">
               <template v-if="therapist.home">
-                <v-icon class="icon" color="green">check_box</v-icon>
+                <v-icon
+                  class="icon"
+                  color="green"
+                >check_box</v-icon>
                 <span>Consultation à domicile</span>
               </template>
               <template v-else>
-                <v-icon class="icon" color="red">indeterminate_check_box</v-icon>
+                <v-icon
+                  class="icon"
+                  color="red"
+                >indeterminate_check_box</v-icon>
                 <span>Pas de consultation à domicile</span>
               </template>
             </div>
@@ -32,8 +39,14 @@
                 <v-icon class="icon">person</v-icon>
                 <span class="app-section-subtitle title-1 font-600 cBlack no-margin">Contactez moi</span>
               </div>
-              <div class="therapist-mail" v-if="therapist.emails.length > 0">
-                <v-icon class="icon size-45" color="blue">email</v-icon>
+              <div
+                class="therapist-mail"
+                v-if="therapist.emails.length > 0"
+              >
+                <v-icon
+                  class="icon size-45"
+                  color="blue"
+                >email</v-icon>
                 <div class="list">
                   <span
                     v-for="(email, j) in therapist.emails"
@@ -42,8 +55,14 @@
                   >{{ email }}</span>
                 </div>
               </div>
-              <div class="therapist-phone" v-if="therapist.phones.length > 0">
-                <v-icon class="icon size-45" color="orange">contact_phone</v-icon>
+              <div
+                class="therapist-phone"
+                v-if="therapist.phones.length > 0"
+              >
+                <v-icon
+                  class="icon size-45"
+                  color="orange"
+                >contact_phone</v-icon>
                 <div class="list">
                   <span
                     v-for="(phone, j) in therapist.phones"
@@ -53,14 +72,20 @@
                 </div>
               </div>
             </div>
-            <div class="categories-section" v-if="therapist.categories.length > 0">
+            <div
+              class="categories-section"
+              v-if="therapist.categories.length > 0"
+            >
               <div class="contact-title">
                 <v-icon class="icon">category</v-icon>
                 <span class="app-section-subtitle title-1 font-600 cBlack no-margin">Spécialisation</span>
               </div>
               <div class="therapist-categories">
-                <div class="list">
-                  <ul v-for="(category, j) in therapist.categories" :key="j">
+                <div class="category-list">
+                  <ul
+                    v-for="(category, j) in therapist.categories"
+                    :key="j"
+                  >
                     <li>{{category.name}}</li>
                   </ul>
                 </div>
@@ -124,6 +149,7 @@ export default {
   display: flex;
   align-items: center;
   flex: 1;
+  margin-left: 15px;
 }
 
 .mid-section {
@@ -135,6 +161,7 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
+  margin-right: 15px;
 }
 
 .categories-section {
@@ -176,5 +203,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 </style>

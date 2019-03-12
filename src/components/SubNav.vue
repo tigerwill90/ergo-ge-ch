@@ -194,7 +194,7 @@ export default {
 }
 
 .main-content {
-  background-color: white;
+  background-image: url('../assets/img/background.svg')
 }
 
 .center-text {

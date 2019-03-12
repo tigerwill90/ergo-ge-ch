@@ -38,7 +38,7 @@ export default {
     },
     backgroundColor: {
       type: String,
-      default: 'white'
+      default: 'none'
     },
     paddingTop: {
       type: String,
