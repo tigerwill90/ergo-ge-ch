@@ -55,8 +55,14 @@ export default new Vuex.Store({
       state.selector.routeName = selector.routeName
       state.selector.activeLinkIndex = selector.activeLinkIndex
     },
+    setActiveLinkIndex: (state, activeLinkIndex) => {
+      state.selector.activeLinkIndex = activeLinkIndex
+    },
     setHashSelector: (state, hash) => {
       state.selector.hash = hash
+    },
+    setRouteName: (state, routeName) => {
+      state.selector.routeName = routeName
     },
     enableNotifications: state => {
       state.notifications.active = true

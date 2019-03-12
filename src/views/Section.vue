@@ -1,10 +1,10 @@
 <template>
   <SubNav :selector="selector" :title="title" :links="links" sub-class="reduced">
-    <Geneva :id="links[0].to" />
+    <Geneva :ref="links[0].to" :id="links[0].to" />
     <v-divider></v-divider>
-    <Council :id="links[1].to" />
+    <Council :ref="links[1].to" :id="links[1].to" />
     <v-divider></v-divider>
-    <Group :id="links[2].to" />
+    <Group :ref="links[2].to" :id="links[2].to" />
   </SubNav>
 </template>
 <script>
@@ -13,6 +13,7 @@ import Geneva from '../components/Geneva'
 import Council from '../components/Council'
 import Group from '../components/Group'
 import Scrolling from '../mixins/scrolling'
+import HandleScroll from '../mixins/handleScroll'
 export default {
   name: 'Section',
   components: {
@@ -21,7 +22,7 @@ export default {
     Council,
     Group
   },
-  mixins: [Scrolling('section')],
+  mixins: [Scrolling('section'), HandleScroll()],
   data() {
     return {
       title: 'La Section Genevoise',

@@ -6,12 +6,19 @@
     :subtitle="subtitle"
     sub-class="extended"
   >
-    <Description :id="links[0].to" />
+    <Description
+      :ref="links[0].to"
+      :id="links[0].to"
+    />
     <v-divider></v-divider>
-    <Actuality :id="links[1].to" />
+    <Actuality
+      :ref="links[1].to"
+      :id="links[1].to"
+    />
     <v-divider></v-divider>
     <Agenda
       v-if="links[2]"
+      :ref="links[2].to"
       :id="links[2].to"
     />
   </SubNav>
@@ -23,6 +30,7 @@ import Description from '../components/Description'
 import Agenda from '../components/Agenda'
 import Actuality from '../components/Actuality'
 import Scrolling from '../mixins/scrolling'
+import HandleScroll from '../mixins/handleScroll'
 export default {
   name: 'Home',
   components: {
@@ -31,7 +39,7 @@ export default {
     Agenda,
     Actuality
   },
-  mixins: [Scrolling('home')],
+  mixins: [Scrolling('home'), HandleScroll()],
   data() {
     return {
       title: 'Ergo-ge-independants.ch',

@@ -18,7 +18,7 @@
           <v-list-tile
             v-for="(subItem, i) in item.items"
             :key="i"
-            @click="goTo(item.link, subItem.to, i)"
+            @click="goTo(item.link, subItem.to)"
             :disabled="subItem.active"
           >
             <v-list-tile-content>
@@ -93,10 +93,10 @@ export default {
     }
   },
   methods: {
-    goTo(link, to, i) {
+    goTo(link, to) {
       this.$router.push({ name: link })
       const hash = to === undefined ? null : '#' + to
-      this.$store.commit('selector', { hash: hash, routeName: link, activeLinkIndex: i })
+      this.$store.commit('setHashSelector', hash)
     }
   },
   computed: {

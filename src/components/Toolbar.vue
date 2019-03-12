@@ -37,7 +37,7 @@
           exact
           ripple
           class="text-none subheading"
-          :class="{currentLink: link.active}"
+          :class="{currentLink: link.name === $store.getters.selector.routeName}"
         >{{ link.text }}</v-btn>
       </v-toolbar-items>
     </template>
@@ -74,9 +74,9 @@ export default {
   data() {
     return {
       links: [
-        { id: 1, name: 'home', text: 'Accueil', active: true },
-        { id: 2, name: 'section', text: 'Section Genevoise', active: false },
-        { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes', active: false }
+        { id: 1, name: 'home', text: 'Accueil' },
+        { id: 2, name: 'section', text: 'Section Genevoise' },
+        { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes' }
       ],
       searchBar: false
     }
@@ -90,12 +90,8 @@ export default {
     },
     goTo(link, to) {
       this.$router.push({ name: link.name })
-      this.$store.commit('selector', {
-        hash: to === undefined ? null : '#' + to,
-        routeName: link.name
-      })
-      this.links.forEach(link => { link.active = false })
-      link.active = true
+      this.$store.commit('setHashSelector', null)
+      this.$store.commit('setActiveLinkIndex', null)
     }
   },
   computed: {

@@ -30,6 +30,10 @@ export default {
   },
   mounted() {
     this.onResize()
+    this.$store.commit('setRouteName', this.$router.currentRoute.name)
+  },
+  beforeUpdate() {
+    this.$store.commit('setRouteName', this.$router.currentRoute.name)
   }
 }
 </script>
