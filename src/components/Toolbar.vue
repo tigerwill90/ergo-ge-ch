@@ -1,15 +1,44 @@
 <template>
-  <v-toolbar dark class="teal lighten-2 toolbar" fixed height="64">
+  <v-toolbar
+    dark
+    class="teal lighten-2 toolbar"
+    fixed
+    height="64"
+  >
     <template v-if="showMenu">
       <v-toolbar-side-icon @click="handleMenuClick"></v-toolbar-side-icon>
-      <v-toolbar-title v-if="!searchBar" class="toolbar-title">{{ header }}</v-toolbar-title>
+      <v-toolbar-title
+        v-if="!searchBar"
+        class="toolbar-title"
+      >{{ header }}</v-toolbar-title>
     </template>
     <template v-else>
-      <router-link :to="{ name: 'home' }" exact tag="div" class="toolbar-img-container">
-        <img src="../assets/img/ase.svg" alt="ase" class="toolbar-img" />
+      <router-link
+        :to="{ name: 'home' }"
+        exact
+        tag="div"
+        class="toolbar-img-container"
+      >
+        <img
+          src="../assets/img/ase.svg"
+          alt="ase"
+          class="toolbar-img"
+        />
       </router-link>
-      <v-toolbar-items v-if="!searchBar" class="toolbar-item">
-        <v-btn v-for="link in links" :key="link.id" @click="goTo(link.name)" flat exact ripple>{{ link.text }}</v-btn>
+      <v-toolbar-items
+        v-if="!searchBar"
+        class="toolbar-item"
+      >
+        <v-btn
+          v-for="link in links"
+          :key="link.id"
+          @click="goTo(link)"
+          flat
+          exact
+          ripple
+          class="text-none subheading"
+          :class="{currentLink: link.active}"
+        >{{ link.text }}</v-btn>
       </v-toolbar-items>
     </template>
     <v-spacer v-if="!searchBar"></v-spacer>
@@ -24,10 +53,16 @@
       style="margin-left: 20px"
     >
     </v-autocomplete>
-    <v-btn icon @click="showSearchBar">
+    <v-btn
+      icon
+      @click="showSearchBar"
+    >
       <v-icon>search</v-icon>
     </v-btn>
-    <v-btn icon :to="{ name: 'contact' }">
+    <v-btn
+      icon
+      :to="{ name: 'contact' }"
+    >
       <v-icon>perm_identity</v-icon>
     </v-btn>
   </v-toolbar>
@@ -39,9 +74,9 @@ export default {
   data() {
     return {
       links: [
-        { id: 1, name: 'home', text: 'Accueil' },
-        { id: 2, name: 'section', text: 'Section Genevoise' },
-        { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes' }
+        { id: 1, name: 'home', text: 'Accueil', active: true },
+        { id: 2, name: 'section', text: 'Section Genevoise', active: false },
+        { id: 3, name: 'therapist', text: 'Ou trouver les ergothérapeutes', active: false }
       ],
       searchBar: false
     }
@@ -54,11 +89,13 @@ export default {
       this.searchBar = !this.searchBar
     },
     goTo(link, to) {
-      this.$router.push({ name: link })
+      this.$router.push({ name: link.name })
       this.$store.commit('selector', {
         hash: to === undefined ? null : '#' + to,
-        routeName: link
+        routeName: link.name
       })
+      this.links.forEach(link => { link.active = false })
+      link.active = true
     }
   },
   computed: {
@@ -89,6 +126,10 @@ export default {
 
 .toolbar-img {
   max-height: 40px;
+}
+
+.currentLink {
+  color: #d81b60;
 }
 
 @media screen and (max-width: 495px) {

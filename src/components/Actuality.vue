@@ -11,7 +11,7 @@
         @click="previous()"
         v-show="previousArrow"
       >
-        <v-icon>navigate_before</v-icon>
+        <v-icon size="48">navigate_before</v-icon>
       </v-btn>
     </div>
     <div :class="cargouselLayout">
@@ -36,7 +36,7 @@
         @click="next()"
         v-show="nextArrow"
       >
-        <v-icon>navigate_next</v-icon>
+        <v-icon size="48">navigate_next</v-icon>
       </v-btn>
     </div>
   </FlexContainer>

@@ -14,6 +14,7 @@ export default new Vuex.Store({
     selector: {
       hash: null,
       routeName: null,
+      activeLinkIndex: null,
       options: width => {
         const options = {
           duration: 300,
@@ -52,6 +53,7 @@ export default new Vuex.Store({
     selector: (state, selector) => {
       state.selector.hash = selector.hash
       state.selector.routeName = selector.routeName
+      state.selector.activeLinkIndex = selector.activeLinkIndex
     },
     setHashSelector: (state, hash) => {
       state.selector.hash = hash

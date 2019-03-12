@@ -1,10 +1,19 @@
 <template>
-  <SubNav :selector="selector" :links="links" :title="title" :subtitle="subtitle" sub-class="extended">
+  <SubNav
+    :selector="selector"
+    :links="links"
+    :title="title"
+    :subtitle="subtitle"
+    sub-class="extended"
+  >
     <Description :id="links[0].to" />
     <v-divider></v-divider>
     <Actuality :id="links[1].to" />
     <v-divider></v-divider>
-    <Agenda v-if="links[2]" :id="links[2].to" />
+    <Agenda
+      v-if="links[2]"
+      :id="links[2].to"
+    />
   </SubNav>
 </template>
 
@@ -38,7 +47,10 @@ export default {
           { to: 'agenda', title: 'Agenda' }
         ]
       } else {
-        return [{ to: 'desc', title: "L'ergothérapie" }, { to: 'actu', title: 'Actualité' }]
+        return [
+          { to: 'desc', title: "L'ergothérapie" },
+          { to: 'actu', title: 'Actualité' }
+        ]
       }
     }
   }

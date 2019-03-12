@@ -1,6 +1,13 @@
 <template>
-  <div v-scroll="onScroll" class="sub-nav-main">
-    <div v-if="displayNav" class="teal lighten-2" :class="'sub-nav-header ' + subClass">
+  <div
+    v-scroll="onScroll"
+    class="sub-nav-main"
+  >
+    <div
+      v-if="displayNav"
+      class="teal lighten-2"
+      :class="'sub-nav-header ' + subClass"
+    >
       <div class="sub-nav-content">
         <!-- HEADER## -->
         <div v-show="extendedHeader">
@@ -21,13 +28,30 @@
         </div>
       </div>
       <!-- ##HEADER -->
-      <div class="sub-nav-links" :class="linksClass" v-if="showLinks">
-        <v-btn color="white" v-for="(link, i) in links" :key="i" flat exact @click="goTo('#' + link.to)">{{
+      <div
+        class="sub-nav-links"
+        :class="linksClass"
+        v-if="showLinks"
+      >
+        <v-btn
+          color="white"
+          v-for="(link, i) in links"
+          :key="i"
+          flat
+          exact
+          @click="goTo(link, i)"
+          class="text-none subheading"
+          :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}"
+        >{{
           link.title
-        }}</v-btn>
+          }}
+          </v-btn>
       </div>
     </div>
-    <div v-else class="sub-nav-header tiny teal lighten-2">
+    <div
+      v-else
+      class="sub-nav-header tiny teal lighten-2"
+    >
       <div class="sub-nav-content">
         <div class="sub-nav-title-only display-1">
           {{ title }}
@@ -75,7 +99,7 @@ export default {
     subClass: {
       type: String,
       required: true,
-      validator: function(value) {
+      validator: function (value) {
         return ['extended', 'reduced'].indexOf(value) !== -1
       }
     }
@@ -117,10 +141,11 @@ export default {
         this.linksClass['fixed-links'] = false
       }
     },
-    goTo(link) {
+    goTo(link, i) {
       this.$store.commit('selector', {
-        hash: link,
-        routeName: this.$router.currentRoute.name
+        hash: '#' + link.to,
+        routeName: this.$router.currentRoute.name,
+        activeLinkIndex: i
       })
     }
   },
@@ -194,7 +219,7 @@ export default {
 }
 
 .main-content {
-  background-image: url('../assets/img/background.svg')
+  background-image: url("../assets/img/background.svg");
 }
 
 .center-text {
@@ -214,9 +239,14 @@ export default {
   height: 48px;
   z-index: 1000;
   background-color: #4db6ac;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
   width: 100%;
   left: 0;
+}
+
+.currentLink {
+  color: #d81b60 !important;
 }
 
 @media screen and (max-width: 580px) {
