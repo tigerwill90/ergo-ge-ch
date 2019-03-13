@@ -1,3 +1,14 @@
+/*
+ * File: Toolbar.vue
+ * Project: Ergotherapeute
+ * **********************
+ * Author: Sylvain Muller
+ * Email: sylvain.muller90@gmail.com
+ * **********************
+ * License: MIT License
+ * Created Date: 13th February 2019
+ * Last Modified: 13th March 2019
+ */
 <template>
   <v-toolbar
     id="toolbar"
@@ -130,7 +141,7 @@ export default {
       links: [
         { id: 1, name: 'home', text: 'Accueil' },
         { id: 2, name: 'section', text: 'Section Genevoise' },
-        { id: 3, name: 'therapist', text: 'Ou trouver les érgothérapeutes' }
+        { id: 3, name: 'therapist', text: 'Où trouver les ergothérapeutes' }
       ],
       searchBar: false,
       sliderValue: this.$store.getters.fontSizeMultiplier

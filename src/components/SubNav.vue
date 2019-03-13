@@ -1,3 +1,14 @@
+/*
+ * File: SubNav.vue
+ * Project: Ergotherapeute
+ * **********************
+ * Author: Sylvain Muller
+ * Email: sylvain.muller90@gmail.com
+ * **********************
+ * License: MIT License
+ * Created Date: 27th February 2019
+ * Last Modified: 13th March 2019
+ */
 <template>
   <div
     v-scroll="onScroll"
@@ -12,9 +23,12 @@
         <!-- HEADER## -->
         <div v-show="extendedHeader">
           <div class="sub-nav-title">
-            <span class="display-2 center-text test">{{ title }}</span>
+            <span class="display-2 center-text">{{ title }}</span>
           </div>
-          <div class="sub-nav-subtitle">
+          <div
+            v-if="subtitle"
+            class="sub-nav-subtitle"
+          >
             <span class="headline center-text">{{ subtitle }}</span>
           </div>
           <div class="sub-nav-button">
@@ -88,7 +102,8 @@ export default {
       required: true
     },
     subtitle: {
-      type: String
+      type: String,
+      default: null
     },
     subClass: {
       type: String,

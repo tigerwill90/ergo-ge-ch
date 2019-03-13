@@ -31,10 +31,12 @@ export default {
       default: false
     },
     transformSkewY: {
-      type: String
+      type: String,
+      default: '0'
     },
     zIndex: {
-      type: String
+      type: String,
+      default: 'auto'
     },
     backgroundColor: {
       type: String,
@@ -58,34 +60,65 @@ export default {
     },
     alignItems: {
       type: String,
-      validator: function(value) {
-        return ['flex-start', 'flex-end', 'center', 'stretch', 'baseline'].indexOf(value) !== -1
+      default: 'normal',
+      validator: function (value) {
+        return [
+          'flex-start',
+          'flex-end',
+          'center',
+          'stretch',
+          'baseline',
+          'stretch',
+          'self-start',
+          'self-end',
+          'start',
+          'end',
+          'normal'
+        ].indexOf(value) !== -1
       }
     },
     position: {
       type: String,
-      validator: value => ['relative', 'absolute', 'fixed'].indexOf(value) !== -1
+      default: 'initial',
+      validator: value => ['relative', 'absolute', 'fixed', 'sticky', 'static', 'inherit', 'initial'].indexOf(value) !== -1
     },
     justifyContent: {
       type: String,
-      validator: function(value) {
+      default: 'normal',
+      validator: function (value) {
         return (
-          ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'].indexOf(value) !== -1
+          [
+            'flex-start',
+            'flex-end',
+            'center',
+            'space-between',
+            'space-around',
+            'space-evenly',
+            'left',
+            'start',
+            'end',
+            'right',
+            'normal',
+            'stretch'
+          ].indexOf(value) !== -1
         )
       }
     },
     minHeight: {
-      type: String
+      type: String,
+      default: 'auto'
     },
     height: {
-      type: String
+      type: String,
+      default: 'auto'
     },
     width: {
       type: String,
       default: '100%'
     },
     maxWidth: {
-      type: String
+      type: String,
+      default: 'auto'
     }
   }
 }

@@ -50,7 +50,7 @@ export default {
     links() {
       if (this.$store.getters.windowSize.x > 500) {
         return [
-          { to: 'desc', title: "L'érgothérapie" },
+          { to: 'desc', title: "L'ergothérapie" },
           { to: 'actu', title: 'Actualité' },
           { to: 'agenda', title: 'Agenda' }
         ]

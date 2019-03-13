@@ -1,3 +1,14 @@
+/*
+ * File: ActualityCard.vue
+ * Project: Ergotherapeute
+ * **********************
+ * Author: Sylvain Muller
+ * Email: sylvain.muller90@gmail.com
+ * **********************
+ * License: MIT License
+ * Created Date: 9th March 2019
+ * Last Modified: 13th March 2019
+ */
 <template>
   <v-card class="actuality-card">
     <v-img
@@ -12,6 +23,7 @@
         {{ title }}
       </span>
       <span
+        v-if="subtitle"
         class="subtitle-box app-section-subtitle"
         :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
       >
@@ -50,17 +62,19 @@ export default {
     },
     subtitle: {
       type: String,
-      required: true
+      default: null
     },
     imageUrl: {
-      type: String
+      type: String,
+      required: true
     },
     description: {
       type: String,
       required: true
     },
     link: {
-      type: String
+      type: String,
+      default: null
     }
   }
 }

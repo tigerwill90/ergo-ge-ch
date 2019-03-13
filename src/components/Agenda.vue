@@ -1,3 +1,14 @@
+/*
+ * File: Agenda.vue
+ * Project: Ergotherapeute
+ * **********************
+ * Author: Sylvain Muller
+ * Email: sylvain.muller90@gmail.com
+ * **********************
+ * License: MIT License
+ * Created Date: 27th February 2019
+ * Last Modified: 13th March 2019
+ */
 <template>
   <FlexContainer
     v-resize="onResize"
@@ -120,16 +131,11 @@ export default {
               .get(`${process.env.VUE_APP_API_URL}/events?start=${start.format()}&end=${end.format()}`)
               .then(response => {
                 self.loading = false
-                console.log(response.data.data)
                 callback(response.data.data)
               })
               .catch(error => {
-                let data = null
-                if (error.response !== undefined) {
-                  data = error.response.data
-                }
                 self.loading = false
-                throw new Error(data)
+                throw new Error(error.message)
               })
           }
         }

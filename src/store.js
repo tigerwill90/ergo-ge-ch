@@ -1,3 +1,14 @@
+/*
+ * File: store.js
+ * Project: Ergotherapeute
+ * **********************
+ * Author: Sylvain Muller
+ * Email: sylvain.muller90@gmail.com
+ * **********************
+ * License: MIT License
+ * Created Date: 26th February 2019
+ * Last Modified: 13th March 2019
+ */
 import Vue from 'vue'
 import Vuex from 'vuex'
 

@@ -26,8 +26,8 @@
             {{ item.description }}
           </v-card-text>
           <div
-            v-for="(download, i) in item.downloads"
-            :key="i"
+            v-for="(download, j) in item.downloads"
+            :key="j"
             class="desc-link-content"
             :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
           >
@@ -75,8 +75,8 @@
         </div>
         <div class="desc_link_content_mobile">
           <div
-            v-for="(download, i) in item.downloads"
-            :key="i"
+            v-for="(download, j) in item.downloads"
+            :key="j"
           >
             <a
               :href="download.url"
