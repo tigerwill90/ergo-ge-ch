@@ -20,9 +20,10 @@
         flat
         icon
         color="indigo"
+        large
         @click="previous()"
       >
-        <v-icon size="48">
+        <v-icon x-large>
           navigate_before
         </v-icon>
       </v-btn>
@@ -46,10 +47,11 @@
         v-show="nextArrow"
         flat
         icon
+        large
         color="indigo"
         @click="next()"
       >
-        <v-icon size="48">
+        <v-icon x-large>
           navigate_next
         </v-icon>
       </v-btn>

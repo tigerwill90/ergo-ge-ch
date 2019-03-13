@@ -68,15 +68,17 @@
           </v-btn>
         </div>
         <div class="event-title-box">
-          <v-icon class="event-icon">
-            event
-          </v-icon>
           <span class="title">{{ selectedEvent.title }}</span>
         </div>
         <v-divider />
         <div class="event-info-box">
-          <span class="subheading"><strong>Début : </strong> {{ moment(selectedEvent.start).format("dddd, Do MMMM YYYY, H:mm") }}</span>
-          <span class="subheading"><strong>Fin : </strong>{{ moment(selectedEvent.end).format("dddd, Do MMMM YYYY, H:mm") }}</span>
+          <v-icon class="event-icon">
+            access_time
+          </v-icon>
+          <div class="info-time-box">
+            <span class="subheading">{{ moment(selectedEvent.start).format("dddd, Do MMMM YYYY, H:mm") }}</span>
+            <span class="subheading">{{ moment(selectedEvent.end).format("dddd, Do MMMM YYYY, H:mm") }}</span>
+          </div>
         </div>
         <v-divider v-if="selectedEvent.location" />
         <div
@@ -99,6 +101,16 @@
           <p class="subheading">
             {{ selectedEvent.description }}
           </p>
+        </div>
+        <v-divider />
+        <div class="event-desc-organizer">
+          <v-icon class="event-icon">
+            event
+          </v-icon>
+          <span
+            v-if="selectedEvent.organizer"
+            class="subheading"
+          >{{ selectedEvent.organizer.name }}</span>
         </div>
       </v-card>
     </v-menu>
@@ -162,6 +174,7 @@ export default {
   },
   created() {
     self = this
+    window.addEventListener('click', this.closeEventOnClick)
   },
   mounted() {
     this.intervalId = setInterval(() => this.$refs.calendar.fireMethod('refetchEvents'), 300000)
@@ -169,7 +182,15 @@ export default {
   beforeDestroy() {
     clearInterval(this.intervalId)
   },
+  destroyed() {
+    window.removeEventListener('click', this.closeEventOnClick)
+  },
   methods: {
+    closeEventOnClick(event) {
+      if (this.x !== event.clientX || this.y !== event.clientY) {
+        this.closeEvent()
+      }
+    },
     eventSelected(event, jsEvent) {
       this.showEvent = false
       this.x = jsEvent.clientX
@@ -232,7 +253,7 @@ export default {
 .calendar-event-card {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 400px;
   padding: 5px 10px 5px 10px;
 }
 
@@ -244,11 +265,11 @@ export default {
 .event-title-box {
   display: flex;
   align-items: center;
-  margin: 10px 0 10px 0;
+  margin: 0 0 10px 0;
 }
 
 .event-icon {
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .event-btn {
@@ -257,9 +278,13 @@ export default {
 
 .event-info-box {
   display: flex;
+  align-items: center;
   margin: 10px 0 10px 0;
+}
+
+.info-time-box {
+  display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .event-info-location {
@@ -269,6 +294,12 @@ export default {
 }
 
 .event-desc-box {
+  display: flex;
+  margin: 10px 0 10px 0;
+  align-items: center;
+}
+
+.event-desc-organizer {
   display: flex;
   margin: 10px 0 10px 0;
   align-items: center;
