@@ -7,19 +7,19 @@
     sub-class="extended"
   >
     <Description
-      :ref="links[0].to"
       :id="links[0].to"
+      :ref="links[0].to"
     />
-    <v-divider></v-divider>
+    <v-divider />
     <Actuality
-      :ref="links[1].to"
       :id="links[1].to"
+      :ref="links[1].to"
     />
-    <v-divider></v-divider>
+    <v-divider />
     <Agenda
       v-if="links[2]"
-      :ref="links[2].to"
       :id="links[2].to"
+      :ref="links[2].to"
     />
   </SubNav>
 </template>

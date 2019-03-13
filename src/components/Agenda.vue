@@ -5,29 +5,31 @@
     column
     padding-top="50px"
   >
-    <h1 class="app-section-title title-1 center">Calendrier</h1>
+    <h1 class="app-section-title title-1 center">
+      Calendrier
+    </h1>
     <v-progress-circular
+      v-if="loading"
       :size="70"
       :width="5"
       color="teal"
       indeterminate
       class="calendar-progress"
-      v-if="loading"
-    ></v-progress-circular>
+    />
     <full-calendar
       ref="calendar"
       :event-sources="eventSources"
       :config="config"
-      @event-selected="eventSelected"
-      @view-render="onViewRender"
       :editable="false"
       :selectable="false"
+      @event-selected="eventSelected"
+      @view-render="onViewRender"
     />
     <v-menu
+      v-model="showEvent"
       offset-y
       absolute
       bottom
-      v-model="showEvent"
       :position-x="x"
       :position-y="y"
       :close-on-content-click="false"
@@ -36,37 +38,56 @@
     >
       <v-card class="calendar-event-card">
         <div class="event-toolbar">
-          <v-btn :href="selectedEvent.htmlLink" target="_blank" icon small class="event-btn">
+          <v-btn
+            :href="selectedEvent.htmlLink"
+            target="_blank"
+            icon
+            small
+            class="event-btn"
+          >
             <v-icon>open_in_new</v-icon>
           </v-btn>
-          <v-btn icon small @click="closeEvent" class="event-btn">
+          <v-btn
+            icon
+            small
+            class="event-btn"
+            @click="closeEvent"
+          >
             <v-icon>close</v-icon>
           </v-btn>
         </div>
         <div class="event-title-box">
-          <v-icon class="event-icon">event</v-icon>
+          <v-icon class="event-icon">
+            event
+          </v-icon>
           <span class="title">{{ selectedEvent.title }}</span>
         </div>
-        <v-divider></v-divider>
+        <v-divider />
         <div class="event-info-box">
           <span class="subheading"><strong>Début : </strong> {{ moment(selectedEvent.start).format("dddd, Do MMMM YYYY, H:mm") }}</span>
           <span class="subheading"><strong>Fin : </strong>{{ moment(selectedEvent.end).format("dddd, Do MMMM YYYY, H:mm") }}</span>
         </div>
-        <v-divider v-if="selectedEvent.location"></v-divider>
+        <v-divider v-if="selectedEvent.location" />
         <div
-          class="event-info-location"
           v-if="selectedEvent.location"
+          class="event-info-location"
         >
-          <v-icon class="event-icon">location_on</v-icon>
+          <v-icon class="event-icon">
+            location_on
+          </v-icon>
           <span class="subheading">{{ selectedEvent.location }}</span>
         </div>
-        <v-divider v-if="selectedEvent.description"></v-divider>
+        <v-divider v-if="selectedEvent.description" />
         <div
           v-if="selectedEvent.description"
           class="event-desc-box"
         >
-          <v-icon class="event-icon">description</v-icon>
-          <p class="subheading">{{ selectedEvent.description }}</p>
+          <v-icon class="event-icon">
+            description
+          </v-icon>
+          <p class="subheading">
+            {{ selectedEvent.description }}
+          </p>
         </div>
       </v-card>
     </v-menu>
@@ -107,13 +128,8 @@ export default {
                 if (error.response !== undefined) {
                   data = error.response.data
                 }
-                self.$store.commit('addNotification', {
-                  active: true,
-                  type: 'error',
-                  logs: data,
-                  userMessage: 'Impossible de télécharger les évènements du calendrier google'
-                })
                 self.loading = false
+                throw new Error(data)
               })
           }
         }
@@ -137,6 +153,15 @@ export default {
       },
       intervalId: null
     }
+  },
+  created() {
+    self = this
+  },
+  mounted() {
+    this.intervalId = setInterval(() => this.$refs.calendar.fireMethod('refetchEvents'), 300000)
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId)
   },
   methods: {
     eventSelected(event, jsEvent) {
@@ -178,15 +203,6 @@ export default {
     onViewRender() {
       this.closeEvent()
     }
-  },
-  created() {
-    self = this
-  },
-  mounted() {
-    this.intervalId = setInterval(() => this.$refs.calendar.fireMethod('refetchEvents'), 300000)
-  },
-  beforeDestroy() {
-    clearInterval(this.intervalId)
   }
 }
 </script>

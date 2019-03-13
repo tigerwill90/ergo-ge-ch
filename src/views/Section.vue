@@ -1,10 +1,24 @@
 <template>
-  <SubNav :selector="selector" :title="title" :links="links" sub-class="reduced">
-    <Geneva :ref="links[0].to" :id="links[0].to" />
-    <v-divider></v-divider>
-    <Council :ref="links[1].to" :id="links[1].to" />
-    <v-divider></v-divider>
-    <Group :ref="links[2].to" :id="links[2].to" />
+  <SubNav
+    :selector="selector"
+    :title="title"
+    :links="links"
+    sub-class="reduced"
+  >
+    <Geneva
+      :id="links[0].to"
+      :ref="links[0].to"
+    />
+    <v-divider />
+    <Council
+      :id="links[1].to"
+      :ref="links[1].to"
+    />
+    <v-divider />
+    <Group
+      :id="links[2].to"
+      :ref="links[2].to"
+    />
   </SubNav>
 </template>
 <script>

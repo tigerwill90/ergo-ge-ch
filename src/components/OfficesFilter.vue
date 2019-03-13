@@ -1,27 +1,42 @@
 <template>
   <div class="filter-container">
     <div class="categories-selector">
-      <v-select @change="selected"
-              :items="categories"
-              label="Spécialités"
-              item-text="name"
-              item-value="name"
-              flat
-              chips
-              multiple
-              deletable-chips
-              single-line
-              attach
-              small-chips
-      ></v-select>
+      <v-select
+        :items="categories"
+        label="Spécialités"
+        item-text="name"
+        item-value="name"
+        flat
+        chips
+        multiple
+        deletable-chips
+        @change="selected"
+        single-line
+        attach
+        small-chips
+      />
     </div>
-    <v-menu bottom origin="center center" transition="scale-transition" offset-y>
-      <v-btn flat icon color="blue" slot="activator">
+    <v-menu
+      bottom
+      origin="center center"
+      transition="scale-transition"
+      offset-y
+    >
+      <v-btn
+        slot="activator"
+        flat
+        icon
+        color="blue"
+      >
         <v-icon>sort_by_alpha</v-icon>
       </v-btn>
       <v-list>
-        <v-list-tile v-for="({ name, key }, i) in sortables" :key="i" @click="sort(key)">
-          <v-list-tile-title>{{name}}</v-list-tile-title>
+        <v-list-tile
+          v-for="({ name, key }, i) in sortables"
+          :key="i"
+          @click="sort(key)"
+        >
+          <v-list-tile-title>{{ name }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -42,14 +57,6 @@ export default {
       categories: []
     }
   },
-  methods: {
-    sort(officeKey) {
-      this.$emit('sort-office', officeKey)
-    },
-    selected(categories) {
-      this.$emit('filter-categories', categories)
-    }
-  },
   mounted() {
     this.$http.get(`${process.env.VUE_APP_API_URL}/categories`)
       .then(response => {
@@ -67,6 +74,14 @@ export default {
           userMessage: 'Impossible de télécharger la liste des spécialités'
         })
       })
+  },
+  methods: {
+    sort(officeKey) {
+      this.$emit('sort-office', officeKey)
+    },
+    selected(categories) {
+      this.$emit('filter-categories', categories)
+    }
   }
 }
 </script>

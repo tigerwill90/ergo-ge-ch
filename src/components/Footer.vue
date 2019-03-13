@@ -1,11 +1,22 @@
 <template>
-  <v-footer dark height="auto">
-    <v-card class="flex" flat tile>
+  <v-footer
+    dark
+    height="auto"
+  >
+    <v-card
+      class="flex"
+      flat
+      tile
+    >
       <v-card-title class="teal lighten-2">
         <div class="footer">
           <div class="footer-version">
             <span class="text-xs-center">Version 0.0.2</span>
-            <a class="text-xs-center footer-link" href="https://www.sylvainmuller.ch" target="_blank">
+            <a
+              class="text-xs-center footer-link"
+              href="https://www.sylvainmuller.ch"
+              target="_blank"
+            >
               <strong>www.sylvainmuller.ch</strong>&nbsp;
               <v-icon small>open_in_new</v-icon>
             </a>

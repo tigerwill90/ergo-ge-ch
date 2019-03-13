@@ -1,18 +1,20 @@
 <template>
   <v-toolbar
+    id="toolbar"
     dark
     class="teal lighten-2 toolbar"
     fixed
     height="64"
-    id="toolbar"
     :flat="$store.getters.flatToolbar"
   >
     <template v-if="showMenu">
-      <v-toolbar-side-icon @click="handleMenuClick"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="handleMenuClick" />
       <v-toolbar-title
         v-if="!searchBar"
         class="toolbar-title"
-      >{{ header }}</v-toolbar-title>
+      >
+        {{ header }}
+      </v-toolbar-title>
     </template>
     <template v-else>
       <router-link
@@ -25,7 +27,7 @@
           src="../assets/img/ase.svg"
           alt="ase"
           class="toolbar-img"
-        />
+        >
       </router-link>
       <v-toolbar-items
         v-if="!searchBar"
@@ -34,16 +36,18 @@
         <v-btn
           v-for="link in links"
           :key="link.id"
-          @click="goTo(link)"
           flat
           exact
           ripple
           class="text-none subheading"
           :class="{currentLink: link.name === $store.getters.selector.routeName}"
-        >{{ link.text }}</v-btn>
+          @click="goTo(link)"
+        >
+          {{ link.text }}
+        </v-btn>
       </v-toolbar-items>
     </template>
-    <v-spacer v-if="!searchBar"></v-spacer>
+    <v-spacer v-if="!searchBar" />
     <v-autocomplete
       v-if="searchBar"
       autofocus
@@ -53,8 +57,7 @@
       :loading="false"
       hide-details
       style="margin-left: 20px"
-    >
-    </v-autocomplete>
+    />
     <v-btn
       icon
       @click="showSearchBar"
@@ -78,10 +81,12 @@
       </template>
       <v-card class="accessiblity-card">
         <div class="accessiblity-title">
-          <v-icon class="accessiblity-icon">accessibility</v-icon>
+          <v-icon class="accessiblity-icon">
+            accessibility
+          </v-icon>
           <span class="title">Paramètres d'accessibilité</span>
         </div>
-        <v-divider></v-divider>
+        <v-divider />
         <div class="accessiblity-content">
           <div class="accessiblity-box">
             <v-slider
@@ -96,10 +101,14 @@
               class="format-size-slider"
               prepend-icon="format_size"
               @change="onSliderChange"
-            ></v-slider>
+            />
           </div>
           <div class="accessiblity-box">
-            <v-switch value input-value="true" prepend-icon="brightness_medium"></v-switch>
+            <v-switch
+              value
+              input-value="true"
+              prepend-icon="brightness_medium"
+            />
           </div>
         </div>
       </v-card>
@@ -127,6 +136,14 @@ export default {
       sliderValue: this.$store.getters.fontSizeMultiplier
     }
   },
+  computed: {
+    showMenu() {
+      return this.$store.getters.windowSize.x < 830
+    },
+    header() {
+      return this.$route.meta.header
+    }
+  },
   methods: {
     handleMenuClick() {
       this.$store.commit('toggleDrawer')
@@ -141,14 +158,6 @@ export default {
     },
     onSliderChange(value) {
       this.$store.commit('fontSizeMultiplier', value)
-    }
-  },
-  computed: {
-    showMenu() {
-      return this.$store.getters.windowSize.x < 830
-    },
-    header() {
-      return this.$route.meta.header
     }
   }
 }

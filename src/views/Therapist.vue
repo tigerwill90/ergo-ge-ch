@@ -1,8 +1,16 @@
 <template>
   <div class="therapist-content">
-    <OfficesFilter @sort-office="sort" @filter-categories="filter" />
-    <v-divider></v-divider>
-    <OfficeCard v-for="(office, i) in offices" :office="office" :filtered-category="categories" :key="i" />
+    <OfficesFilter
+      @sort-office="sort"
+      @filter-categories="filter"
+    />
+    <v-divider />
+    <OfficeCard
+      v-for="(office, i) in offices"
+      :key="i"
+      :office="office"
+      :filtered-category="categories"
+    />
   </div>
 </template>
 
@@ -22,6 +30,25 @@ export default {
       currentOrderKey: 'name',
       categories: []
     }
+  },
+  mounted() {
+    this.$http
+      .get(`${process.env.VUE_APP_API_URL}/offices`)
+      .then(response => {
+        this.offices = response.data.data
+      })
+      .catch(error => {
+        let data = null
+        if (error.response !== undefined) {
+          data = error.response.data
+        }
+        this.$store.commit('addNotification', {
+          active: true,
+          type: 'error',
+          logs: data,
+          userMessage: "Impossible de télécharger la liste des cabinets d'ergothérapie"
+        })
+      })
   },
   methods: {
     sort(key) {
@@ -43,25 +70,6 @@ export default {
     filter(categories) {
       this.categories = categories
     }
-  },
-  mounted() {
-    this.$http
-      .get(`${process.env.VUE_APP_API_URL}/offices`)
-      .then(response => {
-        this.offices = response.data.data
-      })
-      .catch(error => {
-        let data = null
-        if (error.response !== undefined) {
-          data = error.response.data
-        }
-        this.$store.commit('addNotification', {
-          active: true,
-          type: 'error',
-          logs: data,
-          userMessage: "Impossible de télécharger la liste des cabinets d'ergothérapie"
-        })
-      })
   }
 }
 </script>

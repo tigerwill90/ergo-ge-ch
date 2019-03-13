@@ -1,10 +1,12 @@
 <template>
   <v-tabs>
-    <v-tabs-slider color="teal"></v-tabs-slider>
+    <v-tabs-slider color="teal" />
     <v-tab
       v-for="(therapist, i) in therapists"
       :key="i"
-    >{{ therapist.title }} {{ therapist.lastname }}</v-tab>
+    >
+      {{ therapist.title }} {{ therapist.lastname }}
+    </v-tab>
     <v-tabs-items>
       <v-tab-item
         v-for="(therapist, i) in therapists"
@@ -18,35 +20,43 @@
                 <v-icon
                   class="icon"
                   color="green"
-                >check_box</v-icon>
+                >
+                  check_box
+                </v-icon>
                 <span>Consultation à domicile</span>
               </template>
               <template v-else>
                 <v-icon
                   class="icon"
                   color="red"
-                >indeterminate_check_box</v-icon>
+                >
+                  indeterminate_check_box
+                </v-icon>
                 <span>Pas de consultation à domicile</span>
               </template>
             </div>
           </div>
           <div class="mid-section">
             <div
-              class="contact-section"
               v-if="therapist.phones.length > 0 || therapist.emails.length > 0"
+              class="contact-section"
             >
               <div class="contact-title">
-                <v-icon class="icon">person</v-icon>
+                <v-icon class="icon">
+                  person
+                </v-icon>
                 <span class="app-section-subtitle title-1 font-600 cBlack no-margin">Contactez moi</span>
               </div>
               <div
-                class="therapist-mail"
                 v-if="therapist.emails.length > 0"
+                class="therapist-mail"
               >
                 <v-icon
                   class="icon size-45"
                   color="blue"
-                >email</v-icon>
+                >
+                  email
+                </v-icon>
                 <div class="list">
                   <span
                     v-for="(email, j) in therapist.emails"
@@ -56,13 +66,15 @@
                 </div>
               </div>
               <div
-                class="therapist-phone"
                 v-if="therapist.phones.length > 0"
+                class="therapist-phone"
               >
                 <v-icon
                   class="icon size-45"
                   color="orange"
-                >contact_phone</v-icon>
+                >
+                  contact_phone
+                </v-icon>
                 <div class="list">
                   <span
                     v-for="(phone, j) in therapist.phones"
@@ -73,11 +85,13 @@
               </div>
             </div>
             <div
-              class="categories-section"
               v-if="therapist.categories.length > 0"
+              class="categories-section"
             >
               <div class="contact-title">
-                <v-icon class="icon">category</v-icon>
+                <v-icon class="icon">
+                  category
+                </v-icon>
                 <span class="app-section-subtitle title-1 font-600 cBlack no-margin">Spécialisation</span>
               </div>
               <div class="therapist-categories">
@@ -86,7 +100,7 @@
                     v-for="(category, j) in therapist.categories"
                     :key="j"
                   >
-                    <li>{{category.name}}</li>
+                    <li>{{ category.name }}</li>
                   </ul>
                 </div>
               </div>
@@ -100,15 +114,15 @@
 <script>
 export default {
   name: 'TherapistsTab',
-  data() {
-    return {
-      therapists: []
-    }
-  },
   props: {
     id: {
       type: Number,
       required: true
+    }
+  },
+  data() {
+    return {
+      therapists: []
     }
   },
   mounted() {

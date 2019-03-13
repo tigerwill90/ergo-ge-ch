@@ -5,38 +5,42 @@
   >
     <div class="btn-box">
       <v-btn
+        v-show="previousArrow"
         flat
         icon
         color="indigo"
         @click="previous()"
-        v-show="previousArrow"
       >
-        <v-icon size="48">navigate_before</v-icon>
+        <v-icon size="48">
+          navigate_before
+        </v-icon>
       </v-btn>
     </div>
     <div :class="cargouselLayout">
       <div
-        class="item"
         v-for="(actu, i) in carousels"
         :key="i"
+        class="item"
       >
         <ActualityVue
           :title="actu.title"
           :subtitle="actu.subtitle"
-          :imageUrl="actu.imageUrl"
+          :image-url="actu.imageUrl"
           :description="actu.text"
         />
       </div>
     </div>
     <div class="btn-box">
       <v-btn
+        v-show="nextArrow"
         flat
         icon
         color="indigo"
         @click="next()"
-        v-show="nextArrow"
       >
-        <v-icon size="48">navigate_next</v-icon>
+        <v-icon size="48">
+          navigate_next
+        </v-icon>
       </v-btn>
     </div>
   </FlexContainer>
@@ -111,6 +115,24 @@ export default {
       ]
     }
   },
+  computed: {
+    previousArrow() {
+      return this.lowerBound > 0
+    },
+    nextArrow() {
+      return this.upperBound < this.datas.length - 1
+    }
+  },
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'windowSize') {
+        this.resize(mutation.payload.x)
+      }
+    })
+
+    // init
+    this.resize(this.$store.getters.windowSize.x)
+  },
   methods: {
     next() {
       if (this.upperBound < this.datas.length - 1) {
@@ -168,24 +190,6 @@ export default {
         this.carousels = this.datas.slice(0, 1)
       }
     }
-  },
-  computed: {
-    previousArrow() {
-      return this.lowerBound > 0
-    },
-    nextArrow() {
-      return this.upperBound < this.datas.length - 1
-    }
-  },
-  mounted() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'windowSize') {
-        this.resize(mutation.payload.x)
-      }
-    })
-
-    // init
-    this.resize(this.$store.getters.windowSize.x)
   }
 }
 </script>

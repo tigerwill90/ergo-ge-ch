@@ -32,7 +32,7 @@
           :src="img"
           aspect-ratio="3"
           content
-        > </v-img>
+        />
       </div>
     </div>
     <div class="council-card">
@@ -43,7 +43,9 @@
         :class="{ 'no-margin': i < councils.length - 1 }"
       >
         <div class="council-card-title">
-          <div :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">{{ council.name }}</div>
+          <div :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">
+            {{ council.name }}
+          </div>
         </div>
         <div class="council-card-icon">
           <v-avatar
@@ -55,7 +57,7 @@
             <img
               :src="council.imageUrl"
               alt="avatar"
-            />
+            >
           </v-avatar>
         </div>
       </v-card>

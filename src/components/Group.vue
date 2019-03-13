@@ -3,10 +3,16 @@
     column
     align-items="center"
   >
-    <div class="app-section-title center" :style="{'font-size': (1.9 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">
+    <div
+      class="app-section-title center"
+      :style="{'font-size': (1.9 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+    >
       Où travaillent les ergothérapeutes ?
     </div>
-    <p class="group-desc text-xs-center" :style="{'font-size': (1.4 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">
+    <p
+      class="group-desc text-xs-center"
+      :style="{'font-size': (1.4 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
+    >
       Les ergothérapeutes travaillent dans des institutions
       <strong style="color: teal">du secteur public, dans le secteur subventionné, mais également dans le privé</strong>. Selon l'organisation des services auxquels ils sont rattachés, les ergothérapeutes ont donc à faire à des
       populations très diversifiées.
@@ -34,7 +40,9 @@
         <h1
           class="app-section-title text-xs-center"
           :style="{'font-size': (1.5 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
-        >Secteur privé</h1>
+        >
+          Secteur privé
+        </h1>
         <p
           class="paragraph"
           :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"

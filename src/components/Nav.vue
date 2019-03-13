@@ -1,15 +1,39 @@
 <template>
-  <v-navigation-drawer class="nav-drawer" v-if="forceHide" app temporary v-model="drawer" disable-resize-watcher>
+  <v-navigation-drawer
+    v-if="forceHide"
+    v-model="drawer"
+    class="nav-drawer"
+    app
+    temporary
+    disable-resize-watcher
+  >
     <header class="nav-header">
-      <img src="../assets/img/ase.svg" alt="ase" class="nav-img" @click="goTo('home')" />
+      <img
+        src="../assets/img/ase.svg"
+        alt="ase"
+        class="nav-img"
+        @click="goTo('home')"
+      >
       <span class="title center-text">Association Suisse des Ergothérapeutes</span>
     </header>
-    <v-divider></v-divider>
+    <v-divider />
     <div class="nav-content">
       <v-subheader>Information</v-subheader>
-      <v-list class="nav-list" expand>
-        <v-list-group v-for="item in items" :key="item.title" :prepend-icon="item.icon" no-action>
-          <v-list-tile slot="activator" @click="goTo(item.link)" exact>
+      <v-list
+        class="nav-list"
+        expand
+      >
+        <v-list-group
+          v-for="item in items"
+          :key="item.title"
+          :prepend-icon="item.icon"
+          no-action
+        >
+          <v-list-tile
+            slot="activator"
+            exact
+            @click="goTo(item.link)"
+          >
             <v-list-tile-content>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
@@ -18,8 +42,8 @@
           <v-list-tile
             v-for="(subItem, i) in item.items"
             :key="i"
-            @click="goTo(item.link, subItem.to)"
             :disabled="subItem.active"
+            @click="goTo(item.link, subItem.to)"
           >
             <v-list-tile-content>
               <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
@@ -49,15 +73,31 @@
       </v-list>
       <v-subheader>Liens utiles</v-subheader>
       <div class="nav-link">
-        <a class="nav-ref" v-for="(link, i) in links" :href="link.url" :key="i" target="_blank">{{ link.title }}</a>
+        <a
+          v-for="(link, i) in links"
+          :key="i"
+          class="nav-ref"
+          :href="link.url"
+          target="_blank"
+        >{{ link.title }}</a>
       </div>
     </div>
-    <v-divider></v-divider>
+    <v-divider />
     <footer class="nav-footer">
       <div class="nav-bottom-connexion">
-        <v-btn color="red" outline class="white--text" disabled>
+        <v-btn
+          color="red"
+          outline
+          class="white--text"
+          disabled
+        >
           Connexion
-          <v-icon right dark>account_circle</v-icon>
+          <v-icon
+            right
+            dark
+          >
+            account_circle
+          </v-icon>
         </v-btn>
       </div>
       <div class="nav-bottom-footer">
@@ -90,13 +130,6 @@ export default {
         }
       ],
       date: new Date()
-    }
-  },
-  methods: {
-    goTo(link, to) {
-      this.$router.push({ name: link })
-      const hash = to === undefined ? null : '#' + to
-      this.$store.commit('setHashSelector', hash)
     }
   },
   computed: {
@@ -138,6 +171,13 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    goTo(link, to) {
+      this.$router.push({ name: link })
+      const hash = to === undefined ? null : '#' + to
+      this.$store.commit('setHashSelector', hash)
     }
   }
 }

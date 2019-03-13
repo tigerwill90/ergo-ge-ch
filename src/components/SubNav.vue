@@ -18,7 +18,9 @@
             <span class="headline center-text">{{ subtitle }}</span>
           </div>
           <div class="sub-nav-button">
-            <v-btn :to="{ name: 'contact' }">Contactez nous</v-btn>
+            <v-btn :to="{ name: 'contact' }">
+              Contactez nous
+            </v-btn>
           </div>
         </div>
         <div v-show="!extendedHeader">
@@ -29,23 +31,24 @@
       </div>
       <!-- ##HEADER -->
       <div
+        v-if="showLinks"
         class="sub-nav-links"
         :class="linksClass"
-        v-if="showLinks"
       >
         <v-btn
-          color="white"
           v-for="(link, i) in links"
           :key="i"
+          color="white"
           flat
           exact
-          @click="goTo(link, i)"
           class="text-none subheading"
           :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}"
-        >{{
-          link.title
+          @click="goTo(link, i)"
+        >
+          {{
+            link.title
           }}
-          </v-btn>
+        </v-btn>
       </div>
     </div>
     <div
@@ -74,16 +77,7 @@ const extendedScrollTrigger = 252
 const minExtendedScrollTrigger = 152
 const minimizedScrollTrigger = 122
 export default {
-  name: 'Sub-Nav',
-  data() {
-    return {
-      linksClass: {
-        'absolute-links': true,
-        'fixed-links': false
-      },
-      offsetTop: 0
-    }
-  },
+  name: 'SubNav',
   props: {
     links: {
       type: Array,
@@ -102,6 +96,26 @@ export default {
       validator: function (value) {
         return ['extended', 'reduced'].indexOf(value) !== -1
       }
+    }
+  },
+  data() {
+    return {
+      linksClass: {
+        'absolute-links': true,
+        'fixed-links': false
+      },
+      offsetTop: 0
+    }
+  },
+  computed: {
+    displayNav() {
+      return this.$store.getters.windowSize.x > mobileWidth
+    },
+    extendedHeader() {
+      return this.subClass === 'extended'
+    },
+    showLinks() {
+      return !this.$store.getters.drawer || !this.linksClass['fixed-links']
     }
   },
   methods: {
@@ -154,17 +168,6 @@ export default {
         routeName: this.$router.currentRoute.name,
         activeLinkIndex: i
       })
-    }
-  },
-  computed: {
-    displayNav() {
-      return this.$store.getters.windowSize.x > mobileWidth
-    },
-    extendedHeader() {
-      return this.subClass === 'extended'
-    },
-    showLinks() {
-      return !this.$store.getters.drawer || !this.linksClass['fixed-links']
     }
   }
 }

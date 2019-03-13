@@ -16,16 +16,20 @@
             :src="item.img"
             aspect-ratio="3"
             content
-          ></v-img>
+          />
         </span>
         <v-card class="elevation-2">
-          <v-card-title class="title">{{ item.title }}</v-card-title>
-          <v-card-text :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">{{ item.description }}</v-card-text>
+          <v-card-title class="title">
+            {{ item.title }}
+          </v-card-title>
+          <v-card-text :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}">
+            {{ item.description }}
+          </v-card-text>
           <div
-            class="desc-link-content"
-            :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
             v-for="(download, i) in item.downloads"
             :key="i"
+            class="desc-link-content"
+            :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
           >
             <a
               :href="download.url"
@@ -36,14 +40,18 @@
               icon
               :href="download.url + '?disposition=download'"
             >
-              <v-icon color="green">cloud_download</v-icon>
+              <v-icon color="green">
+                cloud_download
+              </v-icon>
             </v-btn>
           </div>
           <v-card-text
             v-if="item.ref"
             class="card-sub-ref"
             :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
-          >{{ item.ref }}</v-card-text>
+          >
+            {{ item.ref }}
+          </v-card-text>
         </v-card>
       </v-timeline-item>
     </v-timeline>
@@ -52,9 +60,9 @@
       class="section-container"
     >
       <div
-        class="section"
         v-for="(item, i) in items"
         :key="i"
+        class="section"
       >
         <div class="section-title">
           <span class="title text-xs-center">{{ item.title }}</span>
@@ -79,7 +87,9 @@
               icon
               :href="download.url + '?disposition=download'"
             >
-              <v-icon color="green">cloud_download</v-icon>
+              <v-icon color="green">
+                cloud_download
+              </v-icon>
             </v-btn>
           </div>
         </div>
@@ -88,7 +98,7 @@
           aspect-ratio="3"
           content
           :class="{ 'section-img': i < items.length - 1 }"
-        ></v-img>
+        />
       </div>
     </div>
   </FlexContainer>

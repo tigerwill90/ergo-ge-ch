@@ -1,19 +1,25 @@
 <template>
   <v-card
+    v-if="showCard"
     class="office-card"
     elevation="5"
-    v-if="showCard"
   >
     <div class="office-card-title">
       <span class="subheading">{{ flatCategories }}</span>
     </div>
     <div class="office-content">
       <div class="office-title">
-        <h2 class="title">{{ office.name }}</h2>
-        <h3 class="subheading">{{ office.email }} show: {{ showCard }}</h3>
+        <h2 class="title">
+          {{ office.name }}
+        </h2>
+        <h3 class="subheading">
+          {{ office.email }} show: {{ showCard }}
+        </h3>
       </div>
       <div class="office-bloc">
-        <v-icon class="icon">location_city</v-icon>
+        <v-icon class="icon">
+          location_city
+        </v-icon>
         <div class="list subheading">
           <span>{{ office.address }}</span>
           <span>{{ office.npa }} {{ office.city }}</span>
@@ -22,10 +28,12 @@
         </div>
       </div>
       <div class="office-bloc">
-        <v-icon class="icon">contact_phone</v-icon>
+        <v-icon class="icon">
+          contact_phone
+        </v-icon>
         <div
-          class="list subheading"
           v-if="office.phone || office.fax"
+          class="list subheading"
         >
           <span v-if="office.phone">tél: {{ office.phone }}</span>
           <span v-if="office.fax">fax: {{ office.fax }}</span>
@@ -37,7 +45,9 @@
         <div
           slot="header"
           class="expansion-panel-title"
-        >Plus de détails</div>
+        >
+          Plus de détails
+        </div>
         <TherapistTab :id="office.id" />
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -51,12 +61,6 @@ export default {
   components: {
     TherapistTab
   },
-  data() {
-    return {
-      categories: [],
-      flatCategories: ''
-    }
-  },
   props: {
     office: {
       type: Object,
@@ -65,6 +69,12 @@ export default {
     filteredCategory: {
       type: Array,
       required: true
+    }
+  },
+  data() {
+    return {
+      categories: [],
+      flatCategories: ''
     }
   },
   computed: {

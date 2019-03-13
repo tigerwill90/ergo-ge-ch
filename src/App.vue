@@ -3,7 +3,7 @@
     <Nav />
     <Toolbar />
     <v-content class="app-main">
-      <router-view></router-view>
+      <router-view />
     </v-content>
     <Footer />
   </v-app>
@@ -20,6 +20,13 @@ export default {
     Footer,
     Nav
   },
+  mounted() {
+    this.onResize()
+    this.$store.commit('setRouteName', this.$router.currentRoute.name)
+  },
+  beforeUpdate() {
+    this.$store.commit('setRouteName', this.$router.currentRoute.name)
+  },
   methods: {
     onResize() {
       this.$store.commit('windowSize', {
@@ -27,13 +34,6 @@ export default {
         y: window.innerHeight
       })
     }
-  },
-  mounted() {
-    this.onResize()
-    this.$store.commit('setRouteName', this.$router.currentRoute.name)
-  },
-  beforeUpdate() {
-    this.$store.commit('setRouteName', this.$router.currentRoute.name)
   }
 }
 </script>

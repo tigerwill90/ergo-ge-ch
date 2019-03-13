@@ -27,11 +27,15 @@
         <v-btn
           flat
           color="orange"
-        >Partager</v-btn>
+        >
+          Partager
+        </v-btn>
         <v-btn
           flat
           color="orange"
-        >En savoir plus</v-btn>
+        >
+          En savoir plus
+        </v-btn>
       </v-card-actions>
     </div>
   </v-card>
