@@ -19,6 +19,7 @@
       :event-sources="eventSources"
       :config="config"
       @event-selected="eventSelected"
+      @view-render="onViewRender"
       :editable="false"
       :selectable="false"
     />
@@ -30,6 +31,7 @@
       :position-x="x"
       :position-y="y"
       :close-on-content-click="false"
+      :close-on-click="false"
       origin
     >
       <v-card class="calendar-event-card">
@@ -120,7 +122,7 @@ export default {
       loading: false,
       config: {
         local: 'fr',
-        aspectRatio: 2.5,
+        aspectRatio: 2.1,
         themeSystem: 'standard',
         nowIndicator: true,
         titleFormat: 'D MMMM YYYY',
@@ -172,6 +174,9 @@ export default {
         })
       }
       this.$refs.calendar.fireMethod('render')
+    },
+    onViewRender() {
+      this.closeEvent()
     }
   },
   created() {
