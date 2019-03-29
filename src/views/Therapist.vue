@@ -1,3 +1,14 @@
+/*
+ * File: Therapist.vue
+ * Project: Ergotherapeute
+ * **********************
+ * Author: Sylvain Muller
+ * Email: sylvain.muller90@gmail.com
+ * **********************
+ * License: MIT License
+ * Created Date: 27th February 2019
+ * Last Modified: 29th March 2019
+ */
 <template>
   <div class="therapist-content">
     <OfficesFilter

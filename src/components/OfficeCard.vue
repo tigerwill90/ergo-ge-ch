@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 29th March 2019
  */
 <template>
   <v-card
@@ -20,34 +20,22 @@
     </div>
     <div class="office-content">
       <div class="office-title">
-        <h2 class="title">
+        <span class="title">
           {{ office.name }}
-        </h2>
-        <h3 class="subheading">
-          {{ office.email }} show: {{ showCard }}
-        </h3>
+        </span>
+        <span class="subheading">
+          {{ office.email }}
+        </span>
       </div>
       <div class="office-bloc">
         <v-icon class="icon">
           location_city
         </v-icon>
         <div class="list subheading">
-          <span>{{ office.address }}</span>
-          <span>{{ office.npa }} {{ office.city }}</span>
-          <span v-if="office.district">Quartier : {{ office.district }}</span>
-          <span v-if="office.cp">c.p. : {{ office.cp }}</span>
-        </div>
-      </div>
-      <div class="office-bloc">
-        <v-icon class="icon">
-          contact_phone
-        </v-icon>
-        <div
-          v-if="office.phone || office.fax"
-          class="list subheading"
-        >
-          <span v-if="office.phone">tél: {{ office.phone }}</span>
-          <span v-if="office.fax">fax: {{ office.fax }}</span>
+          <span
+            v-for="(contact, i) in office.contacts"
+            :key="i"
+          >{{ contact.street }}, {{ contact.npa }} {{ contact.city }}</span>
         </div>
       </div>
     </div>
@@ -59,7 +47,10 @@
         >
           Plus de détails
         </div>
-        <TherapistTab :id="office.id" />
+        <div class="panel-box">
+          <OfficeContact :contacts="office.contacts" />
+          <TherapistTab :id="office.id" />
+        </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-card>
@@ -67,10 +58,12 @@
 
 <script>
 import TherapistTab from './TherapistsTab'
+import OfficeContact from './OfficeContact'
 export default {
   name: 'OfficeCard',
   components: {
-    TherapistTab
+    TherapistTab,
+    OfficeContact
   },
   props: {
     office: {
@@ -184,5 +177,10 @@ export default {
   font-weight: 600;
   font-size: 1.2em;
   color: #424242;
+}
+
+.panel-box {
+  display: flex;
+  flex-direction: column;
 }
 </style>

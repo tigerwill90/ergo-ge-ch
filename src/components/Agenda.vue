@@ -110,7 +110,7 @@
           <span
             v-if="selectedEvent.organizer"
             class="subheading"
-          >{{ selectedEvent.organizer.name }}</span>
+          >{{ selectedEvent.organizer.name || selectedEvent.organizer.email }}</span>
         </div>
       </v-card>
     </v-menu>
