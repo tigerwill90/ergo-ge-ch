@@ -63,11 +63,12 @@ export default {
   },
   methods: {
     sort(key) {
-      if (this.currentOrderKey === key) {
-        this.offices.reverse()
-      } else {
-        this.offices.sort((a, b) => {
-          if (a.hasOwnProperty(key)) {
+      // Offices can be directly sorted
+      if (this.offices[0].hasOwnProperty(key)) {
+        if (this.currentOrderKey === key) {
+          this.offices.reverse()
+        } else {
+          this.offices.sort((a, b) => {
             if (a[key] < b[key]) {
               return -1
             } else if (a[key] > b[key]) {
@@ -75,10 +76,38 @@ export default {
             } else {
               return 0
             }
-          } else {
-            // TODO street & city case
-          }
-        })
+          })
+        }
+      } else {
+        // Deep sorting by office contact
+        if (this.currentOrderKey === key) {
+          this.offices.reverse()
+          this.offices.forEach(office => {
+            office.contacts.reverse()
+          })
+        } else {
+          this.offices.forEach(office => {
+            office.contacts.sort((a, b) => {
+              if (a[key] < b[key]) {
+                return -1
+              } else if (a[key] > b[key]) {
+                return 1
+              } else {
+                return 0
+              }
+            })
+          })
+          // sort by first contacts key
+          this.offices.sort((a, b) => {
+            if (a.contacts[0][key] < b.contacts[0][key]) {
+              return -1
+            } else if (a.contacts[0][key] > b.contacts[0][key]) {
+              return 1
+            } else {
+              return 0
+            }
+          })
+        }
       }
       this.currentOrderKey = key
     },

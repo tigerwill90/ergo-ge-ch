@@ -25,8 +25,10 @@
       <div class="address">
         <span class="subheading"><strong>Rue :</strong> {{ contact.street }}</span>
         <span class="subheading"><strong>Ville :</strong> {{ contact.npa }} {{ contact.city }}</span>
+        <span class="subheading"><strong>C.p. :</strong> {{ contact.cp }} </span>
       </div>
       <v-icon
+        v-if="contact.phone || contact.fax"
         class="icon"
         large
       >

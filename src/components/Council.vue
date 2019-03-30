@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 30th March 2019
  */
 <template>
   <FlexContainer
@@ -27,7 +27,7 @@
         Les membres du comité
       </div>
       <p
-        class="cWhite"
+        class="cWhite paragraph"
         :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
       >
         Le comité de la section est élu par l’Assemblée Générale. Tous les membres de la section peuvent se présenter à
@@ -148,6 +148,10 @@ export default {
 
 .cWhite {
   color: white;
+}
+
+.paragraph {
+  margin-bottom: 15px;
 }
 
 @media screen and (max-width: 1000px) {

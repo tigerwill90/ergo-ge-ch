@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 30th March 2019
  */
 <template>
   <v-tabs>
@@ -15,6 +15,7 @@
     <v-tab
       v-for="(therapist, i) in therapists"
       :key="i"
+      class="text-none"
     >
       {{ therapist.title }} {{ therapist.lastname }}
     </v-tab>
@@ -25,7 +26,12 @@
       >
         <div class="therapist-content">
           <div class="therapist-title">
-            <span class="app-section-subtitle title-1 font-600 no-margin">{{ therapist.title }} {{ therapist.firstname }} {{ therapist.lastname }}</span>
+            <div class="therapist-title-name">
+              <v-icon class="icon">
+                person
+              </v-icon>
+              <span class="app-section-subtitle title-1 font-600 no-margin">{{ therapist.title }} {{ therapist.firstname }} {{ therapist.lastname }}</span>
+            </div>
             <div class="therapist-title-home">
               <template v-if="therapist.home">
                 <v-icon
@@ -52,12 +58,7 @@
               v-if="therapist.phones.length > 0 || therapist.emails.length > 0"
               class="contact-section"
             >
-              <div class="contact-title">
-                <v-icon class="icon">
-                  person
-                </v-icon>
-                <span class="app-section-subtitle title-1 font-600 cBlack no-margin">Contactez moi</span>
-              </div>
+              <span class="app-section-subtitle title-1 font-600 cBlack no-margin">Contactez moi</span>
               <div
                 v-if="therapist.emails.length > 0"
                 class="therapist-mail"
@@ -167,14 +168,18 @@ export default {
 
 .therapist-title {
   display: flex;
+  flex-direction: column;
+}
+
+.therapist-title-name {
+  display: flex;
   align-items: center;
 }
 
 .therapist-title-home {
   display: flex;
+  margin: 5px 0 5px 0;
   align-items: center;
-  flex: 1;
-  margin-left: 15px;
 }
 
 .mid-section {
