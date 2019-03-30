@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 30th March 2019
  */
 <template>
   <div class="filter-container">
@@ -62,7 +62,6 @@ export default {
       sortables: [
         { name: 'Nom', key: 'name' },
         { name: 'Ville', key: 'city' },
-        { name: 'Quartier', key: 'district' },
         { name: 'Code postal', key: 'npa' }
       ],
       categories: []

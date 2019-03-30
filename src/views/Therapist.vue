@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 29th March 2019
+ * Last Modified: 30th March 2019
  */
 <template>
   <div class="therapist-content">
@@ -67,12 +67,16 @@ export default {
         this.offices.reverse()
       } else {
         this.offices.sort((a, b) => {
-          if (a[key] < b[key]) {
-            return -1
-          } else if (a[key] > b[key]) {
-            return 1
+          if (a.hasOwnProperty(key)) {
+            if (a[key] < b[key]) {
+              return -1
+            } else if (a[key] > b[key]) {
+              return 1
+            } else {
+              return 0
+            }
           } else {
-            return 0
+            // TODO street & city case
           }
         })
       }
