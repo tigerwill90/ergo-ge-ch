@@ -15,6 +15,8 @@
     class="calendar"
     column
     padding-top="50px"
+    padding-left="10%"
+    padding-right="10%"
   >
     <v-progress-circular
       v-if="loading"

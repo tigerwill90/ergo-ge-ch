@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 29th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <FlexContainer
@@ -39,6 +39,7 @@
           :subtitle="actu.subtitle"
           :image-url="actu.imageUrl"
           :description="actu.text"
+          :date="actu.date"
         />
       </div>
     </div>
@@ -78,52 +79,25 @@ export default {
       carousels: [],
       datas: [
         {
-          title: 'Rencontre des ergothérapeutes chef-fe-s 0',
-          subtitle: 'explicabo sit odio',
+          title: 'Rencontre des ergothérapeutes chef-fe-s',
           imageUrl: `${process.env.VUE_APP_API_URL}/images/knitting`,
+          date: 'Vendredi 15 mars 2019',
           text:
             'Qui nulla totam. Aut omnis qui voluptatum suscipit laudantium ad. Exercitationem quibusdam enim beatae porro. Fuga omnis iusto deleniti cum facilis rerum quia exercitationem eveniet. Voluptatibus aliquam sit.'
         },
         {
-          title: 'Journée de la région Suisse romande 1',
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/crossfit`,
-          subtitle: 'vero-sit-cumque',
-          text: 'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero. Doloremque itaque sunt facilis quo quasi reiciendis suscipit ut. At aspernatur reprehenderit eum dicta qui ut.'
+          title: 'Journée des sections romandie',
+          imageUrl: `${process.env.VUE_APP_API_URL}/images/romandie`,
+          subtitle: 'Rencontre avec les ergothérapeutes',
+          date: 'Dimanche 5 mai 2019',
+          text: 'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero.'
         },
         {
-          title: 'illum-non-officiis 2',
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/fruit`,
-          subtitle: 'minima',
+          title: 'Assemblée des délégué-e-s 2019',
+          imageUrl: `${process.env.VUE_APP_API_URL}/images/berne`,
+          date: 'Dimanche 26 mai 2019',
           text:
             'Autem corporis sunt cupiditate libero consectetur id explicabo et quis. Repellendus rem tempore nemo nobis nihil neque esse ratione sapiente.'
-        },
-        {
-          title: "Journée mondiale de l'ergothérapie 3",
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/running`,
-          subtitle: 'vero-sit-cumque',
-          text:
-            'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero. Doloremque itaque sunt facilis quo quasi reiciendis suscipit ut. At aspernatur reprehenderit eum dicta qui ut.'
-        },
-        {
-          title: "Journée mondiale de l'ergothérapie 4",
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/running`,
-          subtitle: 'vero-sit-cumque',
-          text:
-            'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero. Doloremque itaque sunt facilis quo quasi reiciendis suscipit ut. At aspernatur reprehenderit eum dicta qui ut.'
-        },
-        {
-          title: "Journée mondiale de l'ergothérapie 5",
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/running`,
-          subtitle: 'vero-sit-cumque',
-          text:
-            'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero. Doloremque itaque sunt facilis quo quasi reiciendis suscipit ut. At aspernatur reprehenderit eum dicta qui ut.'
-        },
-        {
-          title: 'Last 6',
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/running`,
-          subtitle: 'vero-sit-cumque',
-          text:
-            'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero. Doloremque itaque sunt facilis quo quasi reiciendis suscipit ut. At aspernatur reprehenderit eum dicta qui ut.'
         }
       ]
     }

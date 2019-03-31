@@ -38,7 +38,7 @@
         target="_blank"
         :class="{'text-white': $store.getters.invertBrightness}"
       >
-        Ordonnance pour l'Ergothérapie
+        Ordonnance pour l'Ergothérapie (pdf)
       </a>
     </div>
   </FlexContainer>

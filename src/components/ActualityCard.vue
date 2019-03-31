@@ -39,6 +39,8 @@
         :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
       >
         {{ description }}
+        <br>
+        <span v-if="date"><strong>Date:</strong> {{ date }}</span>
       </div>
       <v-card-actions>
         <v-btn
@@ -66,6 +68,10 @@ export default {
       required: true
     },
     subtitle: {
+      type: String,
+      default: null
+    },
+    date: {
       type: String,
       default: null
     },

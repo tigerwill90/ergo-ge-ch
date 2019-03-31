@@ -132,6 +132,10 @@ export default {
           title: 'La définition (pdf)'
         },
         {
+          url: process.env.VUE_APP_PDF_PRESCRIPTION_URL,
+          title: 'Ordonnance pour l\'Ergothérapie (pdf)'
+        },
+        {
           url: 'https://www.ergotherapie.ch/page-dacceuil',
           title: 'Association Suisse des Ergothérapeutes'
         },
