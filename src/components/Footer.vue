@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <v-footer
@@ -22,7 +22,7 @@
       <v-card-title class="teal lighten-2">
         <div class="footer">
           <div class="footer-version">
-            <span class="text-xs-center">Version 0.0.2</span>
+            <span class="text-xs-center">Version {{ version }}</span>
             <a
               class="text-xs-center footer-link"
               href="https://www.sylvainmuller.ch"
@@ -51,7 +51,8 @@ export default {
   name: 'Footer',
   data() {
     return {
-      date: new Date()
+      date: new Date(),
+      version: process.env.VUE_APP_VERSION
     }
   }
 }
