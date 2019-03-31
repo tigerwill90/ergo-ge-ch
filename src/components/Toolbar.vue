@@ -1,4 +1,5 @@
 /*
+import { get } from 'http';
  * File: Toolbar.vue
  * Project: Ergotherapeute
  * **********************
@@ -7,7 +8,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <v-toolbar
@@ -95,7 +96,7 @@
           <v-icon class="accessiblity-icon">
             accessibility
           </v-icon>
-          <span class="title">Paramètres d'accessibilité</span>
+          <span class="title">Accessibilité</span>
         </div>
         <v-divider />
         <div class="accessiblity-content">
@@ -117,8 +118,8 @@
           <div class="accessiblity-box">
             <v-switch
               value
-              input-value="true"
               prepend-icon="brightness_medium"
+              @change="invertBrightness"
             />
           </div>
         </div>
@@ -169,6 +170,9 @@ export default {
     },
     onSliderChange(value) {
       this.$store.commit('fontSizeMultiplier', value)
+    },
+    invertBrightness(value) {
+      this.$store.commit('invertBrightness', value)
     }
   }
 }
@@ -229,7 +233,7 @@ export default {
 }
 
 .format-size-slider {
-  max-width: 250px;
+  max-width: 280px;
 }
 
 @media screen and (max-width: 495px) {

@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 30th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <div class="therapist-content">
@@ -49,16 +49,7 @@ export default {
         this.offices = response.data.data
       })
       .catch(error => {
-        let data = null
-        if (error.response !== undefined) {
-          data = error.response.data
-        }
-        this.$store.commit('addNotification', {
-          active: true,
-          type: 'error',
-          logs: data,
-          userMessage: "Impossible de télécharger la liste des cabinets d'ergothérapie"
-        })
+        throw new Error(error.message)
       })
   },
   methods: {

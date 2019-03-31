@@ -1,4 +1,5 @@
 <template>
+  <!-- selector in mixin -->
   <SubNav
     :selector="selector"
     :links="links"
@@ -11,15 +12,20 @@
       :ref="links[0].to"
     />
     <v-divider />
-    <Actuality
+    <Prescription
       :id="links[1].to"
       :ref="links[1].to"
     />
     <v-divider />
-    <Agenda
-      v-if="links[2]"
+    <Actuality
       :id="links[2].to"
       :ref="links[2].to"
+    />
+    <v-divider />
+    <Agenda
+      v-if="links[3]"
+      :id="links[3].to"
+      :ref="links[3].to"
     />
   </SubNav>
 </template>
@@ -29,6 +35,7 @@ import SubNav from '../components/SubNav'
 import Description from '../components/Description'
 import Agenda from '../components/Agenda'
 import Actuality from '../components/Actuality'
+import Prescription from '../components/Prescription'
 import Scrolling from '../mixins/scrolling'
 import HandleScroll from '../mixins/handleScroll'
 export default {
@@ -37,7 +44,8 @@ export default {
     SubNav,
     Description,
     Agenda,
-    Actuality
+    Actuality,
+    Prescription
   },
   mixins: [Scrolling('home'), HandleScroll()],
   data() {
@@ -51,12 +59,14 @@ export default {
       if (this.$store.getters.windowSize.x > 500) {
         return [
           { to: 'desc', title: "L'ergothérapie" },
+          { to: 'prescription', title: "L'ordonnance" },
           { to: 'actu', title: 'Actualité' },
           { to: 'agenda', title: 'Agenda' }
         ]
       } else {
         return [
           { to: 'desc', title: "L'ergothérapie" },
+          { to: 'prescription', title: "L'ordonnance" },
           { to: 'actu', title: 'Actualité' }
         ]
       }

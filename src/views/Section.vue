@@ -1,4 +1,5 @@
 <template>
+  <!-- selector in mixin -->
   <SubNav
     :selector="selector"
     :title="title"

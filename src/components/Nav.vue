@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 26th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <v-navigation-drawer
@@ -163,6 +163,7 @@ export default {
           link: 'home',
           items: [
             { to: 'desc', title: "L'ergothérapie", active: false },
+            { to: 'prescription', title: "L'ordonnance", active: false },
             { to: 'actu', title: 'Actualité', active: false },
             {
               to: 'agenda',
@@ -188,7 +189,10 @@ export default {
     goTo(link, to) {
       this.$router.push({ name: link })
       const hash = to === undefined ? null : '#' + to
-      this.$store.commit('setHashSelector', hash)
+      this.$store.commit('selector', {
+        hash,
+        routeName: link
+      })
     }
   }
 }

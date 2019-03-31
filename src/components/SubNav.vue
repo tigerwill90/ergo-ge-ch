@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <div
@@ -180,8 +180,7 @@ export default {
     goTo(link, i) {
       this.$store.commit('selector', {
         hash: '#' + link.to,
-        routeName: this.$router.currentRoute.name,
-        activeLinkIndex: i
+        routeName: this.$router.currentRoute.name
       })
     }
   }

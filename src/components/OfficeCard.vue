@@ -97,16 +97,7 @@ export default {
         this.flatCategories = this.categories.map(cat => cat.name).join(', ')
       })
       .catch(error => {
-        let data = null
-        if (error.response !== undefined) {
-          data = error.response.data
-        }
-        this.$store.commit('addNotification', {
-          active: true,
-          type: 'error',
-          logs: data,
-          userMessage: 'Impossible de télécharger la liste des spécialités des cabinets'
-        })
+        throw new Error(error.message)
       })
   }
 }

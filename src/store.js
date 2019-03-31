@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 26th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -23,6 +23,7 @@ export default new Vuex.Store({
     },
     drawer: false,
     fontSizeMultiplier: 40,
+    invertBrightness: false,
     flatToolbar: false,
     selector: {
       hash: null,
@@ -40,18 +41,6 @@ export default new Vuex.Store({
         options.offset = 110
         return options
       }
-    },
-    // TODO delete notification stuff
-    notifications: {
-      active: () => {
-        const alert = localStorage.getItem(process.env.VUE_APP_LOCAL_STORAGE_ALERT)
-        if (alert === null || alert === 'ACTIVE') {
-          return true
-        }
-        return false
-      },
-      messageId: 0,
-      messages: []
     }
   },
   mutations: {
@@ -67,7 +56,6 @@ export default new Vuex.Store({
     selector: (state, selector) => {
       state.selector.hash = selector.hash
       state.selector.routeName = selector.routeName
-      state.selector.activeLinkIndex = selector.activeLinkIndex
     },
     setActiveLinkIndex: (state, activeLinkIndex) => {
       state.selector.activeLinkIndex = activeLinkIndex
@@ -81,36 +69,11 @@ export default new Vuex.Store({
     fontSizeMultiplier: (state, value) => {
       state.fontSizeMultiplier = value
     },
+    invertBrightness: (state, value) => {
+      state.invertBrightness = value
+    },
     flatToolbar: (state, value) => {
       state.flatToolbar = value
-    },
-    enableNotifications: state => {
-      state.notifications.active = true
-      localStorage.setItem(process.env.VUE_APP_LOCAL_STORAGE_ALERT, 'ACTIVE')
-    },
-    disableNotifications: state => {
-      state.notifications.active = false
-      localStorage.setItem(process.env.VUE_APP_LOCAL_STORAGE_ALERT, 'INACTIVE')
-    },
-    addNotification: (state, newMessage) => {
-      const message = {
-        active: newMessage.active,
-        type: newMessage.type,
-        logs: newMessage.logs,
-        message: newMessage.userMessage
-      }
-      message.id = state.notifications.messageId++
-      state.notifications.messages.push(message)
-    },
-    deleteNotification: (state, id) => {
-      const pos = state.notifications.messages.map(message => message.id).indexOf(id)
-      if (pos !== -1) {
-        state.notifications.messages.splice(pos, 1)
-      }
-    },
-    deleteNotifications: state => {
-      state.notifications.messages = []
-      state.notifications.messageId = 0
     }
   },
   actions: {},
@@ -118,8 +81,8 @@ export default new Vuex.Store({
     windowSize: state => state.windowSize,
     drawer: state => state.drawer,
     selector: state => state.selector,
-    notifications: state => state.notifications,
     fontSizeMultiplier: state => state.fontSizeMultiplier,
-    flatToolbar: state => state.flatToolbar
+    flatToolbar: state => state.flatToolbar,
+    invertBrightness: state => state.invertBrightness
   }
 })
