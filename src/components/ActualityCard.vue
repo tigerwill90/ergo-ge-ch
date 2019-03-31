@@ -7,10 +7,13 @@
  * **********************
  * License: MIT License
  * Created Date: 9th March 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
-  <v-card class="actuality-card">
+  <v-card
+    class="actuality-card"
+    :dark="$store.getters.invertBrightness"
+  >
     <v-img
       :src="imageUrl"
       max-height="200"
@@ -18,6 +21,7 @@
     <div class="actuality-content">
       <span
         class="title-box app-section-subtitle font-600"
+        :class="{cDark: !$store.getters.invertBrightness}"
         :style="{'font-size': (1 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
       >
         {{ title }}
@@ -25,6 +29,7 @@
       <span
         v-if="subtitle"
         class="subtitle-box app-section-subtitle"
+        :class="{cDark: !$store.getters.invertBrightness}"
         :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
       >
         {{ subtitle }}
@@ -38,13 +43,13 @@
       <v-card-actions>
         <v-btn
           flat
-          color="orange"
+          :color="color"
         >
           Partager
         </v-btn>
         <v-btn
           flat
-          color="orange"
+          :color="color"
         >
           En savoir plus
         </v-btn>
@@ -75,6 +80,14 @@ export default {
     link: {
       type: String,
       default: null
+    }
+  },
+  computed: {
+    color() {
+      if (this.$store.getters.invertBrightness) {
+        return 'white'
+      }
+      return 'orange'
     }
   }
 }

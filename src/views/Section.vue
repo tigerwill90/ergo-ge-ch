@@ -10,12 +10,10 @@
       :id="links[0].to"
       :ref="links[0].to"
     />
-    <v-divider />
     <Council
       :id="links[1].to"
       :ref="links[1].to"
     />
-    <v-divider />
     <Group
       :id="links[2].to"
       :ref="links[2].to"

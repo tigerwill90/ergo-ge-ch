@@ -111,6 +111,7 @@
                   <ul
                     v-for="(category, j) in therapist.categories"
                     :key="j"
+                    style="border-color: teal;"
                   >
                     <li>{{ category.name }}</li>
                   </ul>

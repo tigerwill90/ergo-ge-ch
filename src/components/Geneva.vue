@@ -7,10 +7,13 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
-  <FlexContainer justify-content="center">
+  <FlexContainer
+    justify-content="center"
+    :background-color="background"
+  >
     <div
       v-if="!$vuetify.breakpoint.smAndDown"
       class="section"
@@ -22,8 +25,11 @@
           alt="geneva"
         >
       </div>
-      <p class="headline paragraph">
-        <strong style="color: teal;">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes
+      <p
+        class="headline paragraph"
+        :class="{'text-white': $store.getters.invertBrightness}"
+      >
+        <strong :class="{'text-teal': !$store.getters.invertBrightness}">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes
         membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de
         l’Association
       </p>
@@ -32,8 +38,11 @@
       v-else
       class="section column"
     >
-      <p class="text-xs-center headline">
-        <strong style="color: teal;">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes
+      <p
+        class="text-xs-center headline"
+        :class="{'text-white': $store.getters.invertBrightness}"
+      >
+        <strong :class="{'text-teal': !$store.getters.invertBrightness}">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes
         membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de
         l’Association
       </p>
@@ -50,7 +59,15 @@
 
 <script>
 export default {
-  name: 'Geneva'
+  name: 'Geneva',
+  computed: {
+    background() {
+      if (this.$store.getters.invertBrightness) {
+        return '#424242'
+      }
+      return 'transparent'
+    }
+  }
 }
 </script>
 
@@ -80,5 +97,13 @@ export default {
 
 .paragraph {
   padding-left: 20px;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-teal {
+  color: teal;
 }
 </style>

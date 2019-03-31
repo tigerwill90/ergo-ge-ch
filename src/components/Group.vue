@@ -7,15 +7,18 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <FlexContainer
     column
     align-items="center"
+    :background-color="background"
+    :class="{'text-white': $store.getters.invertBrightness}"
   >
     <div
       class="app-section-title center"
+      :class="{cDark: !$store.getters.invertBrightness}"
       :style="{'font-size': (1.9 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
     >
       Où travaillent les ergothérapeutes ?
@@ -25,7 +28,7 @@
       :style="{'font-size': (1.4 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
     >
       Les ergothérapeutes travaillent dans des institutions
-      <strong style="color: teal">du secteur public, dans le secteur subventionné, mais également dans le privé</strong>. Selon l'organisation des services auxquels ils sont rattachés, les ergothérapeutes ont donc à faire à des
+      <strong :class="{'text-teal': !$store.getters.invertBrightness}">du secteur public, dans le secteur subventionné, mais également dans le privé</strong>. Selon l'organisation des services auxquels ils sont rattachés, les ergothérapeutes ont donc à faire à des
       populations très diversifiées.
     </p>
     <div class="group-list">
@@ -38,6 +41,7 @@
         </h1>
         <ul
           class="group-ul"
+          :class="{'ul-teal': !$store.getters.invertBrightness}"
           :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
         >
           <li>Hôpitaux Universitaires de Genève</li>
@@ -69,7 +73,15 @@
 
 <script>
 export default {
-  name: 'Group'
+  name: 'Group',
+  computed: {
+    background() {
+      if (this.$store.getters.invertBrightness) {
+        return '#424242'
+      }
+      return 'transparent'
+    }
+  }
 }
 </script>
 
@@ -100,6 +112,18 @@ export default {
 
 .paragraph {
   max-width: 80%;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-teal {
+  color: teal;
+}
+
+.ul-teal {
+  border-color: teal;
 }
 
 @media screen and (max-width: 1025px) {

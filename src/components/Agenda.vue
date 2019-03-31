@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 29th March 2019
+ * Last Modified: 31st March 2019
  */
 <template>
   <FlexContainer
@@ -16,9 +16,6 @@
     column
     padding-top="50px"
   >
-    <h1 class="app-section-title title-1 center">
-      Calendrier
-    </h1>
     <v-progress-circular
       v-if="loading"
       :size="70"
@@ -47,7 +44,10 @@
       :close-on-click="false"
       origin
     >
-      <v-card class="calendar-event-card">
+      <v-card
+        class="calendar-event-card"
+        :dark="$store.getters.invertBrightness"
+      >
         <div class="event-toolbar">
           <v-btn
             :href="selectedEvent.htmlLink"

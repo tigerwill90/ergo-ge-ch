@@ -1,5 +1,5 @@
 <template>
-  <FlexContainer>
+  <FlexContainer :background-color="background">
     <v-timeline
       v-if="!$vuetify.breakpoint.xs"
       :dense="$vuetify.breakpoint.smAndDown"
@@ -18,7 +18,10 @@
             content
           />
         </span>
-        <v-card class="elevation-2">
+        <v-card
+          class="elevation-2"
+          :dark="$store.getters.invertBrightness"
+        >
           <v-card-title class="title">
             {{ item.title }}
           </v-card-title>
@@ -34,20 +37,21 @@
             <a
               :href="download.url"
               target="_blank"
+              :class="{'text-white': $store.getters.invertBrightness}"
             >{{ download.name }}</a>
             <v-btn
               small
               icon
               :href="download.url + '?disposition=download'"
             >
-              <v-icon color="green">
+              <v-icon :color="color">
                 cloud_download
               </v-icon>
             </v-btn>
           </div>
           <v-card-text
             v-if="item.ref"
-            class="card-sub-ref"
+            :class="{'card-sub-ref': !$store.getters.invertBrightness}"
             :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
           >
             {{ item.ref }}
@@ -63,13 +67,14 @@
         v-for="(item, i) in items"
         :key="i"
         class="section"
+        :class="{'text-white': $store.getters.invertBrightness}"
       >
         <div class="section-title">
           <span class="title text-xs-center">{{ item.title }}</span>
         </div>
         <div
           :class="{ 'section-content': !item.download }"
-          class="subheading"
+          :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
         >
           {{ item.description }}
         </div>
@@ -81,6 +86,7 @@
             <a
               :href="download.url"
               target="_blank"
+              :style="{'font-size': (0.8 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
             >{{ download.name }}</a>
             <v-btn
               small
@@ -153,6 +159,20 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    color() {
+      if (this.$store.getters.invertBrightness) {
+        return 'white'
+      }
+      return 'green'
+    },
+    background() {
+      if (this.$store.getters.invertBrightness && this.$vuetify.breakpoint.xs) {
+        return '#424242'
+      }
+      return 'transparent'
+    }
   }
 }
 </script>
@@ -170,6 +190,10 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 16px;
+}
+
+.text-white {
+  color: white;
 }
 
 .section-container {

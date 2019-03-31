@@ -5,7 +5,7 @@ html, body {
 
 ul {
   list-style-type: none;
-  border-left: 3px solid teal;
+  border-left: 3px solid;
 }
 
 p {
@@ -21,7 +21,6 @@ p {
   font-weight: 400;
   margin: 0 0 2rem 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.54);
 }
 
 .app-section-title.title-1 {
@@ -48,6 +47,10 @@ p {
   color: white;
 }
 
+.app-section-title.cDark {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .app-section-title.font-600 {
   font-weight: 600;
 }
@@ -60,7 +63,6 @@ p {
   font-weight: 400;
   margin: 0 0 1rem 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.54);
 }
 
 .app-section-subtitle.title-1 {
@@ -77,6 +79,10 @@ p {
 
 .app-section-subtitle.cWhite {
   color: white;
+}
+
+.app-section-subtitle.cDark {
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .app-section-subtitle.cBlack {

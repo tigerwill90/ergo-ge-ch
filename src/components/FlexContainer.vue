@@ -40,7 +40,7 @@ export default {
     },
     backgroundColor: {
       type: String,
-      default: 'none'
+      default: 'transparent'
     },
     paddingTop: {
       type: String,
