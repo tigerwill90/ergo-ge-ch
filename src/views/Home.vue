@@ -55,6 +55,7 @@ export default {
     }
   },
   computed: {
+    // TODO refactor links
     links() {
       if (this.$store.getters.windowSize.x > 500) {
         return [

@@ -264,7 +264,7 @@ export default {
   z-index: 1000;
   background-color: #4db6ac;
   box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 0px 0 rgba(0, 0, 0, 0.12);
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 0 0 rgba(0, 0, 0, 0.12);
   width: 100%;
   left: 0;
 }

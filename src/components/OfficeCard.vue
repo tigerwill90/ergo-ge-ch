@@ -16,12 +16,15 @@
     elevation="5"
   >
     <div class="office-card-title">
-      <span class="subheading">{{ flatCategories }}</span>
+      <span
+        v-if="office.categories"
+        class="subheading"
+      >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
     </div>
     <div class="office-content">
       <div class="office-title">
         <span class="title">
-          {{ office.name }}
+          {{ office.name }} {{ showCard }}
         </span>
         <span class="subheading">
           {{ office.email }}
@@ -70,35 +73,24 @@ export default {
       type: Object,
       required: true
     },
-    filteredCategory: {
+    selectedCategories: {
       type: Array,
       required: true
     }
   },
   data() {
     return {
-      categories: [],
       flatCategories: ''
     }
   },
   computed: {
-    // TODO, correct filter bug when reverse sorting
+    /**
+     * Foreach categories, return directly true if match with one of the selected categories
+     */
     showCard() {
-      if (this.filteredCategory.length <= 0) return true
-      const res = this.categories.some(cat => this.filteredCategory.find(el => cat.name === el))
-      return res
+      if (this.selectedCategories.length <= 0 || this.office.categories === undefined) return true
+      return this.office.categories.some(cat => this.selectedCategories.find(el => cat.name === el))
     }
-  },
-  mounted() {
-    this.$http
-      .get(`${process.env.VUE_APP_API_URL}/offices/${this.office.id}/categories`)
-      .then(response => {
-        this.categories = response.data.data
-        this.flatCategories = this.categories.map(cat => cat.name).join(', ')
-      })
-      .catch(error => {
-        throw new Error(error.message)
-      })
   }
 }
 </script>

@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 25th April 2019
  */
 <template>
   <div class="filter-container">
@@ -81,8 +81,8 @@ export default {
     sort(officeKey) {
       this.$emit('sort-office', officeKey)
     },
-    selected(categories) {
-      this.$emit('filter-categories', categories)
+    selected(selectedCategories) {
+      this.$emit('filter-categories', selectedCategories)
     }
   }
 }
@@ -102,9 +102,5 @@ export default {
   max-width: 700px;
   display: flex;
   align-items: center;
-}
-
-.selector {
-  margin: 0;
 }
 </style>

@@ -18,7 +18,11 @@ if (browser && browser.name === 'ie' /* && parseInt(browser.version) < 11 */) {
   alert('Wow... Your browser look really old, we can do anything for you')
   window.location.replace('http://ergo-ge-independants.ch')
 } else {
-  loadApp()
+  loadApp().catch(err => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(err.message)
+    }
+  })
 }
 
 async function loadApp() {
@@ -51,6 +55,6 @@ async function loadApp() {
       render: h => h(App)
     }).$mount('#app')
   } catch (e) {
-    throw new Error(e.message)
+    throw e
   }
 }

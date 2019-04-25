@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 25th April 2019
  */
 <template>
   <div class="therapist-content">
@@ -20,7 +20,7 @@
       v-for="(office, i) in offices"
       :key="i"
       :office="office"
-      :filtered-category="categories"
+      :selected-categories="selectedCategories"
     />
   </div>
 </template>
@@ -36,10 +36,9 @@ export default {
   },
   data() {
     return {
-      title: 'Les indépendants',
       offices: [],
       currentOrderKey: 'name',
-      categories: []
+      selectedCategories: []
     }
   },
   mounted() {
@@ -47,6 +46,16 @@ export default {
       .get(`${process.env.VUE_APP_API_URL}/offices`)
       .then(response => {
         this.offices = response.data.data
+        this.offices.forEach(office => {
+          this.$http
+            .get(`${process.env.VUE_APP_API_URL}/offices/${office.id}/categories`)
+            .then(response => {
+              this.$set(office, 'categories', response.data.data)
+            })
+            .catch(error => {
+              throw new Error(error.message)
+            })
+        })
       })
       .catch(error => {
         throw new Error(error.message)
@@ -102,18 +111,14 @@ export default {
       }
       this.currentOrderKey = key
     },
-    filter(categories) {
-      this.categories = categories
+    filter(selectedCategories) {
+      this.selectedCategories = selectedCategories
     }
   }
 }
 </script>
 
 <style scoped>
-.therapist-main {
-  background-color: #f5f5f5;
-}
-
 .therapist-content {
   padding: 0 24px 24px 24px;
 }
