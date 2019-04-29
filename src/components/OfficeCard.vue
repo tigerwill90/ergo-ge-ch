@@ -12,8 +12,10 @@
 <template>
   <v-card
     v-if="showCard"
+    id="office-card"
     class="office-card"
     elevation="5"
+    @click="openDialog"
   >
     <div class="office-card-title">
       <span
@@ -30,7 +32,10 @@
           {{ office.email }}
         </span>
       </div>
-      <div class="office-bloc">
+      <div
+        v-if="$vuetify.breakpoint.mdAndUp"
+        class="office-bloc"
+      >
         <v-icon class="icon">
           location_city
         </v-icon>
@@ -42,7 +47,10 @@
         </div>
       </div>
     </div>
-    <v-expansion-panel class="expansion-panel">
+    <v-expansion-panel
+      v-if="$vuetify.breakpoint.mdAndUp"
+      class="expansion-panel"
+    >
       <v-expansion-panel-content lazy>
         <div
           slot="header"
@@ -56,6 +64,39 @@
         </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
+    <v-dialog
+      v-else
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      lazy
+      attach="#office-card"
+      class="dialog"
+      scrollable
+    >
+      <article class="dialog-content">
+        <div class="teal lighten-2 toolbar">
+          <div class="title toolbar-title">
+            {{ office.name }}
+          </div>
+          <v-btn
+            flat
+            color="white"
+            icon
+            @click="openDialog"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </div>
+        <OfficeContact
+          :contacts="office.contacts"
+        />
+        <TherapistTab
+          :id="office.id"
+          tab-header-color="#fafafa"
+        />
+      </article>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -80,7 +121,8 @@ export default {
   },
   data() {
     return {
-      flatCategories: ''
+      flatCategories: '',
+      dialog: false
     }
   },
   computed: {
@@ -90,6 +132,20 @@ export default {
     showCard() {
       if (this.selectedCategories.length <= 0 || this.office.categories === undefined) return true
       return this.office.categories.some(cat => this.selectedCategories.find(el => cat.name === el))
+    }
+  },
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'windowSize' && state.windowSize.x >= 960) {
+        this.dialog = false
+      }
+    })
+  },
+  methods: {
+    openDialog() {
+      if (this.$store.getters.windowSize.x < 960) {
+        this.dialog = !this.dialog
+      }
     }
   }
 }
@@ -165,5 +221,41 @@ export default {
 .panel-box {
   display: flex;
   flex-direction: column;
+}
+
+.dialog {
+  position: absolute;
+  z-index: 3000;
+}
+
+.dialog-content {
+  background-color: #fafafa;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  height: 64px;
+  background-color: teal;
+  display: flex;
+  align-items: center;
+  padding: 0 5px 0 10px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+.toolbar-title {
+  color: white;
+  flex: 1;
+}
+@media screen and (max-width: 960px) {
+  .office-card {
+    width: 100%;
+    margin-top: 30px;
+    position: relative;
+    cursor: pointer;
+  }
 }
 </style>

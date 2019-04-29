@@ -1,5 +1,4 @@
 /*
-import { get } from 'http';
  * File: Toolbar.vue
  * Project: Ergotherapeute
  * **********************
@@ -8,7 +7,7 @@ import { get } from 'http';
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 29th April 2019
  */
 <template>
   <v-toolbar

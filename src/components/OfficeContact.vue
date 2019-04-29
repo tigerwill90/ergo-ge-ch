@@ -7,42 +7,57 @@
  * **********************
  * License: MIT License
  * Created Date: 29th March 2019
- * Last Modified: 30th March 2019
+ * Last Modified: 29th April 2019
  */
 <template>
-  <div class="contacts-box">
+  <div
+    class="contacts-box"
+    :style="{
+      margin: margin
+    }"
+  >
     <div
       v-for="(contact, i) in contacts"
       :key="i"
       class="contact"
+      :class="{divider: i < contacts.length - 1}"
     >
-      <v-icon
-        class="icon"
-        large
+      <div
+        class="address-wrapper"
+        :class="{column: smallSize}"
       >
-        location_city
-      </v-icon>
-      <div class="address">
-        <span class="subheading"><strong>Rue :</strong> {{ contact.street }}</span>
-        <span class="subheading"><strong>Ville :</strong> {{ contact.npa }} {{ contact.city }}</span>
-        <span class="subheading"><strong>C.p. :</strong> {{ contact.cp }} </span>
+        <v-icon
+          class="icon"
+          large
+        >
+          location_city
+        </v-icon>
+        <div
+          class="address"
+        >
+          <span class="subheading"><strong>Rue :</strong> {{ contact.street }}</span>
+          <span class="subheading"><strong>Ville :</strong> {{ contact.npa }} {{ contact.city }}</span>
+          <span class="subheading"><strong>C.p. :</strong> {{ contact.cp }} </span>
+        </div>
       </div>
-      <v-icon
-        v-if="contact.phone || contact.fax"
-        class="icon"
-        large
-      >
-        contact_phone
-      </v-icon>
-      <div class="phone">
-        <span
-          v-if="contact.phone"
-          class="subheading"
-        ><strong>Tél :</strong> {{ contact.phone }} </span>
-        <span
-          v-if="contact.fax"
-          class="subheading"
-        ><strong>Fax :</strong> {{ contact.fax }}</span>
+      <div class="phone-wrapper">
+        <v-icon
+          v-if="contact.phone || contact.fax"
+          class="icon"
+          large
+        >
+          contact_phone
+        </v-icon>
+        <div class="phone">
+          <span
+            v-if="contact.phone"
+            class="subheading"
+          ><strong>Tél :</strong> {{ contact.phone }} </span>
+          <span
+            v-if="contact.fax"
+            class="subheading"
+          ><strong>Fax :</strong> {{ contact.fax }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -54,7 +69,32 @@ export default {
     contacts: {
       type: Array,
       required: true
+    },
+    margin: {
+      type: String,
+      default: '15px 24px 15px 24px'
     }
+  },
+  data() {
+    return {
+      smallSize: false
+    }
+  },
+  mounted() {
+    if (this.$store.getters.windowSize.x < 800) {
+      this.smallSize = true
+    } else {
+      this.smallSize = false
+    }
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'windowSize') {
+        if (state.windowSize.x < 800) {
+          this.smallSize = true
+        } else {
+          this.smallSize = false
+        }
+      }
+    })
   }
 }
 </script>
@@ -62,28 +102,52 @@ export default {
   .contacts-box {
     display: flex;
     flex-direction: column;
-    margin: 15px 24px 15px 24px;
   }
 
   .contact {
     display: flex;
-    margin: 5px 0 5px 0;
+    padding: 10px 0 10px 0;
     align-items: center;
   }
 
-  .address {
+  .contact.divider {
+    border-bottom: 1px solid rgba(0,0,0,.12);
+  }
+
+  .address-wrapper {
+    display: flex;
+    flex: 1.5;
+  }
+
+  .phone-wrapper {
+    display: flex;
     flex: 1;
+  }
+
+  .address {
     display: flex;
     flex-direction: column;
   }
 
+  .address-wrapper.column {
+    margin-bottom: 15px;
+  }
+
   .phone {
-    flex: 1;
     display: flex;
     flex-direction: column;
   }
 
   .icon {
     margin-right: 10px;
+  }
+
+  @media screen and (max-width: 800px) {
+    .contact {
+      display: flex;
+      padding: 10px 0 10px 0;
+      align-items: stretch;
+      flex-direction: column;
+    }
   }
 </style>

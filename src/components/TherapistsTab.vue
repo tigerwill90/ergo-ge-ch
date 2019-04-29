@@ -7,10 +7,13 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 29th April 2019
  */
 <template>
-  <v-tabs>
+  <v-tabs
+    show-arrows
+    :color="tabHeaderColor"
+  >
     <v-tabs-slider color="teal" />
     <v-tab
       v-for="(therapist, i) in therapists"
@@ -131,6 +134,10 @@ export default {
     id: {
       type: Number,
       required: true
+    },
+    tabHeaderColor: {
+      type: String,
+      default: 'none'
     }
   },
   data() {
