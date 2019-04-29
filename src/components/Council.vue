@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 30th March 2019
+ * Last Modified: 29th April 2019
  */
 <template>
   <FlexContainer
@@ -16,8 +16,8 @@
     class="council-main"
     padding-top="150px"
     padding-bottom="150px"
-    padding-left="50px"
-    padding-right="50px"
+    padding-left="10%"
+    padding-right="10%"
   >
     <div class="council-desc">
       <div

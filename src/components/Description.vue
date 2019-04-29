@@ -1,5 +1,9 @@
 <template>
-  <FlexContainer :background-color="background">
+  <FlexContainer
+    :background-color="background"
+    padding-left="10%"
+    padding-right="10%"
+  >
     <v-timeline
       v-if="!$vuetify.breakpoint.xs"
       :dense="$vuetify.breakpoint.smAndDown"

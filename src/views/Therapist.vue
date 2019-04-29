@@ -7,22 +7,26 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 25th April 2019
+ * Last Modified: 29th April 2019
  */
 <template>
-  <div class="therapist-content">
-    <OfficesFilter
-      @sort-office="sort"
-      @filter-categories="filter"
-    />
+  <section class="therapist-content">
+    <div class="filter-content">
+      <OfficesFilter
+        @sort-office="sort"
+        @filter-categories="filter"
+      />
+    </div>
     <v-divider />
-    <OfficeCard
-      v-for="(office, i) in offices"
-      :key="i"
-      :office="office"
-      :selected-categories="selectedCategories"
-    />
-  </div>
+    <div class="cards-content">
+      <OfficeCard
+        v-for="(office, i) in offices"
+        :key="i"
+        :office="office"
+        :selected-categories="selectedCategories"
+      />
+    </div>
+  </section>
 </template>
 
 <script>
@@ -120,6 +124,14 @@ export default {
 
 <style scoped>
 .therapist-content {
-  padding: 0 24px 24px 24px;
+  padding-bottom: 24px;
+}
+
+.filter-content {
+  padding: 0 5% 0 5%;
+}
+
+.cards-content {
+  padding: 0 5% 0 5%;
 }
 </style>
