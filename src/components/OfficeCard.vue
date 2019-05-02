@@ -17,18 +17,38 @@
     elevation="5"
     @click="openDialog"
   >
-    <div class="office-card-title">
+    <div
+      v-if="$store.getters.windowSize.x > 775"
+      class="office-card-title"
+    >
+      <span
+        v-if="office.categories"
+        class="subheading"
+      >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
+    </div>
+    <div
+      v-else
+      class="office-small-categories"
+    >
       <span
         v-if="office.categories"
         class="subheading"
       >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
     </div>
     <div class="office-content">
-      <div class="office-title">
-        <span class="title">
-          {{ office.name }} {{ showCard }}
+      <div
+        class="office-title"
+      >
+        <span
+          class="title"
+          style="word-break: break-word;"
+        >
+          {{ office.name }}
         </span>
-        <span class="subheading">
+        <span
+          class="subheading"
+          style="word-break: break-all;"
+        >
           {{ office.email }}
         </span>
       </div>
@@ -72,7 +92,6 @@
       lazy
       attach="#office-card"
       class="dialog"
-      scrollable
     >
       <article class="dialog-content">
         <div class="teal lighten-2 toolbar">
@@ -90,10 +109,12 @@
         </div>
         <OfficeContact
           :contacts="office.contacts"
+          margin="15px 24px 15px 24px"
         />
         <TherapistTab
           :id="office.id"
           tab-header-color="#fafafa"
+          margin="0 15px 10px 15px"
         />
       </article>
     </v-dialog>
@@ -161,13 +182,11 @@ export default {
 .office-card-title {
   display: flex;
   align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
   background-color: #424242;
   position: absolute;
   min-width: 200px;
   max-width: 90%;
-  height: 30px;
+  padding: 3px 20px 3px 20px;
   color: white;
   top: -15px;
   left: 10px;
@@ -181,6 +200,14 @@ export default {
   padding: 35px 10px 20px 15px;
   width: 100%;
   height: 100%;
+  flex: 2;
+}
+
+.office-small-categories {
+  display: flex;
+  background-color: #424242;
+  padding: 3px 20px 3px 20px;
+  color: white;
 }
 
 .office-title {
@@ -230,10 +257,11 @@ export default {
 
 .dialog-content {
   background-color: #fafafa;
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 65px;
 }
 
 .toolbar {
@@ -244,6 +272,10 @@ export default {
   padding: 0 5px 0 10px;
   box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 0 0 rgba(0, 0, 0, 0.12);
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
 }
 
 .toolbar-title {
@@ -256,6 +288,15 @@ export default {
     margin-top: 30px;
     position: relative;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  .office-content {
+    display: flex;
+    padding: 25px 10px 25px 15px;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

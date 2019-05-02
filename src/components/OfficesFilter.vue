@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 25th April 2019
+ * Last Modified: 30th April 2019
  */
 <template>
   <div class="filter-container">
@@ -102,5 +102,14 @@ export default {
   max-width: 700px;
   display: flex;
   align-items: center;
+}
+
+@media screen and (max-width: 450px){
+  .categories-selector {
+    min-width: 200px;
+    max-width: 700px;
+    display: flex;
+    align-items: center;
+  }
 }
 </style>

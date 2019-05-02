@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 29th March 2019
- * Last Modified: 29th April 2019
+ * Last Modified: 2nd May 2019
  */
 <template>
   <div
@@ -16,6 +16,10 @@
       margin: margin
     }"
   >
+    <span class="title contacts-title">
+      <span v-if="contacts.length > 1">Adresses et contacts</span>
+      <span v-else>Adresse et contact</span>
+    </span>
     <div
       v-for="(contact, i) in contacts"
       :key="i"
@@ -72,7 +76,7 @@ export default {
     },
     margin: {
       type: String,
-      default: '15px 24px 15px 24px'
+      default: '0 24px 15px 24px'
     }
   },
   data() {
@@ -81,14 +85,14 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.getters.windowSize.x < 800) {
+    if (this.$store.getters.windowSize.x < 650) {
       this.smallSize = true
     } else {
       this.smallSize = false
     }
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'windowSize') {
-        if (state.windowSize.x < 800) {
+        if (state.windowSize.x < 650) {
           this.smallSize = true
         } else {
           this.smallSize = false
@@ -99,6 +103,11 @@ export default {
 }
 </script>
 <style scoped>
+
+  .contacts-title {
+    margin: 20px 10px 10px 0;
+  }
+
   .contacts-box {
     display: flex;
     flex-direction: column;
@@ -142,7 +151,7 @@ export default {
     margin-right: 10px;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 650px) {
     .contact {
       display: flex;
       padding: 10px 0 10px 0;
