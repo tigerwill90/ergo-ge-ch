@@ -1,5 +1,5 @@
 <template>
-  <div
+  <section
     :style="{
       padding: paddingTop + ' ' + paddingRight + ' ' + paddingBottom + ' ' + paddingLeft,
       'background-color': backgroundColor,
@@ -19,7 +19,7 @@
     class="flex-container"
   >
     <slot />
-  </div>
+  </section>
 </template>
 
 <script>
