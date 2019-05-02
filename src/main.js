@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 2nd May 2019
  */
 import '@babel/polyfill'
 import { detect } from 'detect-browser'
@@ -41,6 +41,7 @@ async function loadApp() {
     await import('./global-components')
     const { default: VueAxios } = await import('./plugins/vueaxios')
     const { default: axios } = await import('axios')
+    const { VueReCaptcha } = await import('vue-recaptcha-v3')
     const { default: store } = await import('./store')
     await import('./plugins/asyncComputed')
     const { default: router } = await import('./router')
@@ -48,6 +49,7 @@ async function loadApp() {
 
     Vue.config.productionTip = false
     Vue.use(VueAxios, axios)
+    Vue.use(VueReCaptcha, { siteKey: '6LeeaKEUAAAAAKYNOQ6BYb-XO4VKhtAf0GLOhTzE' })
 
     new Vue({
       router,
