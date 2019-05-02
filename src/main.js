@@ -49,7 +49,7 @@ async function loadApp() {
 
     Vue.config.productionTip = false
     Vue.use(VueAxios, axios)
-    Vue.use(VueReCaptcha, { siteKey: '6LeeaKEUAAAAAKYNOQ6BYb-XO4VKhtAf0GLOhTzE' })
+    Vue.use(VueReCaptcha, { siteKey: process.env.VUE_APP_RECAPTCHA_PUBLIC_KEY })
 
     new Vue({
       router,
