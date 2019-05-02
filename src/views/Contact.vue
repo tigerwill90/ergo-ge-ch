@@ -28,7 +28,6 @@
           type="text"
           label="Prénom et nom"
           required
-          autofocus
           :rules="nameRules"
           :counter="50"
           box
@@ -107,10 +106,10 @@ export default {
       if (this.$refs.form.validate()) {
         this.$recaptcha('login')
           .then(token => {
-            console.log(token)
+            console.log('working in progress')
           })
           .catch(err => {
-            console.log(err)
+            throw err
           })
       }
     }
