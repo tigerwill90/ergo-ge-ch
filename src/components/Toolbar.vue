@@ -68,6 +68,7 @@
       :loading="false"
       hide-details
       style="margin-left: 20px"
+      type="search"
     />
     <v-btn
       icon
