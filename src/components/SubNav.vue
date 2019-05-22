@@ -243,7 +243,7 @@ export default {
 }
 
 .main-content {
-  background-image: url("../assets/img/background.svg");
+  background-color: #fafafa;
 }
 
 .center-text {
