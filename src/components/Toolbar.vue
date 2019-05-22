@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 2nd May 2019
+ * Last Modified: 22nd May 2019
  */
 <template>
   <v-toolbar
@@ -76,33 +76,26 @@
     >
       <v-icon>search</v-icon>
     </v-btn>
-    <AccessiblityMenu />
-    <v-menu
-      bottom
-      left
-      offset-y
-      :close-on-content-click="false"
-      attach="#toolbar"
+    <AccessiblityMenu v-if="$store.getters.user" />
+    <v-btn
+      v-else
+      icon
+      @click="goTo({name: 'login'})"
     >
-      <template v-slot:activator="{ on }">
-        <v-btn
-          icon
-          v-on="on"
-        >
-          <v-icon>perm_identity</v-icon>
-        </v-btn>
-      </template>
-      <v-card />
-    </v-menu>
+      <v-icon>perm_identity</v-icon>
+    </v-btn>
+    <UserMenu />
   </v-toolbar>
 </template>
 
 <script>
 import AccessiblityMenu from './AccessiblityMenu'
+import UserMenu from './UserMenu'
 export default {
   name: 'Toolbar',
   components: {
-    AccessiblityMenu
+    AccessiblityMenu,
+    UserMenu
   },
   data() {
     return {
@@ -118,7 +111,7 @@ export default {
   },
   computed: {
     showMenu() {
-      return this.$store.getters.windowSize.x < 830
+      return this.$store.getters.windowSize.x < 880
     },
     header() {
       return this.$route.meta.header

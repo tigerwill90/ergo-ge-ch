@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 26th February 2019
- * Last Modified: 2nd May 2019
+ * Last Modified: 22nd May 2019
  */
 <template>
   <v-app v-resize="onResize">

@@ -50,8 +50,8 @@ export default {
   mixins: [Scrolling('home'), HandleScroll()],
   data() {
     return {
-      title: 'Ergo-ge-independants.ch',
-      subtitle: "La section genevoise de l'Association Suisse des Ergothérapeutes\xa0!"
+      title: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
+      subtitle: 'ergotherapie-ge.ch'
     }
   },
   computed: {

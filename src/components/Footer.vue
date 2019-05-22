@@ -47,7 +47,6 @@
       v-model="snackbar"
       bottom
       left
-      vertical
       :timeout="6000"
     >
       {{ message }}

@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 26th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 22nd May 2019
  */
 <template>
   <v-navigation-drawer
@@ -157,7 +157,7 @@ export default {
       }
     },
     forceHide() {
-      return this.$store.getters.windowSize.x < 830
+      return this.$store.getters.windowSize.x < 880
     },
     items() {
       return [

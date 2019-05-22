@@ -45,7 +45,9 @@ export default new Vuex.Store({
     notification: {
       status: null,
       message: null
-    }
+    },
+    user: null,
+    authorization: null
   },
   mutations: {
     windowSize: (state, windowSize) => {
@@ -82,6 +84,12 @@ export default new Vuex.Store({
     notification: (state, { status, message }) => {
       state.notification.status = status
       state.notification.message = message
+    },
+    user: (state, user) => {
+      state.user = user
+    },
+    authorization: (state, authorization) => {
+      state.authorization = authorization
     }
   },
   actions: {},
@@ -92,6 +100,8 @@ export default new Vuex.Store({
     fontSizeMultiplier: state => state.fontSizeMultiplier,
     flatToolbar: state => state.flatToolbar,
     invertBrightness: state => state.invertBrightness,
-    notification: state => state.success
+    notification: state => state.success,
+    user: state => state.user,
+    authorization: state => state.authorization
   }
 })

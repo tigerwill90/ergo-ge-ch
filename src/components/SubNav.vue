@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 22nd May 2019
  */
 <template>
   <div
@@ -85,8 +85,8 @@
 
 <script>
 // TODO implements STATE PATTERN
-const mobileWidth = 495
-const desktopExtendedHeaderWidth = 580
+const mobileWidth = 580
+const desktopExtendedHeaderWidth = 600
 const extendedScrollTrigger = 252
 const minExtendedScrollTrigger = 152
 const minimizedScrollTrigger = 122
@@ -219,21 +219,21 @@ export default {
 }
 
 .sub-nav-title {
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin: 45px 50px 20px 50px;
   display: flex;
   justify-content: center;
 }
 
 .sub-nav-subtitle {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: center;
 }
 
 .sub-nav-title-only {
-  padding-left: 20px;
-  margin-top: 50px;
+  padding: 0 20px 0 20px;
+  margin: 45px 0 20px 0;
+  text-align: center;
 }
 
 .sub-nav-button {
@@ -284,7 +284,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 745px) {
+@media screen and (max-width: 900px) {
   .sub-nav-button {
     display: none;
   }

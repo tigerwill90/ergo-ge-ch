@@ -7,11 +7,13 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 13th March 2019
+ * Last Modified: 22nd May 2019
  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
+import store from './store'
+import axios from 'axios'
 
 Vue.use(Router)
 
@@ -57,6 +59,24 @@ const router = new Router({
       }
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/Login.vue'),
+      meta: {
+        title: 'Connectez-vous',
+        header: 'Connection'
+      }
+    },
+    {
+      path: '/management',
+      name: 'management',
+      component: () => import('./views/Management.vue'),
+      meta: {
+        title: 'Gestion des données',
+        header: 'Gestion'
+      }
+    },
+    {
       path: '*',
       redirect: '/'
     }
@@ -68,7 +88,22 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
-  next()
+  // TODO maybe we can handle the to.name login in the next
+  if (store.getters.authorization === null && to.name !== 'login') {
+    axios.get(`${process.env.VUE_APP_API_URL}/auth/token`, { withCredentials: true })
+      .then(response => {
+        store.commit('user', response.data.data.user)
+        store.commit('authorization', response.data.data.authorization)
+        next()
+      })
+      .catch(() => {
+        store.commit('user', null)
+        store.commit('authorization', null)
+        next()
+      })
+  } else {
+    next()
+  }
 })
 
 export default router

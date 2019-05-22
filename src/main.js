@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 2nd May 2019
+ * Last Modified: 22nd May 2019
  */
 import '@babel/polyfill'
 import { detect } from 'detect-browser'
@@ -15,8 +15,8 @@ import { detect } from 'detect-browser'
 const browser = detect()
 
 if (browser && browser.name === 'ie' /* && parseInt(browser.version) < 11 */) {
-  alert('Wow... Your browser look really old, we can\'t do anything for you :)')
-  window.location.replace('http://ergo-ge-independants.ch')
+  alert('Désolé votre navigateur internet est trop vieux, il n\'est pas supporté par notre application. Vous allez être redirigé')
+  window.location.replace('https://www.google.com/intl/fr/chrome')
 } else {
   loadApp().catch(err => {
     if (process.env.NODE_ENV === 'development') {
@@ -42,9 +42,9 @@ async function loadApp() {
     const { default: VueAxios } = await import('./plugins/vueaxios')
     const { default: axios } = await import('axios')
     const { VueReCaptcha } = await import('vue-recaptcha-v3')
+    const { default: router } = await import('./router')
     const { default: store } = await import('./store')
     await import('./plugins/asyncComputed')
-    const { default: router } = await import('./router')
     const { default: App } = await import('./App')
 
     Vue.config.productionTip = false
