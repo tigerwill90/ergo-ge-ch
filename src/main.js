@@ -15,7 +15,7 @@ import { detect } from 'detect-browser'
 const browser = detect()
 
 if (browser && browser.name === 'ie' /* && parseInt(browser.version) < 11 */) {
-  alert('Wow... Your browser look really old, we can do anything for you')
+  alert('Wow... Your browser look really old, we can\'t do anything for you :)')
   window.location.replace('http://ergo-ge-independants.ch')
 } else {
   loadApp().catch(err => {

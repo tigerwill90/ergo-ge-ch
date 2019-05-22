@@ -92,7 +92,7 @@
           <v-icon>perm_identity</v-icon>
         </v-btn>
       </template>
-      <v-card>yolo</v-card>
+      <v-card />
     </v-menu>
   </v-toolbar>
 </template>

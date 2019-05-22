@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 26th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 22nd May 2019
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -41,6 +41,10 @@ export default new Vuex.Store({
         options.offset = 110
         return options
       }
+    },
+    notification: {
+      status: null,
+      message: null
     }
   },
   mutations: {
@@ -74,6 +78,10 @@ export default new Vuex.Store({
     },
     flatToolbar: (state, value) => {
       state.flatToolbar = value
+    },
+    notification: (state, { status, message }) => {
+      state.notification.status = status
+      state.notification.message = message
     }
   },
   actions: {},
@@ -83,6 +91,7 @@ export default new Vuex.Store({
     selector: state => state.selector,
     fontSizeMultiplier: state => state.fontSizeMultiplier,
     flatToolbar: state => state.flatToolbar,
-    invertBrightness: state => state.invertBrightness
+    invertBrightness: state => state.invertBrightness,
+    notification: state => state.success
   }
 })

@@ -41,12 +41,12 @@
           box
         />
         <v-text-field
-          v-model="object"
+          v-model="subject"
           type="text"
           label="Objet du message"
           required
           :counter="60"
-          :rules="objectRules"
+          :rules="subjectRules"
           box
         />
         <v-textarea
@@ -81,7 +81,7 @@ export default {
       valid: false,
       name: '',
       email: '',
-      object: '',
+      subject: '',
       message: '',
       nameRules: [
         v => !!v || 'Nom et prénom requis',
@@ -91,25 +91,43 @@ export default {
         v => !!v || 'Email requis',
         v => /.+@.+/.test(v) || 'L\'email doit être valide'
       ],
-      objectRules: [
+      subjectRules: [
         v => !!v || 'Objet requis',
-        v => v.length <= 60 || 'Maximum 60 caractères'
+        v => (v.length <= 100 && v.length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 100'
       ],
       messageRules: [
         v => !!v || 'Message requis',
-        v => v.length <= 1000 || 'Maximum 1000 caractère'
+        v => (v.length <= 1000 && v.length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 1000'
       ]
     }
   },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        this.$recaptcha('login')
+        this.$recaptcha('social')
           .then(token => {
-            console.log('working in progress')
+            this.$http
+              .post(`${process.env.VUE_APP_API_URL}/emails/send`, {
+                name: this.name,
+                email: this.email,
+                subject: this.subject,
+                message: this.message,
+                token: token
+              })
+              .then(response => {
+                this.$refs.form.resetValidation()
+                this.name = ''
+                this.email = ''
+                this.subject = ''
+                this.message = ''
+                this.$store.commit('notification', { status: response.status, message: 'Message envoyé avec succès' })
+              })
+              .catch(err => {
+                this.$store.commit('notification', { status: err.response.status, message: 'Impossbile d\'envoyé le message' })
+              })
           })
           .catch(err => {
-            throw err
+            this.$store.commit('notification', { status: err.response.status, message: 'Impossbile d\'envoyé le message' })
           })
       }
     }

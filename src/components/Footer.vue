@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 22nd May 2019
  */
 <template>
   <v-footer
@@ -43,6 +43,22 @@
         &copy;{{ date.getFullYear() }} —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
       </v-card-actions>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      bottom
+      left
+      vertical
+      :timeout="6000"
+    >
+      {{ message }}
+      <v-btn
+        color="pink"
+        flat
+        @click="snackbar = false"
+      >
+        Fermé
+      </v-btn>
+    </v-snackbar>
   </v-footer>
 </template>
 
@@ -52,8 +68,18 @@ export default {
   data() {
     return {
       date: new Date(),
+      snackbar: false,
+      message: null,
       version: process.env.VUE_APP_VERSION
     }
+  },
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'notification') {
+        this.snackbar = true
+        this.message = state.notification.message
+      }
+    })
   }
 }
 </script>
