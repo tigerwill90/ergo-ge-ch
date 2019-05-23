@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 29th April 2019
+ * Last Modified: 23rd May 2019
  */
 <template>
   <FlexContainer
@@ -82,8 +82,7 @@ export default {
   data() {
     return {
       councils: [
-        { name: 'Alison Borda', imageUrl: `${process.env.VUE_APP_API_URL}/images/ironman` },
-        { name: 'Myriam Fonjallaz', imageUrl: `${process.env.VUE_APP_API_URL}/images/hulk` },
+        { name: 'Cyril Defort', imageUrl: `${process.env.VUE_APP_API_URL}/images/ironman` },
         { name: 'Séverine Fries', imageUrl: `${process.env.VUE_APP_API_URL}/images/thor` },
         { name: 'Sandra Pereira', imageUrl: `${process.env.VUE_APP_API_URL}/images/blackwidow` }
       ],

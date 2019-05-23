@@ -18,20 +18,18 @@
     @click="openDialog"
   >
     <div
-      v-if="$store.getters.windowSize.x > 775"
+      v-if="$store.getters.windowSize.x > 775 && office.categories"
       class="office-card-title"
     >
       <span
-        v-if="office.categories"
         class="subheading"
       >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
     </div>
     <div
-      v-else
+      v-if="$store.getters.windowSize.x <= 775 && office.categories"
       class="office-small-categories"
     >
       <span
-        v-if="office.categories"
         class="subheading"
       >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
     </div>

@@ -145,7 +145,8 @@
               Chaque ergothérapeute est spécialisé dans un ou plusieurs domaines. Renseigner chacune de vos spécialités permet
               au patient de touver un ergothérapeute plus facilement.
             </p>
-            <div class="contacts-box">
+            <div class="category-box">
+              <v-icon>category</v-icon>
               <div
                 class="contacts-list"
               >
@@ -153,7 +154,7 @@
                   :items="categoriesList"
                   label="Catégories"
                   item-text="name"
-                  item-value="name"
+                  return-object
                   flat
                   chips
                   multiple
@@ -164,6 +165,28 @@
                   @change="selectCategories"
                 />
               </div>
+            </div>
+            <div class="submit">
+              <v-btn
+                class="warning"
+                @click="cancel()"
+              >
+                Annuler
+              </v-btn>
+              <v-btn
+                v-if="updateMode"
+                class="primary"
+                @click="updateTherapist()"
+              >
+                Modifier le cabinet
+              </v-btn>
+              <v-btn
+                v-else
+                class="primary"
+                @click="createTherapist()"
+              >
+                Créer le cabinet
+              </v-btn>
             </div>
           </v-form>
         </div>
@@ -211,13 +234,13 @@
                     <div class="action">
                       <v-btn
                         color="primary"
-                        @click="prepareUpdate(office)"
+                        @click="prepareUpdate(therapist)"
                       >
                         Modifier
                       </v-btn>
                       <v-btn
                         color="warning"
-                        @click="remove(office, i)"
+                        @click="remove(therapist, i)"
                       >
                         Supprimer
                       </v-btn>
@@ -243,6 +266,7 @@ export default {
   mixins: [admin()],
   data() {
     return {
+      id: -1,
       therapists: [],
       offices: [],
       titles: ['Mme.', 'M.', 'Dr.', 'Pr.'],
@@ -256,13 +280,13 @@ export default {
       categories: [],
       home: false,
       valid: false,
-      panel: [true]
+      panel: [true],
+      updateMode: !this.isAdmin()
     }
   },
   mounted() {
     // Fetch office
     this.emails.push('')
-    this.categories.push('')
     this.phones.push({ type: '', number: '' })
 
     // fetch offices and therapists
@@ -278,7 +302,8 @@ export default {
             this.therapists = response.data.data
           })
           .catch(err => {
-            this.$store.commit('notification', { status: err.response.status, message: 'Impossible d\'afficher cette ergothérapeute' })
+            this.therapists = []
+            this.$store.commit('notification', { status: err.response.status, message: 'Ce cabinet n\'a pas d\'ergothérapeutes' })
           })
       })
       .catch(err => {
@@ -301,8 +326,52 @@ export default {
           this.therapists = response.data.data
         })
         .catch(err => {
-          this.$store.commit('notification', { status: err.response.status, message: 'Impossible d\'afficher cet ergothérapeute' })
+          this.therapists = []
+          if (err.response.status === 404) {
+            this.$store.commit('notification', { status: err.response.status, message: 'Aucun ergothérapeute trouvé pour ce cabinet' })
+          } else {
+            this.$store.commit('notification', { status: err.response.status, message: 'Impossible d\'afficher la liste des ergothérapeutes pour ce cabinet' })
+          }
         })
+    },
+    remove(therapist, id) {
+      this.$http.delete(`${process.env.VUE_APP_API_URL}/therapists/${therapist.id}`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+        }
+      })
+        .then(response => {
+          this.therapists.splice(id, 1)
+          this.$store.commit('notification', { status: 200, message: `L'ergothérapeute ${therapist.first_name} ${therapist.last_name} a bien été supprimé` })
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+          // TODO try to reconnect then delete authorization
+            this.$store.commit('authorization', null)
+            this.$store.commit('notification', { status: err.response.status, message: 'Session expirée, vous devez vous reconneter' })
+          } else {
+            this.$store.commit('notification', { status: err.response.status, message: 'Oups, une erreur inattendu est survenu' })
+          }
+        })
+    },
+    createTherapist() {
+
+    },
+    updateTherapist() {
+
+    },
+    cancel() {
+      this.$refs.form.resetValidation()
+      this.id = -1
+      this.title = ''
+      this.first_name = ''
+      this.last_name = ''
+      this.home = false
+      this.emails = ['']
+      this.categories = []
+      this.categoriesList = []
+      this.phones = [{ type: '', number: '' }]
+      this.updateMode = !this.isAdmin()
     },
     addNewTherapistEmail() {
       this.emails.push('')
@@ -413,10 +482,23 @@ export default {
     margin: 10px 0 15px 0;
   }
 
+  .category-box {
+    background: #bbdefb;
+    border-radius: 5px;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 0 15px 0;
+  }
+
   .new-entity {
     background: #cfd8dc;
     display: flex;
     align-items: center;
     padding: 0 0 0 10px;
+  }
+
+  .submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

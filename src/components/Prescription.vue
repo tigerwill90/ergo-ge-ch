@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 31st March 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 23rd May 2019
  */
 <template>
   <FlexContainer
@@ -32,14 +32,24 @@
       >
         assignment
       </v-icon>
-      <a
-        class="subheading"
-        :href="prescriptionUrl"
-        target="_blank"
-        :class="{'text-white': $store.getters.invertBrightness}"
-      >
-        Ordonnance pour l'Ergothérapie (pdf)
-      </a>
+      <div class="document-list">
+        <a
+          class="subheading"
+          :href="prescriptionUrl"
+          target="_blank"
+          :class="{'text-white': $store.getters.invertBrightness}"
+        >
+          Ordonnance pour l'Ergothérapie (pdf)
+        </a>
+        <a
+          class="subheading"
+          :href="indicationUrl"
+          target="_blank"
+          :class="{'text-white': $store.getters.invertBrightness}"
+        >
+          Indication pour le formulaire d'ordonnance (pdf)
+        </a>
+      </div>
     </div>
   </FlexContainer>
 </template>
@@ -48,7 +58,8 @@ export default {
   name: 'Prescription',
   data() {
     return {
-      prescriptionUrl: process.env.VUE_APP_PDF_PRESCRIPTION_URL
+      prescriptionUrl: process.env.VUE_APP_PDF_PRESCRIPTION_URL,
+      indicationUrl: process.env.VUE_APP_PDF_INDICATION_URL
     }
   },
   computed: {
@@ -88,5 +99,11 @@ export default {
 
 .text-teal {
   color: teal;
+}
+
+.document-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

@@ -126,7 +126,7 @@
             <div class="submit">
               <v-btn
                 class="warning"
-                @click="cancel()"
+                @click="reset()"
               >
                 Annuler
               </v-btn>
@@ -309,7 +309,7 @@ export default {
           }
         })
     },
-    cancel() {
+    reset() {
       this.$refs.form.resetValidation()
       this.id = -1
       this.name = ''
@@ -370,17 +370,7 @@ export default {
           }
         })
           .then(response => {
-            this.$refs.form.resetValidation()
-            this.email = ''
-            this.name = ''
-            this.contacts = [{
-              city: '',
-              cp: '',
-              fax: '',
-              npa: '',
-              phone: '',
-              street: ''
-            }]
+            this.reset()
             this.offices.push(response.data.data)
             this.$store.commit('notification', { status: response.status, message: 'Office ajoutée' })
           })
