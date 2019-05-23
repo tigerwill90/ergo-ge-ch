@@ -4,8 +4,7 @@
     padding-right="10%"
   >
     <article
-      v-if="admin"
-      class="admin-content"
+      class="article-content"
     >
       <span class="app-section-title title-1">Gestion des cabinets</span>
       <div class="offices-panel">
@@ -15,9 +14,14 @@
             v-model="valid"
             class="form-input-box"
           >
-            <p>
+            <p v-if="isAdmin()">
               Le nom du cabinet un identifiant unique. En temps qu'administrateur,
               vous pouvez modifier et supprimer l'ensemble des cabinets. <strong>Soyez prudent !</strong>
+            </p>
+            <p v-else>
+              Le nom du cabinet un identifiant unique. En temps qu'utilisateur de la plateforme ASE - Section Genevoise,
+              vous pouvez modifier les informations concernant votre cabinet. Si vous souhaitez ajouter ou supprimer des cabinets,
+              merci d'envoyer une demande via le formulaire de contact.
             </p>
             <div class="information-box">
               <v-icon>contact_mail</v-icon>
@@ -121,6 +125,12 @@
             </div>
             <div class="submit">
               <v-btn
+                class="warning"
+                @click="cancel()"
+              >
+                Annuler
+              </v-btn>
+              <v-btn
                 v-if="updateMode"
                 class="primary"
                 @click="updateOffice()"
@@ -197,9 +207,6 @@
         </div>
       </div>
     </article>
-    <article v-else>
-      yola
-    </article>
   </FlexContainer>
 </template>
 <script>
@@ -214,12 +221,13 @@ export default {
   data() {
     return {
       offices: [],
+      id: -1,
       name: '',
       email: '',
       contacts: [],
       valid: false,
       panel: [true],
-      updateMode: false,
+      updateMode: !this.isAdmin(),
       nameRules: [
         v => !!v || 'Le nom du cabinet est requis',
         v => (v.length <= 45 || v.length >= 3) || 'Le nombre de caractères doit être compris entre 3 et 45'
@@ -266,7 +274,11 @@ export default {
     })
 
     // Fetch office
-    this.$http.get(`${process.env.VUE_APP_API_URL}/offices`)
+    let url = `${process.env.VUE_APP_API_URL}/offices`
+    if (!this.isAdmin()) {
+      url = `${process.env.VUE_APP_API_URL}/users/${this.$store.getters.user.id}/offices`
+    }
+    this.$http.get(url)
       .then(response => {
         this.offices = response.data.data
       })
@@ -297,11 +309,26 @@ export default {
           }
         })
     },
-    prepareUpdate(office) {
+    cancel() {
       this.$refs.form.resetValidation()
+      this.id = -1
+      this.name = ''
+      this.email = ''
+      this.contacts = [{
+        city: '',
+        cp: '',
+        fax: '',
+        npa: '',
+        phone: '',
+        street: ''
+      }]
+      this.updateMode = !this.isAdmin()
+    },
+    prepareUpdate(office) {
+      this.id = office.id
       this.email = office.email
       this.name = office.name
-      this.contacts = office.contacts
+      this.contacts = JSON.parse(JSON.stringify(office.contacts)) // clone array
       this.updateMode = true
     },
     addNewOfficeContact() {
@@ -371,13 +398,64 @@ export default {
       }
     },
     updateOffice() {
-      console.log('yolo')
+      if (this.$refs.form.validate()) {
+        this.contacts.forEach(contact => {
+          if (contact.cp === '') {
+            delete contact.cp
+          }
+          if (contact.phone === '') {
+            delete contact.phone
+          }
+          if (contact.fax === '') {
+            delete contact.fax
+          }
+        })
+      }
+      this.$http({
+        method: 'PUT',
+        url: `${process.env.VUE_APP_API_URL}/offices/${this.id}`,
+        headers: {
+          Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+        },
+        data: {
+          name: this.name,
+          email: this.email,
+          contacts: this.contacts
+        }
+      })
+        .then(response => {
+          this.$refs.form.resetValidation()
+          this.email = ''
+          this.name = ''
+          this.contacts = [{
+            city: '',
+            cp: '',
+            fax: '',
+            npa: '',
+            phone: '',
+            street: ''
+          }]
+          const pos = this.offices.map(office => office.id).indexOf(this.id)
+          this.offices.splice(pos, 1, response.data.data)
+          this.$store.commit('notification', { status: response.status, message: 'Office ajoutée' })
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            // TODO try to reconnect then delete authorization
+            this.$store.commit('authorization', null)
+            this.$store.commit('notification', { status: err.response.status, message: 'Session expirée, vous devez vous reconneter' })
+          } else if (err.response.status === 409) {
+            this.$store.commit('notification', { status: err.response.status, message: 'L\'adresse email ou le nom du cabinet existe déjà' })
+          } else {
+            this.$store.commit('notification', { status: err.response.status, message: 'Oups, une erreur inattendu est survenu' })
+          }
+        })
     }
   }
 }
 </script>
 <style scoped>
-  .admin-content {
+  .article-content {
     display: flex;
     flex-direction: column;
     width: 100%;
