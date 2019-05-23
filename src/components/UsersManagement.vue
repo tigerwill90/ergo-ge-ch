@@ -3,11 +3,8 @@
     padding-left="10%"
     padding-right="10%"
   >
-    <article v-if="admin">
-      yolo
-    </article>
-    <article v-else>
-      yola
+    <article>
+      <span class="app-section-title title-1">Gestion des utilisateurs</span>
     </article>
   </FlexContainer>
 </template>

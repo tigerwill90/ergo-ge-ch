@@ -15,11 +15,11 @@
             class="form-input-box"
           >
             <p v-if="isAdmin()">
-              Le nom du cabinet un identifiant unique. En temps qu'administrateur,
+              Le nom du cabinet est un identifiant unique. En temps qu'administrateur,
               vous pouvez modifier et supprimer l'ensemble des cabinets. <strong>Soyez prudent !</strong>
             </p>
             <p v-else>
-              Le nom du cabinet un identifiant unique. En temps qu'utilisateur de la plateforme ASE - Section Genevoise,
+              Le nom du cabinet est un identifiant unique. En temps qu'utilisateur de la plateforme ASE - Section Genevoise,
               vous pouvez modifier les informations concernant votre cabinet. Si vous souhaitez ajouter ou supprimer des cabinets,
               merci d'envoyer une demande via le formulaire de contact.
             </p>
