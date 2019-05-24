@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 27th February 2019
- * Last Modified: 2nd May 2019
+ * Last Modified: 23rd May 2019
  */
 <template>
   <article class="therapists-box">
@@ -28,7 +28,7 @@
         :key="i"
         class="text-none"
       >
-        {{ therapist.title }} {{ therapist.lastname }}
+        {{ therapist.title }} {{ therapist.last_name }}
       </v-tab>
       <v-tabs-items>
         <v-tab-item
@@ -41,7 +41,7 @@
                 <v-icon class="icon">
                   person
                 </v-icon>
-                <span class="app-section-subtitle title-1 font-600 no-margin">{{ therapist.title }} {{ therapist.firstname }} {{ therapist.lastname }}</span>
+                <span class="app-section-subtitle title-1 font-600 no-margin">{{ therapist.title }} {{ therapist.first_name }} {{ therapist.last_name }}</span>
               </div>
               <div class="therapist-title-home">
                 <template v-if="therapist.home">

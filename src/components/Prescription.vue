@@ -22,7 +22,7 @@
       :class="{'text-white': $store.getters.invertBrightness}"
     >
       Le traitement d'ergothérapie est pris en charge par <strong :class="{'text-teal': !$store.getters.invertBrightness}">les assurances sociales</strong> (AI, AA, AM)
-      ainsi que par <strong :class="{'text-teal': !$store.getters.invertBrightness}">les caisses maladies</strong> (LAMal) lorsqu'il est prescrit par un médecin
+      ainsi que par <strong :class="{'text-teal': !$store.getters.invertBrightness}">les caisses maladies</strong> (LAMal) lorsqu'il est prescrit par un médecin.
     </p>
     <div class="prescription-document-container">
       <v-icon

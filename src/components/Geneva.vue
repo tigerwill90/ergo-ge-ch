@@ -7,7 +7,7 @@
  * **********************
  * License: MIT License
  * Created Date: 13th February 2019
- * Last Modified: 31st March 2019
+ * Last Modified: 23rd May 2019
  */
 <template>
   <FlexContainer
@@ -31,7 +31,7 @@
       >
         <strong :class="{'text-teal': !$store.getters.invertBrightness}">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes
         membres de l’ASE qui sont domiciliés à Genève ou qui en font la demande par écrit au secrétariat central de
-        l’Association
+        l’Association.
       </p>
     </div>
     <div
