@@ -17,6 +17,14 @@
       </div>
     </article>
     <article class="form-box">
+      <v-progress-circular
+        v-if="loading"
+        :size="70"
+        :width="5"
+        color="teal"
+        indeterminate
+        class="calendar-progress"
+      />
       <span class="app-section-title title-2 cDark">Contactez nous par email</span>
       <v-form
         ref="form"
@@ -63,6 +71,7 @@
           <v-btn
             large
             color="primary"
+            :disabled="loading"
             @click="submit"
           >
             Envoyer
@@ -83,6 +92,7 @@ export default {
       email: '',
       subject: '',
       message: '',
+      loading: false,
       nameRules: [
         v => !!v || 'Nom et prénom requis',
         v => v.length <= 50 || 'Maximum 50 caractères'
@@ -104,6 +114,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.loading = true
         this.$recaptcha('social')
           .then(token => {
             this.$http
@@ -115,6 +126,7 @@ export default {
                 token: token
               })
               .then(response => {
+                this.loading = false
                 this.$refs.form.resetValidation()
                 this.name = ''
                 this.email = ''
@@ -123,10 +135,12 @@ export default {
                 this.$store.commit('notification', { status: response.status, message: 'Message envoyé avec succès' })
               })
               .catch(err => {
+                this.loading = false
                 this.$store.commit('notification', { status: err.response.status, message: 'Impossbile d\'envoyé le message' })
               })
           })
           .catch(err => {
+            this.loading = false
             this.$store.commit('notification', { status: err.response.status, message: 'Impossbile d\'envoyé le message' })
           })
       }
@@ -182,6 +196,16 @@ export default {
 
   .information-paragraph {
     font-size: 1.5em;
+  }
+
+  .calendar-progress {
+    margin: auto;
+    position: relative;
+    top: 50%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
   }
 
   @media screen and (max-width: 1330px) {
