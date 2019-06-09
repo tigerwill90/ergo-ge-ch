@@ -9,8 +9,8 @@
   </FlexContainer>
 </template>
 <script>
-import admin from '../mixins/admin'
-import FlexContainer from './FlexContainer'
+import admin from '../../mixins/admin'
+import FlexContainer from '../FlexContainer'
 export default {
   name: 'UsersManagement',
   components: {

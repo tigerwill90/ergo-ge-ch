@@ -136,12 +136,13 @@ export default {
               })
               .catch(err => {
                 this.loading = false
-                this.$store.commit('notification', { status: err.response.status, message: 'Impossbile d\'envoyé le message' })
+                console.log(err.response)
+                this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
               })
           })
           .catch(err => {
             this.loading = false
-            this.$store.commit('notification', { status: err.response.status, message: 'Impossbile d\'envoyé le message' })
+            this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
           })
       }
     }
