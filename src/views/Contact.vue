@@ -37,7 +37,7 @@
           label="Prénom et nom"
           required
           :rules="nameRules"
-          :counter="50"
+          :counter="45"
           box
         />
         <v-text-field
@@ -45,6 +45,7 @@
           type="email"
           label="Email"
           :rules="emailRules"
+          :counter="250"
           required
           box
         />
@@ -53,7 +54,7 @@
           type="text"
           label="Objet du message"
           required
-          :counter="60"
+          :counter="100"
           :rules="subjectRules"
           box
         />
@@ -96,19 +97,25 @@ export default {
       loading: false,
       nameRules: [
         v => !!v || 'Nom et prénom requis',
-        v => v.length <= 50 || 'Maximum 50 caractères'
+        v => v.length >= 3 || 'Minimum 3 caractères',
+        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le prénom et le nom ne doivent contenir aucun caractères spéciaux: Ex : Tony Stark',
+        v => v.length <= 45 || 'Maximum 45 caractères'
       ],
       emailRules: [
         v => !!v || 'Email requis',
-        v => /.+@.+/.test(v) || 'L\'email doit être valide'
+        v => v.toString().length >= 5 || 'Minimum 5 caractères',
+        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide',
+        v => v.toString().length <= 250 || 'Maximum 250 caractères'
       ],
       subjectRules: [
         v => !!v || 'Objet requis',
-        v => (v.length <= 100 && v.length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 100'
+        v => v.length >= 5 || 'Minimum 5 caractères',
+        v => v.length <= 100 || 'Maximum 100 caractères'
       ],
       messageRules: [
         v => !!v || 'Message requis',
-        v => (v.length <= 1000 && v.length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 1000'
+        v => v.length >= 5 || 'Minimum 5 caractères',
+        v => v.length <= 1000 || 'Maximum 1000 caractères'
       ]
     }
   },
@@ -150,8 +157,8 @@ export default {
                 this.$store.commit('notification', { status: response.status, message: 'Message envoyé avec succès' })
               })
               .catch(err => {
-                this.loading = false
                 console.log(err.response)
+                this.loading = false
                 this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
               })
           })
