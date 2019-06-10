@@ -43,6 +43,7 @@ import TherapistsManagement from '../components/managements/therapists/Therapist
 import UsersManagement from '../components/managements/UsersManagement'
 import CategoriesManagement from '../components/managements/CategoriesManagement'
 import admin from '../mixins/admin'
+import store from '../store'
 export default {
   name: 'Management',
   components: {
@@ -64,20 +65,39 @@ export default {
         { to: 'therapists', title: 'Ergothérapeutes' },
         { to: 'users', title: 'Utilisateurs' },
         { to: 'categories', title: 'Catégories' }
-      ]
+      ],
+      unsubscribe: null
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (!store.getters.authorization) {
+      store.dispatch('reconnect').then(user => {
+        console.log('before management, success')
+        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        store.dispatch('setReconnectInterval')
+        next()
+      }).catch(() => {
+        console.log('before management, fail')
+        next()
+      })
+    } else {
+      next()
     }
   },
   mounted() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'authorization' && this.$router.currentRoute.name === 'management') {
-        if (mutation.payload === null) {
-          this.$router.push({ name: 'login' })
-        }
+    // If client is unauthenticated, go to login
+    if (!this.$store.getters.authorization) {
+      this.$router.push({ name: 'login' })
+      return
+    }
+
+    // Subscribe to authorization mutation, don't forget to unsubscribe. Maybe not the best way to do that
+    this.unsubscribe = this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'authorization' && !mutation.payload) {
+        this.unsubscribe()
+        this.$router.push({ name: 'login' })
       }
     })
-    if (this.$store.getters.authorization === null) {
-      this.$router.push({ name: 'login' })
-    }
 
     // admin or user
     let url = `${process.env.VUE_APP_API_URL}/offices`
@@ -109,6 +129,11 @@ export default {
       .catch(err => {
         this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
       })
+  },
+  destroyed() {
+    if (this.unsubscribe) {
+      this.unsubscribe()
+    }
   },
   methods: {
     createOffice(office) {

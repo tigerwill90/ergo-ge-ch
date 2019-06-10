@@ -48,6 +48,7 @@
   </section>
 </template>
 <script>
+import store from '../store'
 export default {
   name: 'Login',
   data() {
@@ -62,6 +63,22 @@ export default {
       passwordRules: [
         v => !!v || 'Mot de passe requis'
       ]
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (!store.getters.authorization) {
+      store.dispatch('reconnect').then(user => {
+        console.log('before login, success')
+        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        store.dispatch('setReconnectInterval')
+        next(vm => vm.$router.push({ name: 'home' }))
+      }).catch(() => {
+        console.log('before login, failure')
+        next()
+      })
+    } else {
+      console.log('before login, go -1')
+      next(vm => vm.$router.go(-1))
     }
   },
   methods: {
@@ -80,6 +97,7 @@ export default {
             this.$store.commit('user', response.data.data.user)
             this.$store.commit('authorization', response.data.data.authorization)
             this.$store.commit('notification', { status: response.status, message: 'Vous êtes connecter' })
+            this.$store.dispatch('setReconnectInterval')
             this.$router.go(-1)
           })
           .catch(err => {

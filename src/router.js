@@ -12,8 +12,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'
-import store from './store'
-import axios from 'axios'
 
 Vue.use(Router)
 
@@ -73,7 +71,7 @@ const router = new Router({
       component: () => import('./views/Management.vue'),
       meta: {
         title: 'Gestion des données',
-        header: 'Gestion'
+        header: 'Management'
       }
     },
     {
@@ -88,22 +86,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
-  // TODO maybe we can handle the to.name login in the next
-  if (store.getters.authorization === null && to.name !== 'login') {
-    axios.get(`${process.env.VUE_APP_API_URL}/auth/token`, { withCredentials: true })
-      .then(response => {
-        store.commit('user', response.data.data.user)
-        store.commit('authorization', response.data.data.authorization)
-        next()
-      })
-      .catch(() => {
-        store.commit('user', null)
-        store.commit('authorization', null)
-        next()
-      })
-  } else {
-    next()
-  }
+  next()
 })
 
 export default router

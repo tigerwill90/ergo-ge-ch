@@ -11,6 +11,7 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -47,7 +48,8 @@ export default new Vuex.Store({
       message: null
     },
     user: null,
-    authorization: null
+    authorization: null,
+    attempt: 0
   },
   mutations: {
     windowSize: (state, windowSize) => {
@@ -90,9 +92,44 @@ export default new Vuex.Store({
     },
     authorization: (state, authorization) => {
       state.authorization = authorization
+    },
+    attempt: (state) => {
+      state.attempt++
     }
   },
-  actions: {},
+  actions: {
+    reconnect({ commit }) {
+      return new Promise((resolve, reject) => {
+        console.log('fetching authorization')
+        axios.get(`${process.env.VUE_APP_API_URL}/auth/token`, { withCredentials: true })
+          .then(response => {
+            commit('user', response.data.data.user)
+            commit('authorization', response.data.data.authorization)
+            resolve(response.data.data.user)
+          })
+          .catch(err => {
+            commit('attempt')
+            commit('user', null)
+            commit('authorization', null)
+            reject(err)
+          })
+      })
+    },
+    setReconnectInterval({ dispatch, state }) {
+      if (state.authorization !== null) {
+        const delay = ((state.authorization.expires_in - 10) - Math.floor(Date.now() / 1000)) * 1000
+        console.log(delay)
+        const timeout = setTimeout(() => {
+          dispatch('reconnect').then(() => {
+            dispatch('setReconnectInterval')
+          }).catch(() => {
+            console.log('timeout clear')
+            clearTimeout(timeout)
+          })
+        }, delay)
+      }
+    }
+  },
   getters: {
     windowSize: state => state.windowSize,
     drawer: state => state.drawer,
@@ -102,6 +139,7 @@ export default new Vuex.Store({
     invertBrightness: state => state.invertBrightness,
     notification: state => state.success,
     user: state => state.user,
-    authorization: state => state.authorization
+    authorization: state => state.authorization,
+    attempt: state => state.attempt
   }
 })

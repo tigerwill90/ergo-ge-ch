@@ -111,10 +111,6 @@ export default {
           this.$store.commit('notification', { status: 200, message: `Le cabinet ${office.name} a bien été supprimé` })
         })
         .catch(err => {
-          if (err.response.status === 401) {
-            // TODO try to reconnect then delete authorization
-            this.$store.commit('authorization', null)
-          }
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
     }

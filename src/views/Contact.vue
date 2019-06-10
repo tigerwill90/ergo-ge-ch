@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   name: 'Contact',
   data() {
@@ -109,6 +110,20 @@ export default {
         v => !!v || 'Message requis',
         v => (v.length <= 1000 && v.length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 1000'
       ]
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (!store.getters.authorization && store.getters.attempt <= 0) {
+      store.dispatch('reconnect').then(user => {
+        console.log('before contacts')
+        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        store.dispatch('setReconnectInterval')
+        next()
+      }).catch(() => {
+        next()
+      })
+    } else {
+      next()
     }
   },
   methods: {
