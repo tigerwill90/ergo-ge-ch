@@ -86,7 +86,7 @@
                       :key="j"
                       class="subheading"
                       style="word-break: break-all;"
-                    >{{ email }}</span>
+                    ><a :href="'mailto:' + email">{{ email }}</a></span>
                   </div>
                 </div>
                 <div
@@ -104,7 +104,7 @@
                       v-for="(phone, j) in therapist.phones"
                       :key="j"
                       class="subheading"
-                    >{{ phone.type }} {{ phone.number }}</span>
+                    >{{ phone.type }} <a :href="'tel:'+ phone.number">{{ phone.number }}</a></span>
                   </div>
                 </div>
               </div>

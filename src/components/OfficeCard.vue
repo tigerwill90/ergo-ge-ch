@@ -47,7 +47,7 @@
           class="subheading"
           style="word-break: break-all;"
         >
-          {{ office.email }}
+          <a :href="'mailto:' + office.email">{{ office.email }}</a>
         </span>
       </div>
       <div

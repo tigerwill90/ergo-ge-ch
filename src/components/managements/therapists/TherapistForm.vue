@@ -11,13 +11,15 @@
       class="form-input-box"
     >
       <p v-if="isAdmin()">
-        Les ergothérapeutes font parti d'un ou plusieurs cabinet. En temps qu'administrateur,
+        Un ergothérapeute ne fait parti que d'un seul cabinet. En temps qu'administrateur,
         vous pouvez modifier et supprimer l'ensemble des ergothérapeutes. <strong>Soyez prudent !</strong>
+        Vous pouvez ajouter un même ergothérapeute plusieurs fois pour l'associer à plusieurs cabinets.
       </p>
       <p v-else>
         En temps qu'utilisateur de la plateforme ASE - Section Genevoise,
         vous pouvez modifier les informations concernant les ergothérapeutes qui travaillent avec vous. Garder
         ces informations à jour permet aux patients de contacter un spécialiste plus facilement.
+        Vous pouvez ajouter un même ergothérapeute plusieurs fois pour l'associer à plusieurs cabinets
       </p>
       <div class="information-box">
         <v-icon>person</v-icon>
@@ -200,14 +202,14 @@
           class="primary"
           @click="updateTherapist()"
         >
-          Modifier le cabinet
+          Modifier l'ergothérapeute
         </v-btn>
         <v-btn
           v-else
           class="primary"
           @click="createTherapist()"
         >
-          Créer le cabinet
+          Créer l'ergothérapeute
         </v-btn>
       </div>
     </v-form>
@@ -430,5 +432,11 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    @media screen and (max-width: 500px){
+      .submit {
+        flex-direction: column;
+      }
     }
 </style>

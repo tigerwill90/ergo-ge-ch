@@ -56,11 +56,15 @@
           <span
             v-if="contact.phone"
             class="subheading"
-          ><strong>Tél :</strong> {{ contact.phone }} </span>
+          ><strong>Tél :</strong>
+            <a :href="'tel:'+ contact.phone"> {{ contact.phone }}</a>
+          </span>
           <span
             v-if="contact.fax"
             class="subheading"
-          ><strong>Fax :</strong> {{ contact.fax }}</span>
+          ><strong>Fax :</strong>
+            <a :href="'tel:'+ contact.fax"> {{ contact.fax }}</a>
+          </span>
         </div>
       </div>
     </div>
