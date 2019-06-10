@@ -2,6 +2,7 @@
   <FlexContainer
     padding-left="10%"
     padding-right="10%"
+    padding-bottom="50px"
   >
     <article class="article-content">
       <span class="app-section-title title-1">Gestion des ergothérapeutes</span>

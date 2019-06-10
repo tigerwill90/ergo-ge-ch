@@ -43,6 +43,7 @@
           <v-list-tile
             slot="activator"
             exact
+            :class="{currentLink: (item.link === $store.getters.selector.routeName)}"
             @click="goTo(item.link)"
           >
             <v-list-tile-content>
@@ -57,7 +58,9 @@
             @click="goTo(item.link, subItem.to)"
           >
             <v-list-tile-content>
-              <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+              <v-list-tile-title :class="{currentLink: ('#' + subItem.to === $store.getters.selector.currentHash)}">
+                {{ subItem.title }}
+              </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list-group>
@@ -100,7 +103,8 @@
           color="red"
           outline
           class="white--text"
-          disabled
+          :disabled="!!$store.getters.authorization"
+          @click="goTo('login')"
         >
           Connexion
           <v-icon
@@ -136,6 +140,10 @@ export default {
           title: 'Ordonnance pour l\'Ergothérapie (pdf)'
         },
         {
+          url: process.env.VUE_APP_PDF_INDICATION_URL,
+          title: 'Indication pour l\'ordonnance (pdf)'
+        },
+        {
           url: 'https://www.ergotherapie.ch/page-dacceuil',
           title: 'Association Suisse des Ergothérapeutes'
         },
@@ -160,7 +168,7 @@ export default {
       return this.$store.getters.windowSize.x < 880
     },
     items() {
-      return [
+      const menus = [
         {
           title: 'Accueil',
           icon: 'home',
@@ -187,6 +195,23 @@ export default {
           ]
         }
       ]
+
+      if (this.$store.getters.authorization) {
+        menus.push(
+          {
+            title: 'Management',
+            icon: 'business',
+            link: 'management',
+            items: [
+              { to: 'offices', title: 'Cabinets', active: false },
+              { to: 'therapists', title: 'Ergothérapeutes', active: false },
+              { to: 'users', title: 'Utilisateurs', active: false },
+              { to: 'categories', title: 'Catégories', active: false }
+            ]
+          }
+        )
+      }
+      return menus
     }
   },
   methods: {
@@ -197,6 +222,7 @@ export default {
         hash,
         routeName: link
       })
+      this.$store.commit('setCurrentHash', hash)
     }
   }
 }
@@ -275,5 +301,9 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 8px 0 8px 0;
+}
+
+.currentLink {
+  color: #d81b60;
 }
 </style>

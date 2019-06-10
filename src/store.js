@@ -30,6 +30,7 @@ export default new Vuex.Store({
       hash: null,
       routeName: null,
       activeLinkIndex: null,
+      currentHash: null,
       options: width => {
         const options = {
           duration: 300,
@@ -71,6 +72,9 @@ export default new Vuex.Store({
     setHashSelector: (state, hash) => {
       state.selector.hash = hash
     },
+    setCurrentHash: (state, hash) => {
+      state.selector.currentHash = hash
+    },
     setRouteName: (state, routeName) => {
       state.selector.routeName = routeName
     },
@@ -100,7 +104,6 @@ export default new Vuex.Store({
   actions: {
     reconnect({ commit }) {
       return new Promise((resolve, reject) => {
-        console.log('fetching authorization')
         axios.get(`${process.env.VUE_APP_API_URL}/auth/token`, { withCredentials: true })
           .then(response => {
             commit('user', response.data.data.user)

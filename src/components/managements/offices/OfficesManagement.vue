@@ -2,6 +2,7 @@
   <FlexContainer
     padding-left="10%"
     padding-right="10%"
+    padding-bottom="50px"
   >
     <article
       class="article-content"

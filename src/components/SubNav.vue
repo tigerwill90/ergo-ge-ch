@@ -182,6 +182,7 @@ export default {
         hash: '#' + link.to,
         routeName: this.$router.currentRoute.name
       })
+      this.$store.commit('setCurrentHash', '#' + link.to)
     }
   }
 }
