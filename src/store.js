@@ -118,12 +118,10 @@ export default new Vuex.Store({
     setReconnectInterval({ dispatch, state }) {
       if (state.authorization !== null) {
         const delay = ((state.authorization.expires_in - 10) - Math.floor(Date.now() / 1000)) * 1000
-        console.log(delay)
         const timeout = setTimeout(() => {
           dispatch('reconnect').then(() => {
             dispatch('setReconnectInterval')
           }).catch(() => {
-            console.log('timeout clear')
             clearTimeout(timeout)
           })
         }, delay)

@@ -60,7 +60,7 @@ export default {
       password: '',
       emailRules: [
         v => !!v || 'Email requis',
-        v => /.+@.+/.test(v) || 'L\'email doit être valide'
+        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide'
       ],
       passwordRules: [
         v => !!v || 'Mot de passe requis'
@@ -95,7 +95,7 @@ export default {
           .then(response => {
             this.$store.commit('user', response.data.data.user)
             this.$store.commit('authorization', response.data.data.authorization)
-            this.$store.commit('notification', { status: response.status, message: 'Vous êtes connecter' })
+            this.$store.commit('notification', { status: response.status, message: `Bienvenue ${response.data.data.user.first_name} ${response.data.data.user.last_name}` })
             this.$store.dispatch('setReconnectInterval')
             this.$router.go(-1)
           })
