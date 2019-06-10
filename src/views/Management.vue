@@ -72,12 +72,10 @@ export default {
   beforeRouteEnter (to, from, next) {
     if (!store.getters.authorization) {
       store.dispatch('reconnect').then(user => {
-        console.log('before management, success')
         store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
         store.dispatch('setReconnectInterval')
         next()
       }).catch(() => {
-        console.log('before management, fail')
         next()
       })
     } else {
