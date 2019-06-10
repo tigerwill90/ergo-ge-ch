@@ -38,6 +38,7 @@
           required
           :rules="nameRules"
           :counter="45"
+          :disabled="authenticated"
           box
         />
         <v-text-field
@@ -47,6 +48,7 @@
           :rules="emailRules"
           :counter="250"
           required
+          :disabled="authenticated"
           box
         />
         <v-text-field
@@ -95,6 +97,8 @@ export default {
       subject: '',
       message: '',
       loading: false,
+      authenticated: false,
+      unsubscribe: null,
       nameRules: [
         v => !!v || 'Nom et prénom requis',
         v => v.length >= 3 || 'Minimum 3 caractères',
@@ -132,6 +136,24 @@ export default {
       next()
     }
   },
+  mounted() {
+    if (this.$store.getters.user) {
+      this.name = `${this.$store.getters.user.first_name} ${this.$store.getters.user.last_name}`
+      this.email = this.$store.getters.user.email
+      this.authenticated = true
+    }
+    this.unsubscribe = this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'user' && !state.user) {
+        this.name = ''
+        this.email = ''
+        this.authenticated = false
+        this.$refs.form.resetValidation()
+      }
+    })
+  },
+  destroyed() {
+    this.unsubscribe()
+  },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
@@ -149,14 +171,15 @@ export default {
               .then(response => {
                 this.loading = false
                 this.$refs.form.resetValidation()
-                this.name = ''
-                this.email = ''
+                if (!this.$store.getters.user) {
+                  this.name = ''
+                  this.email = ''
+                }
                 this.subject = ''
                 this.message = ''
                 this.$store.commit('notification', { status: response.status, message: 'Message envoyé avec succès' })
               })
               .catch(err => {
-                console.log(err.response)
                 this.loading = false
                 this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
               })
