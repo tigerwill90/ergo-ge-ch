@@ -119,17 +119,21 @@ export default new Vuex.Store({
       })
     },
     setReconnectInterval({ dispatch, state }) {
-      if (state.authorization !== null) {
-        const delay = ((state.authorization.expires_in - 10) - Math.floor(Date.now() / 1000)) * 1000
-        const timeout = setTimeout(() => {
-          console.warn('reconnect', delay)
+      const interval = setInterval(() => {
+        if (!state.authorization) {
+          clearInterval(interval)
+          return
+        }
+        const now = Math.floor(Date.now() / 1000)
+        const exp = state.authorization.expires_in - 10
+        if (now >= exp) {
           dispatch('reconnect').then(() => {
-            dispatch('setReconnectInterval')
+            console.warn('reconnected')
           }).catch(() => {
-            clearTimeout(timeout)
+            clearInterval(interval)
           })
-        }, delay)
-      }
+        }
+      }, 1000)
     }
   },
   getters: {
