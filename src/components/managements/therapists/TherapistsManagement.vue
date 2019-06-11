@@ -83,6 +83,9 @@ export default {
   },
   methods: {
     removeTherapist(id) {
+      if (this.therapist.id === this.therapists[id].id) {
+        this.reset(false)
+      }
       this.$emit('remove-therapist', id)
     },
     selected(therapists) {
