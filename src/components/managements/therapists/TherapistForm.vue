@@ -309,6 +309,8 @@ export default {
         }).catch(err => {
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
+      } else {
+        this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour créer l\'ergothérapeute' })
       }
     },
     updateTherapist() {
@@ -336,6 +338,8 @@ export default {
         }).catch(err => {
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
+      } else {
+        this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour modifier l\'ergothérapeute' })
       }
     },
     reset() {
