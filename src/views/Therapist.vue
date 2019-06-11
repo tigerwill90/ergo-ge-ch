@@ -32,7 +32,6 @@
 <script>
 import OfficeCard from '../components/OfficeCard'
 import OfficesFilter from '../components/OfficesFilter'
-import store from '../store'
 export default {
   name: 'Therapist',
   components: {
@@ -46,20 +45,14 @@ export default {
       selectedCategories: []
     }
   },
-  beforeRouteEnter (to, from, next) {
-    if (!store.getters.authorization && store.getters.attempt <= 0) {
-      store.dispatch('reconnect').then(user => {
-        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
-        store.dispatch('setReconnectInterval')
-        next()
-      }).catch(() => {
-        next()
-      })
-    } else {
-      next()
-    }
-  },
   mounted() {
+    if (!this.$store.getters.authorization && this.$store.getters.attempt <= 0) {
+      this.$store.dispatch('reconnect').then(user => {
+        this.$store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        this.$store.dispatch('setReconnectInterval')
+      }).catch(() => {})
+    }
+
     this.$http
       .get(`${process.env.VUE_APP_API_URL}/offices`)
       .then(response => {

@@ -27,7 +27,6 @@ import Council from '../components/Council'
 import Group from '../components/Group'
 import Scrolling from '../mixins/scrolling'
 import HandleScroll from '../mixins/handleScroll'
-import store from '../store'
 export default {
   name: 'Section',
   components: {
@@ -37,19 +36,6 @@ export default {
     Group
   },
   mixins: [Scrolling('section'), HandleScroll()],
-  beforeRouteEnter (to, from, next) {
-    if (!store.getters.authorization && store.getters.attempt <= 0) {
-      store.dispatch('reconnect').then(user => {
-        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
-        store.dispatch('setReconnectInterval')
-        next()
-      }).catch(() => {
-        next()
-      })
-    } else {
-      next()
-    }
-  },
   data() {
     return {
       title: 'La Section Genevoise',
@@ -58,6 +44,14 @@ export default {
         { to: 'conseil', title: 'Comité' },
         { to: 'groupe', title: 'Groupes de travail' }
       ]
+    }
+  },
+  mounted() {
+    if (!this.$store.getters.authorization && this.$store.getters.attempt <= 0) {
+      this.$store.dispatch('reconnect').then(user => {
+        this.$store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        this.$store.dispatch('setReconnectInterval')
+      }).catch(() => {})
     }
   }
 }

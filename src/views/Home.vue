@@ -38,7 +38,6 @@ import Actuality from '../components/Actuality'
 import Prescription from '../components/Prescription'
 import Scrolling from '../mixins/scrolling'
 import HandleScroll from '../mixins/handleScroll'
-import store from '../store'
 export default {
   name: 'Home',
   components: {
@@ -53,19 +52,6 @@ export default {
     return {
       title: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
       subtitle: 'ergotherapie-ge.ch'
-    }
-  },
-  beforeRouteEnter (to, from, next) {
-    if (!store.getters.authorization && store.getters.attempt <= 0) {
-      store.dispatch('reconnect').then(user => {
-        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
-        store.dispatch('setReconnectInterval')
-        next()
-      }).catch(() => {
-        next()
-      })
-    } else {
-      next()
     }
   },
   computed: {
@@ -85,6 +71,14 @@ export default {
           { to: 'actu', title: 'Actualité' }
         ]
       }
+    }
+  },
+  mounted() {
+    if (!this.$store.getters.authorization && this.$store.getters.attempt <= 0) {
+      this.$store.dispatch('reconnect').then(user => {
+        this.$store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        this.$store.dispatch('setReconnectInterval')
+      }).catch(() => {})
     }
   }
 }
