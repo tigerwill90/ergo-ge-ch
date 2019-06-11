@@ -202,44 +202,16 @@ export default {
   methods: {
     reset() {
       this.$refs.form.resetValidation()
-      this.office.id = -1
-      this.office.name = ''
-      this.office.email = ''
-      this.office.contacts = [{
-        city: '',
-        cp: '',
-        fax: '',
-        npa: '',
-        phone: '',
-        street: ''
-      }]
       this.$emit('reset', !this.isAdmin())
     },
     addNewOfficeContact() {
-      this.office.contacts.push({
-        city: '',
-        cp: '',
-        fax: '',
-        npa: '',
-        phone: '',
-        street: ''
-      })
+      this.$emit('add-contact')
     },
     removeNewOfficeContact(id) {
-      this.office.contacts.splice(id, 1)
+      this.$emit('remove-contact', id)
     },
     cleanContacts() {
-      this.office.contacts.forEach(contact => {
-        if (!contact.cp) {
-          delete contact.cp
-        }
-        if (!contact.phone) {
-          delete contact.phone
-        }
-        if (!contact.fax) {
-          delete contact.fax
-        }
-      })
+      this.$emit('clean-contact')
     },
     createOffice() {
       if (this.$refs.form.validate()) {

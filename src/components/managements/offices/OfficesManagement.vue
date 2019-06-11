@@ -15,6 +15,9 @@
           @create-office="create"
           @update-office="update"
           @reset="reset"
+          @add-contact="addContact"
+          @remove-contact="removeContact"
+          @clean-contact="cleanContact"
         />
         <OfficesList
           :offices="offices"
@@ -76,11 +79,51 @@ export default {
       this.$emit('update-office', office)
     },
     remove(id) {
+      if (this.office.id === this.offices[id].id) {
+        this.reset(!this.isAdmin())
+      }
       this.$emit('remove-office', id)
     },
     reset(mode) {
+      this.office.id = -1
+      this.office.name = ''
+      this.office.email = ''
+      this.office.contacts = [{
+        city: '',
+        cp: '',
+        fax: '',
+        npa: '',
+        phone: '',
+        street: ''
+      }]
       this.updateMode = mode
       this.goTo('offices')
+    },
+    addContact() {
+      this.office.contacts.push({
+        city: '',
+        cp: '',
+        fax: '',
+        npa: '',
+        phone: '',
+        street: ''
+      })
+    },
+    removeContact(id) {
+      this.office.contacts.splice(id, 1)
+    },
+    cleanContact() {
+      this.office.contacts.forEach(contact => {
+        if (!contact.cp) {
+          delete contact.cp
+        }
+        if (!contact.phone) {
+          delete contact.phone
+        }
+        if (!contact.fax) {
+          delete contact.fax
+        }
+      })
     },
     goTo(to) {
       this.$store.commit('selector', {
