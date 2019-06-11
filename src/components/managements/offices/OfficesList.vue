@@ -29,12 +29,15 @@
                   <v-icon style="margin-right: 5px">
                     email
                   </v-icon>
-                  <span class="email-text">{{ office.email }}</span>
+                  <span class="email-text">
+                    <a :href="'mailto:' + office.email">{{ office.email }}</a>
+                  </span>
                 </div>
                 <div class="office-action">
                   <v-btn
                     v-if="$store.getters.windowSize.x >= 500"
                     color="primary"
+                    class="text-none"
                     @click="$emit('prepare-update', office)"
                   >
                     Modifier
@@ -50,6 +53,7 @@
                   <v-btn
                     v-if="isAdmin() && $store.getters.windowSize.x >= 500"
                     color="warning"
+                    class="text-none"
                     @click="remove(office, i)"
                   >
                     Supprimer
@@ -147,7 +151,7 @@ export default {
         display: flex;
         align-items: center;
         height: 40px;
-        margin-left: 8px;
+        margin: 0 0 5px 8px;
     }
 
     .email-text {

@@ -192,21 +192,21 @@
       </div>
       <div class="submit">
         <v-btn
-          class="warning"
+          class="warning text-none"
           @click="reset()"
         >
           Annuler
         </v-btn>
         <v-btn
           v-if="updateMode"
-          class="primary"
+          class="primary text-none"
           @click="updateTherapist()"
         >
           Modifier l'ergothérapeute
         </v-btn>
         <v-btn
           v-else
-          class="primary"
+          class="primary text-none"
           @click="createTherapist()"
         >
           Créer l'ergothérapeute

@@ -42,13 +42,13 @@
                     <span
                       v-for="(email, e) in therapist.emails"
                       :key="e"
-                    >{{ email }}</span>
+                    ><a :href="'mailto:' + email">{{ email }}</a></span>
                   </div>
                 </div>
                 <div class="action">
                   <v-btn
                     v-if="$store.getters.windowSize.x >= 500"
-                    color="primary"
+                    class="primary text-none"
                     @click="prepareUpdate(therapist)"
                   >
                     Modifier
@@ -63,7 +63,7 @@
                   </v-btn>
                   <v-btn
                     v-if="$store.getters.windowSize.x >= 500"
-                    color="warning"
+                    class="warning text-none"
                     @click="remove(therapist, i)"
                   >
                     Supprimer
