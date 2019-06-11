@@ -121,7 +121,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 50px 50px 5px 50px;
+    padding: 50px 10% 5px 10%;
     text-align: center;
   }
 
@@ -135,6 +135,7 @@ export default {
     flex: 1;
     align-items: center;
     justify-content: center;
+    padding: 30px 0 50px 0;
   }
 
   .form-input-box {
