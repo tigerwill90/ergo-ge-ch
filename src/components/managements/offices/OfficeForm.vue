@@ -1,7 +1,6 @@
 <template>
   <div
     id="officeForm"
-    ref="officeForm"
     class="add-offices"
   >
     <v-form

@@ -1,7 +1,6 @@
 <template>
   <div
     id="therapistForm"
-    ref="therapistForm"
     class="add-therapist"
   >
     <v-form
