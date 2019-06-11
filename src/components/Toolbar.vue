@@ -124,7 +124,7 @@ export default {
     showSearchBar() {
       this.searchBar = !this.searchBar
     },
-    goTo(link, to) {
+    goTo(link) {
       this.$router.push({ name: link.name })
       this.$store.commit('setHashSelector', null)
       this.$store.commit('setActiveLinkIndex', null)

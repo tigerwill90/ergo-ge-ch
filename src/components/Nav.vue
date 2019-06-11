@@ -67,7 +67,10 @@
         </v-list-group>
       </v-list>
       <v-list class="nav-list">
-        <v-list-tile @click="goTo('therapist')">
+        <v-list-tile
+          :class="{currentLink: ('therapist' === $store.getters.selector.routeName)}"
+          @click="goTo('therapist')"
+        >
           <v-list-tile-action>
             <v-icon>place</v-icon>
           </v-list-tile-action>
@@ -77,7 +80,10 @@
         </v-list-tile>
       </v-list>
       <v-list class="nav-list">
-        <v-list-tile @click="goTo('contact')">
+        <v-list-tile
+          :class="{currentLink: ('contact' === $store.getters.selector.routeName)}"
+          @click="goTo('contact')"
+        >
           <v-list-tile-action>
             <v-icon>phone</v-icon>
           </v-list-tile-action>
@@ -226,6 +232,9 @@ export default {
         hash,
         routeName: link
       })
+      if (!hash) {
+        this.$store.commit('setActiveLinkIndex', null)
+      }
       this.$store.commit('setCurrentHash', hash)
     }
   }
