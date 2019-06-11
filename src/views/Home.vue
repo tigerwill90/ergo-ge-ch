@@ -51,26 +51,13 @@ export default {
   data() {
     return {
       title: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
-      subtitle: 'ergotherapie-ge.ch'
-    }
-  },
-  computed: {
-    // TODO refactor links
-    links() {
-      if (this.$store.getters.windowSize.x > 500) {
-        return [
-          { to: 'desc', title: "L'ergothérapie" },
-          { to: 'prescription', title: "L'ordonnance" },
-          { to: 'actu', title: 'Actualité' },
-          { to: 'agenda', title: 'Agenda' }
-        ]
-      } else {
-        return [
-          { to: 'desc', title: "L'ergothérapie" },
-          { to: 'prescription', title: "L'ordonnance" },
-          { to: 'actu', title: 'Actualité' }
-        ]
-      }
+      subtitle: 'ergotherapie-ge.ch',
+      links: [
+        { to: 'desc', title: "L'ergothérapie", show: true },
+        { to: 'prescription', title: "L'ordonnance", show: true },
+        { to: 'actu', title: 'Actualité', show: true },
+        { to: 'agenda', title: 'Agenda', show: true }
+      ]
     }
   },
   mounted() {

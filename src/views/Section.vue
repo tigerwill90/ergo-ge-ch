@@ -40,9 +40,9 @@ export default {
     return {
       title: 'La Section Genevoise',
       links: [
-        { to: 'geneva', title: 'Section Genevoise' },
-        { to: 'conseil', title: 'Comité' },
-        { to: 'groupe', title: 'Groupes de travail' }
+        { to: 'geneva', title: 'Section Genevoise', show: true },
+        { to: 'conseil', title: 'Comité', show: true },
+        { to: 'groupe', title: 'Groupes de travail', show: true }
       ]
     }
   },

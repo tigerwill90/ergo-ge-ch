@@ -56,7 +56,7 @@
         }
       ],
       "space-before-function-paren": 0,
-      "no-console": 1
+      "no-console": [1, { "allow":  ["warn"] }]
     },
     "parserOptions": {
       "parser": "babel-eslint"

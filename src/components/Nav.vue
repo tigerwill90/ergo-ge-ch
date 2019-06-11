@@ -53,6 +53,7 @@
 
           <v-list-tile
             v-for="(subItem, i) in item.items"
+            v-show="subItem.show"
             :key="i"
             :disabled="subItem.active"
             @click="goTo(item.link, subItem.to)"
@@ -122,8 +123,10 @@
   </v-navigation-drawer>
 </template>
 <script>
+import admin from '../mixins/admin'
 export default {
   name: 'Nav',
+  mixins: [admin()],
   data() {
     return {
       links: [
@@ -174,13 +177,14 @@ export default {
           icon: 'home',
           link: 'home',
           items: [
-            { to: 'desc', title: "L'ergothérapie", active: false },
-            { to: 'prescription', title: "L'ordonnance", active: false },
-            { to: 'actu', title: 'Actualité', active: false },
+            { to: 'desc', title: "L'ergothérapie", active: false, show: true },
+            { to: 'prescription', title: "L'ordonnance", active: false, show: true },
+            { to: 'actu', title: 'Actualité', active: false, show: true },
             {
               to: 'agenda',
               title: 'Agenda',
-              active: this.$store.getters.windowSize.x < 500
+              active: this.$store.getters.windowSize.x < 500,
+              show: true
             }
           ]
         },
@@ -189,9 +193,9 @@ export default {
           icon: 'people',
           link: 'section',
           items: [
-            { to: 'geneva', title: 'Section Genevoise', active: false },
-            { to: 'conseil', title: 'Comité', active: false },
-            { to: 'groupe', title: 'Groupes de travail', active: false }
+            { to: 'geneva', title: 'Section Genevoise', active: false, show: true },
+            { to: 'conseil', title: 'Comité', active: false, show: true },
+            { to: 'groupe', title: 'Groupes de travail', active: false, show: true }
           ]
         }
       ]
@@ -203,10 +207,10 @@ export default {
             icon: 'business',
             link: 'management',
             items: [
-              { to: 'offices', title: 'Cabinets', active: false },
-              { to: 'therapists', title: 'Ergothérapeutes', active: false },
-              { to: 'users', title: 'Utilisateurs', active: false },
-              { to: 'categories', title: 'Catégories', active: false }
+              { to: 'offices', title: 'Cabinets', active: false, show: true },
+              { to: 'therapists', title: 'Ergothérapeutes', active: false, show: true },
+              { to: 'users', title: 'Utilisateurs', active: false, show: true },
+              { to: 'categories', title: 'Catégories', active: false, show: this.isAdmin() }
             ]
           }
         )

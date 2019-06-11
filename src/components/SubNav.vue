@@ -51,6 +51,7 @@
       >
         <v-btn
           v-for="(link, i) in links"
+          v-show="link.show"
           :key="i"
           color="white"
           flat

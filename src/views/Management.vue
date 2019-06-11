@@ -29,6 +29,7 @@
       :ref="links[2].to"
     />
     <CategoriesManagement
+      v-if="links[3].show"
       :id="links[3].to"
       :ref="links[3].to"
     />
@@ -56,15 +57,15 @@ export default {
   mixins: [Scrolling('management'), HandleScroll(), admin()],
   data () {
     return {
-      title: 'Gestion des données',
+      title: 'Management des données',
       offices: [],
       categories: [],
       therapists: [],
       links: [
-        { to: 'offices', title: 'Cabinets' },
-        { to: 'therapists', title: 'Ergothérapeutes' },
-        { to: 'users', title: 'Utilisateurs' },
-        { to: 'categories', title: 'Catégories' }
+        { to: 'offices', title: 'Cabinets', show: true },
+        { to: 'therapists', title: 'Ergothérapeutes', show: true },
+        { to: 'users', title: 'Utilisateurs', show: true },
+        { to: 'categories', title: 'Catégories', show: this.isAdmin() }
       ],
       unsubscribe: null
     }
@@ -89,7 +90,7 @@ export default {
       return
     }
 
-    // Subscribe to authorization mutation, don't forget to unsubscribe. Maybe not the best way to do that
+    // Subscribe to authorization mutation, don't forget to unsubscribe.
     this.unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'authorization' && !mutation.payload) {
         this.unsubscribe()
