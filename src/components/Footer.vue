@@ -47,15 +47,17 @@
       v-model="snackbar"
       bottom
       left
+      auto-height
       :timeout="6000"
     >
       {{ message }}
       <v-btn
-        color="pink"
+        color="teal"
         flat
+        class="text-none"
         @click="snackbar = false"
       >
-        Fermé
+        Fermer
       </v-btn>
     </v-snackbar>
   </v-footer>
