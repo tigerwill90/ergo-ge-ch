@@ -162,7 +162,9 @@ export default {
       valid: false,
       nameRules: [
         v => !!v || 'Le nom du cabinet est requis',
-        v => (v.toString().length <= 45 || v.toString().length >= 3) || 'Le nombre de caractères doit être compris entre 3 et 45'
+        v => v.toString().length >= 3 || 'Minimum 3 caractères',
+        v => /^[A-zÀ-ú0-9][A-zÀ-ú- 0-9]+[A-zÀ-ú0-9]$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex : O-Clair9',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères'
       ],
       emailRules: [
         v => !!v || 'Email requis',

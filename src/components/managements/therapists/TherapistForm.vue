@@ -177,7 +177,7 @@
           class="contacts-list"
         >
           <v-select
-            :value="getOffice()"
+            :value="offices[offices.map(o => o.id).indexOf(therapist.office_id)]"
             :items="offices"
             label="Associer à un cabinet*"
             item-text="name"
@@ -277,12 +277,6 @@ export default {
     }
   },
   methods: {
-    getOffice() {
-      if (this.updateMode) {
-        return this.offices[this.offices.map(o => o.id).indexOf(this.therapist.office_id)]
-      }
-      return null
-    },
     createTherapist() {
       if (this.$refs.form.validate()) {
         this.$http({
