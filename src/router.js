@@ -16,6 +16,7 @@ import Home from './views/Home'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -72,6 +73,15 @@ const router = new Router({
       meta: {
         title: 'Gestion des données',
         header: 'Management'
+      }
+    },
+    {
+      path: '/activate',
+      name: 'activate',
+      component: () => import('./views/Activate.vue'),
+      meta: {
+        title: 'Activer le compte',
+        header: 'Activation'
       }
     },
     {

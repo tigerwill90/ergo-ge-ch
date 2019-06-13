@@ -24,7 +24,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
+    "@vue/cli-service": "^3.8.3",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
@@ -56,7 +56,14 @@
         }
       ],
       "space-before-function-paren": 0,
-      "no-console": [1, { "allow":  ["warn"] }]
+      "no-console": [
+        1,
+        {
+          "allow": [
+            "warn"
+          ]
+        }
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"
