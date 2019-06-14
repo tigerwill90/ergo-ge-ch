@@ -1,29 +1,34 @@
-# Ergotherapeute
+<h1 align="center">Bienvenue to Association Suisse des ergothérapeutes - Section Genevoise 👋</h1>
+<p>
+  <img src="https://img.shields.io/badge/version-0.0.3-blue.svg?cacheSeconds=2592000" />
+</p>
 
-## Project setup
-```
+> Online platform to manage association members
+
+### 🏠 [Homepage](https://ergotherapie-ge.ch)
+
+## Install
+
+```sh
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+## Run
+```sh
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
+## Build
+```sh
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
+## Author
 
-### Lints and fixes files
-```
-npm run lint
-```
+👤 **Sylvain Muller**
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* Github: [@tigerwill90](https://github.com/tigerwill90)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome !<br />Feel free to check [issues page](https://github.com/tigerwill90/ergo-ge-ch/issues).

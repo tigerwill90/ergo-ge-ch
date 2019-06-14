@@ -73,8 +73,8 @@ export default {
       .then(response => {
         this.categories = response.data.data
       })
-      .catch(error => {
-        throw new Error(error.message)
+      .catch(err => {
+        this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
       })
   },
   methods: {
