@@ -21,6 +21,7 @@
     <div class="cards-content">
       <OfficeCard
         v-for="(office, i) in offices"
+        v-show="office.active"
         :key="i"
         :office="office"
         :selected-categories="selectedCategories"
@@ -62,9 +63,10 @@ export default {
             .get(`${process.env.VUE_APP_API_URL}/offices/${office.id}/categories`)
             .then(response => {
               this.$set(office, 'categories', response.data.data)
+              this.$set(office, 'active', true)
             })
-            .catch(error => {
-              throw new Error(error.message)
+            .catch(() => {
+              this.$set(office, 'active', false)
             })
         })
       })

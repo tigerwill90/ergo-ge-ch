@@ -68,7 +68,9 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    if (!store.getters.authorization) {
+    if (store.getters.user && !store.getters.authorization) {
+      next()
+    } else if (!store.getters.authorization) {
       store.dispatch('reconnect').then(user => {
         store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
         store.dispatch('setReconnectInterval')
@@ -78,6 +80,11 @@ export default {
       })
     } else {
       next(vm => vm.$router.go(-1))
+    }
+  },
+  mounted() {
+    if (this.$store.getters.user) {
+      this.email = this.$store.getters.user.email
     }
   },
   methods: {

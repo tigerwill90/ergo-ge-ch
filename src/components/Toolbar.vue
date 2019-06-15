@@ -76,9 +76,9 @@
     >
       <v-icon>search</v-icon>
     </v-btn>
-    <AccessiblityMenu v-if="$store.getters.user" />
+    <AccessiblityMenu />
     <v-btn
-      v-else
+      v-if="!this.$store.getters.authorization"
       icon
       @click="goTo({name: 'login'})"
     >

@@ -2,7 +2,7 @@ const options = {
   devServer: {
     port: 9000
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
+  publicPath: '/',
   transpileDependencies: [/node_modules[/\\\\]vuetify[/\\\\]/],
   configureWebpack: {}
 }

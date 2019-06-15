@@ -11,7 +11,7 @@
  */
 <template>
   <v-menu
-    v-if="$store.getters.user"
+    v-if="$store.getters.authorization"
     v-model="menu"
     bottom
     left

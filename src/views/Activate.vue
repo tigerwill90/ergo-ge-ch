@@ -118,7 +118,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     if (!store.getters.authorization) {
       store.dispatch('reconnect').then(user => {
-        store.commit('notification', { status: 200, message: `Bienvenue ${user.first_name} ${user.last_name}` })
+        store.commit('notification', { status: 200, message: `Vous êtes déjà connecter en tant que ${user.first_name} ${user.last_name}. Déconnecter vous avant de créer un nouveau compte !` })
         store.dispatch('setReconnectInterval')
         next(vm => vm.$router.push({ name: 'home' }))
       }).catch(() => {
@@ -152,6 +152,7 @@ export default {
           .then(response => {
             this.complete = true
             this.$store.commit('notification', { status: response.status, message: 'Vous allez être rediriger vers la page de connexion' })
+            this.$store.commit('user', response.data.data)
             this.timeout = setTimeout(() => {
               this.$router.push({ name: 'login' })
             }, 3000)
