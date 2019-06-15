@@ -82,10 +82,10 @@ export default {
   data() {
     return {
       councils: [
-        { name: 'Delphine Favario', imageUrl: `${process.env.VUE_APP_API_URL}/images/ironman` },
-        { name: 'Cyril Defort', imageUrl: `${process.env.VUE_APP_API_URL}/images/ironman` },
-        { name: 'Séverine Fries', imageUrl: `${process.env.VUE_APP_API_URL}/images/thor` },
-        { name: 'Sandra Pereira', imageUrl: `${process.env.VUE_APP_API_URL}/images/blackwidow` }
+        { name: 'Delphine Favario', imageUrl: `${process.env.VUE_APP_API_URL}/images/unknown` },
+        { name: 'Cyril Defort', imageUrl: `${process.env.VUE_APP_API_URL}/images/unknown` },
+        { name: 'Séverine Fries', imageUrl: `${process.env.VUE_APP_API_URL}/images/unknown` },
+        { name: 'Sandra Pereira', imageUrl: `${process.env.VUE_APP_API_URL}/images/unknown` }
       ],
       img: `${process.env.VUE_APP_API_URL}/images/avengers`
     }

@@ -38,7 +38,7 @@
         <div class="submit-button">
           <v-btn
             large
-            color="primary"
+            color="primary text-none"
             @click="submit"
           >
             Se connecter

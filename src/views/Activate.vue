@@ -77,7 +77,7 @@
             />
           </v-form>
           <v-btn
-            color="primary"
+            color="primary text-none"
             @click="submit"
           >
             Se connecter

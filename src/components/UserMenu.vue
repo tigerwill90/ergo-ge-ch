@@ -51,13 +51,13 @@
         </v-avatar>
         <div class="user-information">
           <span><strong>{{ $store.getters.user.first_name }} {{ $store.getters.user.last_name }}</strong></span>
-          <span style="font-size: 0.9">{{ $store.getters.user.email }}</span>
+          <span style="font-size: 1em">{{ $store.getters.user.email }}</span>
           <v-btn
             small
-            color="primary"
+            color="primary text-none"
             @click="goToManagement"
           >
-            Options de compte
+            Gestion des données
           </v-btn>
         </div>
       </div>
@@ -65,6 +65,7 @@
       <div class="connect-box">
         <v-btn
           small
+          class="text-none"
           @click="disconnect"
         >
           Déconnexion
@@ -79,7 +80,7 @@ export default {
   data() {
     return {
       menu: false,
-      tempImgUrl: `${process.env.VUE_APP_API_URL}/images/ironman`
+      tempImgUrl: `${process.env.VUE_APP_API_URL}/images/unknown`
     }
   },
   methods: {

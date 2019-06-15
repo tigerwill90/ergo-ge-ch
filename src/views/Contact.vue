@@ -12,7 +12,7 @@
           info
         </v-icon>
         <p class="information-paragraph">
-          Une question ? N'hésitez pas à nous contacter en remplissant le formulaire. Nous vous répondrons dans un bref délai.
+          Une question ? N'hésitez pas à nous contacter en remplissant le formulaire. Nous vous répondrons dans les plus bref délais.
         </p>
       </div>
     </article>
