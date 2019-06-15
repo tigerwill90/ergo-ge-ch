@@ -17,7 +17,7 @@
           @reset="reset"
           @add-contact="addContact"
           @remove-contact="removeContact"
-          @clean-contact="cleanContact"
+          @clean-data="cleanData"
         />
         <OfficesList
           :offices="offices"
@@ -112,7 +112,7 @@ export default {
     removeContact(id) {
       this.office.contacts.splice(id, 1)
     },
-    cleanContact() {
+    cleanData() {
       this.office.contacts.forEach(contact => {
         if (!contact.cp) {
           delete contact.cp
