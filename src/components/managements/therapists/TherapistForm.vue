@@ -245,40 +245,40 @@ export default {
       phonesType: ['Tel.', 'Fax.', 'Pro.'],
       valid: false,
       firstNameRules: [
-        v => !!v || 'Le prénom de l\'ergothérapeute est requis',
-        v => v.toString().length >= 3 || 'Minimum 3 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le prénom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Jean-Luc',
-        v => v.toString().length <= 45 || 'Maximum 45 caractères'
+        v => !!v || 'Le prénom de l\'ergothérapeute est requis.',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le prénom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Jean-Luc.',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       lastNameRules: [
-        v => !!v || 'Le nom de l\'ergothérapeute est requis',
-        v => v.toString().length >= 3 || 'Minimum 3 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le nom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Alain',
-        v => v.toString().length <= 45 || 'Maximum 45 caractères'
+        v => !!v || 'Le nom de l\'ergothérapeute est requis.',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le nom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Alain.',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       emailRules: [
         v => !!v || 'Email requis',
-        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide',
-        v => (v.toString().length <= 250 && v.toString().length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 250'
+        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide.',
+        v => (v.toString().length <= 250 && v.toString().length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 250.'
       ],
       phoneRules: [
-        v => !isNaN(v) || 'Le numéro de téléphone doit être composé que de nombres',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11) || 'Le numéro n\'est pas valide. Ex : 0229876532'
+        v => !isNaN(v) || 'Le numéro de téléphone doit être composé que de nombres et sans espace. Ex : 0229876532.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11) || 'Le numéro n\'est pas valide. Ex : 0229876532.'
       ],
       categoriesRules: [
-        v => v.length > 0 || 'Vous devez sélectionner au moins une catégorie'
+        v => v.length > 0 || 'Vous devez sélectionner au moins une catégorie.'
       ],
       officesRules: [
-        v => !!v || 'Vous devez sélectionner un cabinet'
+        v => !!v || 'Vous devez sélectionner un cabinet.'
       ],
       phoneTypeRules: [
-        v => !!v || 'Vous devez sélectionner le type de numéros'
+        v => !!v || 'Vous devez sélectionner le type de numéros.'
       ],
       titleRules: [
-        v => !!v || 'Vous devez sélectionner un titre'
+        v => !!v || 'Vous devez sélectionner un titre.'
       ]
     }
   },

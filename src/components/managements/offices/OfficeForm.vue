@@ -161,54 +161,53 @@ export default {
     return {
       valid: false,
       nameRules: [
-        v => !!v || 'Le nom du cabinet est requis',
-        v => v.toString().length >= 3 || 'Minimum 3 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => /^[A-zÀ-ú0-9][A-zÀ-ú- 0-9]+[A-zÀ-ú0-9]$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex : O-Clair9',
-        v => v.toString().length <= 45 || 'Maximum 45 caractères'
+        v => !!v || 'Le nom du cabinet est requis.',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zÀ-ú0-9][A-zÀ-ú- 0-9]+[A-zÀ-ú0-9]$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex : O-Clair9.',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       emailRules: [
         v => !!v || 'Email requis',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide',
-        v => v.toString().length <= 250 || 'Maximum 250 caractères'
+        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide.',
+        v => v.toString().length <= 250 || 'Maximum 250 caractères.'
       ],
       streetRules: [
-        v => !!v || 'Le nom de la rue est requis',
-        v => v.toString().length >= 5 || 'Minimum 5 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => /^[A-zÀ-ú-., ]+[ ][0-9]+$/.test(v) || 'L\'adresse n\'est pas valide, Ex : Rue de la Coratrie 17',
-        v => v.toString().length <= 80 || 'Maximum 80 caractères'
+        v => !!v || 'Le nom de la rue est requis.',
+        v => v.toString().length >= 5 || 'Minimum 5 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zÀ-ú-., ]+[ ][0-9]+(?:[ A-zÀ-ú])*$/.test(v) || 'L\'adresse n\'est pas valide, Ex : Rue de la Coratrie 17.',
+        v => v.toString().length <= 80 || 'Maximum 80 caractères.'
       ],
       cityRules: [
-        v => !!v || 'Le nom de la ville est requis',
-        v => v.toString().length >= 2 || 'Minimum 2 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => /^[A-zÀ-ú- /]+[A-zÀ-ú]$/.test(v) || 'Les caractères spéciaux ne sont pas admis',
-        v => v.toString().length <= 45 || 'Maximum 45 caractères'
+        v => !!v || 'Le nom de la ville est requis.',
+        v => v.toString().length >= 2 || 'Minimum 2 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zÀ-ú- /]+[A-zÀ-ú]$/.test(v) || 'Les caractères spéciaux ne sont pas admis.',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       npaRules: [
-        v => !!v || 'Le code postal est requis',
-        v => v.toString().length >= 2 || 'Minimum 2 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => !isNaN(v) || 'Le code postal est composé uniquement de nombre',
-        v => v.toString().length <= 10 || 'Maximum 10 caractères'
+        v => !!v || 'Le code postal est requis.',
+        v => v.toString().length >= 2 || 'Minimum 2 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => !isNaN(v) || 'Le code postal est composé uniquement de nombre.',
+        v => v.toString().length <= 10 || 'Maximum 10 caractères.'
       ],
       cpRules: [
-        v => (!v || v.toString().length >= 2) || 'Minimum 2 caractères',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => (/^[0-9][0-9-]*[0-9]+$/.test(v) || !v) || 'La case postal est composé uniquement de nombre et d\'un ou plusieurs trait d\'union',
-        v => (!v || v.toString().length <= 10) || 'Maximum 10 caractères'
+        v => (!v || v.toString().length >= 2) || 'Minimum 2 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => (/^[0-9][0-9-]*[0-9]+$/.test(v) || !v) || 'La case postal est composé uniquement de nombre et d\'un ou plusieurs trait d\'union.',
+        v => (!v || v.toString().length <= 10) || 'Maximum 10 caractères.'
       ],
       phoneRules: [
-        v => (!isNaN(v) || !v) || 'Le numéro de téléphone doit être composé que de nombres',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => (!v || (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11)) || 'Le numéro n\'est pas valide. Ex : 0229876532'
+        v => (!isNaN(v) || !v) || 'Le numéro de téléphone doit être composé que de nombres et sans espace. Ex : 0229876532.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => (!v || (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11)) || 'Le numéro n\'est pas valide. Ex : 0229876532.'
       ],
       faxRules: [
-        v => (!isNaN(v) || !v) || 'Le numéro de fax doit être composé que de nombres',
-        v => !/\s+$/.test(v) || 'Espace en fin de mot interdit',
-        v => (!v || (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11)) || 'Le numéro n\'est pas valide. Ex : 0229876532'
+        v => (!isNaN(v) || !v) || 'Le numéro de fax doit être composé que de nombres et sans espace. Ex : 0229876532.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => (!v || (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11)) || 'Le numéro n\'est pas valide. Ex : 0229876532.'
       ]
     }
   },
