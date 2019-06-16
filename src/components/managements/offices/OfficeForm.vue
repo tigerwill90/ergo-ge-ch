@@ -127,6 +127,7 @@
         <v-btn
           v-if="updateMode"
           class="primary text-none"
+          :disabled="disabled"
           @click="updateOffice()"
         >
           Modifier le cabinet
@@ -134,6 +135,7 @@
         <v-btn
           v-else
           class="primary text-none"
+          :disabled="disabled"
           @click="createOffice()"
         >
           Créer le cabinet
@@ -160,6 +162,7 @@ export default {
   data() {
     return {
       valid: false,
+      disabled: false,
       nameRules: [
         v => !!v || 'Le nom du cabinet est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
@@ -227,6 +230,7 @@ export default {
     },
     createOffice() {
       if (this.$refs.form.validate()) {
+        this.disabled = true
         this.cleanData()
         this.$http({
           method: 'POST',
@@ -237,11 +241,13 @@ export default {
           data: this.office
         })
           .then(response => {
+            this.disabled = false
             this.$emit('create-office', response.data.data)
             this.reset()
             this.$store.commit('notification', { status: response.status, message: 'Cabinet ajouté' })
           })
           .catch(err => {
+            this.disabled = false
             this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
           })
       } else {
@@ -250,6 +256,7 @@ export default {
     },
     updateOffice() {
       if (this.$refs.form.validate()) {
+        this.disabled = true
         this.cleanData()
         this.$http({
           method: 'PUT',
@@ -260,11 +267,13 @@ export default {
           data: this.office
         })
           .then(response => {
+            this.disabled = false
             this.$emit('update-office', response.data.data)
             this.reset()
             this.$store.commit('notification', { status: response.status, message: 'Cabinet modifié' })
           })
           .catch(err => {
+            this.disabled = false
             this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
           })
       } else {

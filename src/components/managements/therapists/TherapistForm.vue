@@ -199,6 +199,7 @@
         <v-btn
           v-if="updateMode"
           class="primary text-none"
+          :disabled="disabled"
           @click="updateTherapist()"
         >
           Modifier l'ergothérapeute
@@ -206,6 +207,7 @@
         <v-btn
           v-else
           class="primary text-none"
+          :disabled="disabled"
           @click="createTherapist()"
         >
           Créer l'ergothérapeute
@@ -243,6 +245,7 @@ export default {
       titles: ['Mme.', 'M.', 'Dr.', 'Pr.'],
       phonesType: ['Tel.', 'Fax.', 'Pro.'],
       valid: false,
+      disabled: false,
       firstNameRules: [
         v => !!v || 'Le prénom de l\'ergothérapeute est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
@@ -284,6 +287,7 @@ export default {
   methods: {
     createTherapist() {
       if (this.$refs.form.validate()) {
+        this.disabled = true
         this.$http({
           method: 'POST',
           url: `${process.env.VUE_APP_API_URL}/therapists`,
@@ -301,10 +305,12 @@ export default {
             categories: this.therapist.categories.map(c => c.id)
           }
         }).then(response => {
+          this.disabled = false
           this.$emit('create-therapist', response.data.data)
           this.reset()
           this.$store.commit('notification', { status: response.status, message: 'Ergothérapeute ajouté' })
         }).catch(err => {
+          this.disabled = false
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
       } else {
@@ -313,6 +319,7 @@ export default {
     },
     updateTherapist() {
       if (this.$refs.form.validate()) {
+        this.disabled = true
         this.$http({
           method: 'PUT',
           url: `${process.env.VUE_APP_API_URL}/therapists/${this.therapist.id}`,
@@ -330,10 +337,12 @@ export default {
             categories: this.therapist.categories.map(c => c.id)
           }
         }).then(response => {
+          this.disabled = false
           this.$emit('update-therapist', response.data.data)
           this.reset()
           this.$store.commit('notification', { status: response.status, message: 'Ergothérapeute modifié' })
         }).catch(err => {
+          this.disabled = false
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
       } else {

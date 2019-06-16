@@ -78,6 +78,7 @@
           </v-form>
           <v-btn
             color="primary text-none"
+            :disabled="disabled"
             @click="submit"
           >
             Se connecter
@@ -104,6 +105,7 @@ export default {
       repeatPassword: '',
       complete: false,
       timeout: null,
+      disabled: false,
       passwordRules: [
         v => !!v || 'Mot de passe requis',
         v => v.length >= 10 || 'Minimum 10 caractères',
@@ -140,6 +142,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.disabled = true
         this.$http({
           method: 'PATCH',
           url: `${process.env.VUE_APP_API_URL}/users/activate`,
@@ -154,10 +157,12 @@ export default {
             this.$store.commit('notification', { status: response.status, message: 'Vous allez être rediriger vers la page de connexion' })
             this.$store.commit('user', response.data.data)
             this.timeout = setTimeout(() => {
+              this.disabled = false
               this.$router.push({ name: 'login' })
             }, 2000)
           })
           .catch(err => {
+            this.disabled = false
             this.$refs.form.resetValidation()
             this.password = ''
             this.repeatPassword = ''
