@@ -4,7 +4,6 @@
     class="add-therapist"
   >
     <v-form
-      id="form"
       ref="form"
       v-model="valid"
       class="form-input-box"

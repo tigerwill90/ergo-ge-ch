@@ -155,7 +155,7 @@ export default {
             this.$store.commit('user', response.data.data)
             this.timeout = setTimeout(() => {
               this.$router.push({ name: 'login' })
-            }, 3000)
+            }, 2000)
           })
           .catch(err => {
             this.$refs.form.resetValidation()
