@@ -40,7 +40,7 @@
         </div>
       </v-card-title>
       <v-card-actions class="grey darken-3 justify-center">
-        &copy;{{ date.getFullYear() }} —&nbsp;<strong>www.ergo-ge-independants.ch</strong>
+        &copy;{{ date.getFullYear() }} —&nbsp;<strong>www.ergotherapie-ge.ch</strong>
       </v-card-actions>
     </v-card>
     <v-snackbar
