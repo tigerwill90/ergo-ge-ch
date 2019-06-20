@@ -250,14 +250,14 @@ export default {
         v => !!v || 'Le prénom de l\'ergothérapeute est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le prénom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Jean-Luc.',
+        v => /^[A-zÀ-ú][A-zÀ-ú-' ]+[A-zÀ-ú]$/.test(v) || 'Le prénom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Jean-Luc.',
         v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       lastNameRules: [
         v => !!v || 'Le nom de l\'ergothérapeute est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-zÀ-ú][A-zÀ-ú- ]+[A-zÀ-ú]$/.test(v) || 'Le nom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Alain.',
+        v => /^[A-zÀ-ú][A-zÀ-ú-' ]+[A-zÀ-ú]$/.test(v) || 'Le nom ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex: Alain.',
         v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       emailRules: [
