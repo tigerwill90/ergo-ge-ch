@@ -29,8 +29,7 @@
         <v-text-field
           v-model="office.email"
           type="email"
-          label="Email*"
-          required
+          label="Email"
           :rules="emailRules"
         />
       </div>
@@ -171,9 +170,8 @@ export default {
         v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       emailRules: [
-        v => !!v || 'Email requis',
-        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide.',
-        v => v.toString().length <= 250 || 'Maximum 250 caractères.'
+        v => (!v || (/.+@.+/.test(v) && /\.[A-z]+$/.test(v))) || 'L\'email doit être valide.',
+        v => (!v || v.toString().length <= 250) || 'Maximum 250 caractères.'
       ],
       streetRules: [
         v => !!v || 'Le nom de la rue est requis.',

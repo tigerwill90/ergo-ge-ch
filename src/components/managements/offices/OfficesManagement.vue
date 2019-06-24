@@ -113,6 +113,9 @@ export default {
       this.office.contacts.splice(id, 1)
     },
     cleanData() {
+      if (!this.office.email) {
+        delete this.office.email
+      }
       this.office.contacts.forEach(contact => {
         if (!contact.cp) {
           delete contact.cp
