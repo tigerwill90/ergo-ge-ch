@@ -23,7 +23,7 @@
             <div class="office-list-box">
               <div class="office-list-action">
                 <div
-                  v-if="$store.getters.windowSize.x > 450"
+                  v-if="$store.getters.windowSize.x > 450 && office.email"
                   class="office-email"
                 >
                   <v-icon style="margin-right: 5px">

@@ -44,6 +44,7 @@
           {{ office.name }}
         </span>
         <span
+          v-if="office.email"
           class="subheading"
           style="word-break: break-all;"
         >

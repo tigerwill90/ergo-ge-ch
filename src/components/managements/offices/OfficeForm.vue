@@ -166,7 +166,7 @@ export default {
         v => !!v || 'Le nom du cabinet est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-zÀ-ú0-9][A-zÀ-ú- 0-9']+[A-zÀ-ú0-9()]+$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté le trait d\'union. Ex : O-Clair9.',
+        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z- 0-9'àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]*[A-z0-9()àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté "-" et "(", ")" en fin de nom. Ex : O-Clair9.',
         v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       emailRules: [
@@ -177,14 +177,14 @@ export default {
         v => !!v || 'Le nom de la rue est requis.',
         v => v.toString().length >= 5 || 'Minimum 5 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-zÀ-ú-., ']+[ ][0-9]+(?:[ A-zÀ-ú])*$/.test(v) || 'L\'adresse n\'est pas valide, Ex : Rue de la Coratrie 17.',
+        v => /^[A-z-., 'àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+[ ][0-9]+(?:[ A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ])*$/.test(v) || 'L\'adresse n\'est pas valide, Ex : Rue de la Coratrie 17 bis.',
         v => v.toString().length <= 80 || 'Maximum 80 caractères.'
       ],
       cityRules: [
         v => !!v || 'Le nom de la ville est requis.',
         v => v.toString().length >= 2 || 'Minimum 2 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-zÀ-ú- '/]+[A-zÀ-ú]$/.test(v) || 'Les caractères spéciaux ne sont pas admis.',
+        v => /^[A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z- '/àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+[A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]$/.test(v) || 'Les caractères spéciaux ne sont pas admis exepté "/", "-" et "\'"',
         v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       npaRules: [
