@@ -79,25 +79,24 @@ export default {
       carousels: [],
       datas: [
         {
-          title: 'Rencontre des ergothérapeutes chef-fe-s',
+          title: 'Congrès de l\'ergothérapie',
           imageUrl: `${process.env.VUE_APP_API_URL}/images/knitting`,
-          date: 'Vendredi 15 mars 2019',
-          text:
-            'Qui nulla totam. Aut omnis qui voluptatum suscipit laudantium ad. Exercitationem quibusdam enim beatae porro. Fuga omnis iusto deleniti cum facilis rerum quia exercitationem eveniet. Voluptatibus aliquam sit.'
+          date: '6 et 7 septembre 2019',
+          text: 'Le congrès de l’ASE a lieu une fois tous les quatre ans. Pour plus d\'informations sur le prochain congrès " ergo5.0 - Stars of Daily Living" : www.ergotherapie-kongress.ch'
         },
         {
           title: 'Journée des sections romandie',
           imageUrl: `${process.env.VUE_APP_API_URL}/images/romandie`,
           subtitle: 'Rencontre avec les ergothérapeutes',
-          date: 'Dimanche 5 mai 2019',
-          text: 'Voluptatem veniam saepe sed impedit enim labore cumque molestias ipsam. Vitae velit et sunt dolorem veritatis optio facilis et. Ipsa asperiores voluptas voluptatem. Ut esse quas voluptas id ea libero.'
+          date: 'Samedi 30 novembre 2019',
+          text: 'La journée des section de Suisse romande a lieu une fois par an. Elle a pour but de permettre l’échange, la discussion et l’information entre la section et l’ASE. Tous les membres peuvent participer.'
         },
         {
-          title: 'Assemblée des délégué-e-s 2019',
+          title: 'Assemblée des délégué-e-s 2020',
           imageUrl: `${process.env.VUE_APP_API_URL}/images/berne`,
-          date: 'Dimanche 26 mai 2019',
+          date: 'Samedi 16 mai 2020',
           text:
-            'Autem corporis sunt cupiditate libero consectetur id explicabo et quis. Repellendus rem tempore nemo nobis nihil neque esse ratione sapiente.'
+            'L\'Assemblée des délégués est l\'organe supérieur de l’ASE. Tous les membres de l’ASE peuvent participer à l’Assemblée des délégués mais seul-e-s les délégué-e-s disposent du droit de vote.'
         }
       ]
     }
@@ -111,7 +110,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.subscribe((mutation, state) => {
+    this.$store.subscribe((mutation) => {
       if (mutation.type === 'windowSize') {
         this.resize(mutation.payload.x)
       }
