@@ -166,7 +166,7 @@ export default {
         v => !!v || 'Le nom du cabinet est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z- 0-9'àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]*[A-z0-9()àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté "-" et "(", ")" en fin de nom. Ex : O-Clair9.',
+        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z- 0-9',àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]*[A-z0-9()', àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté "-", "," et "(", ")", "," en fin de nom. Ex : O-Clair9',
         v => v.toString().length <= 45 || 'Maximum 45 caractères.'
       ],
       emailRules: [
@@ -201,14 +201,16 @@ export default {
         v => (!v || v.toString().length <= 10) || 'Maximum 10 caractères.'
       ],
       phoneRules: [
-        v => (!isNaN(v) || !v) || 'Le numéro de téléphone doit être composé que de nombres et sans espace. Ex : 0229876532.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => (!v || (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11)) || 'Le numéro n\'est pas valide. Ex : 0229876532.'
+        v => (!v || /^(?:[+])?[0-9]+$/.test(v)) || 'Le numéro de téléphone n\'est pas valide. Ex : 0229876532 ou +41769876545.',
+        v => (!v || v.toString().length >= 8) || 'Minimum 8 nombres.',
+        v => (!v || v.toString().length <= 45) || 'Maximum 45 nombres'
       ],
       faxRules: [
-        v => (!isNaN(v) || !v) || 'Le numéro de fax doit être composé que de nombres et sans espace. Ex : 0229876532.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => (!v || (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11)) || 'Le numéro n\'est pas valide. Ex : 0229876532.'
+        v => (!v || /^(?:[+])?[0-9]+$/.test(v)) || 'Le numéro de fax n\'est pas valide. Ex : 0229876532 ou +41769876545.',
+        v => (!v || v.toString().length >= 8) || 'Minimum 8 nombres.',
+        v => (!v || v.toString().length <= 45) || 'Maximum 45 nombres'
       ]
     }
   },

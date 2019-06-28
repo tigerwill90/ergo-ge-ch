@@ -266,9 +266,11 @@ export default {
         v => (v.toString().length <= 250 && v.toString().length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 250.'
       ],
       phoneRules: [
-        v => !isNaN(v) || 'Le numéro de téléphone doit être composé que de nombres et sans espace. Ex : 0229876532.',
+        v => !!v || 'Au moins un numéro requis',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => (v.toString().length === 7 || v.toString().length === 10 || v.toString().length === 11) || 'Le numéro n\'est pas valide. Ex : 0229876532.'
+        v => /^(?:[+])?[0-9]+$/.test(v) || 'Le numéro de téléphone n\'est pas valide. Ex : 0229876532 ou +41769876545.',
+        v => v.toString().length >= 8 || 'Minimum 8 nombres.',
+        v => v.toString().length <= 45 || 'Maximum 45 nombres'
       ],
       categoriesRules: [
         v => v.length > 0 || 'Vous devez sélectionner au moins une catégorie.'
