@@ -58,6 +58,7 @@
           required
           :counter="100"
           :rules="subjectRules"
+          :disabled="templateSubject"
           box
         />
         <v-textarea
@@ -98,6 +99,7 @@ export default {
       message: '',
       loading: false,
       authenticated: false,
+      templateSubject: false,
       unsubscribe: null,
       nameRules: [
         v => !!v || 'Nom et prénom requis',
@@ -150,6 +152,11 @@ export default {
         this.$refs.form.resetValidation()
       }
     })
+    const subject = new URLSearchParams(window.location.search).get('subject')
+    if (subject) {
+      this.subject = subject
+      this.templateSubject = true
+    }
   },
   destroyed() {
     this.unsubscribe()
