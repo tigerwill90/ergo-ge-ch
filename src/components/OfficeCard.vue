@@ -50,6 +50,13 @@
         >
           <a :href="'mailto:' + office.email">{{ office.email }}</a>
         </span>
+        <span
+          v-if="office.web"
+          class="subheading"
+          style="word-break: break-all;"
+        >
+          <a :href="office.web">{{ office.web }}</a>
+        </span>
       </div>
       <div
         v-if="$vuetify.breakpoint.mdAndUp"

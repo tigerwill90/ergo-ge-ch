@@ -1,5 +1,5 @@
 {
-  "name": "Ergotherapeute",
+  "name": "ergotherapeute",
   "version": "0.0.3",
   "private": true,
   "scripts": {
@@ -12,20 +12,20 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "axios": "^0.18.1",
-    "detect-browser": "^4.5.1",
+    "detect-browser": "^4.6.0",
     "moment": "^2.24.0",
     "vue": "^2.6.10",
     "vue-async-computed": "^3.7.0",
     "vue-full-calendar": "^2.7.0",
     "vue-recaptcha-v3": "^1.5.0",
-    "vue-router": "^3.0.6",
+    "vue-router": "^3.0.7",
     "vuetify": "^1.5.16",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.4",
+    "@vue/cli-plugin-babel": "^3.9.2",
+    "@vue/cli-plugin-eslint": "^3.9.2",
+    "@vue/cli-service": "^3.9.2",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",

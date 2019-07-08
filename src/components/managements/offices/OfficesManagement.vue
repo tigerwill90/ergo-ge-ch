@@ -88,6 +88,7 @@ export default {
       this.office.id = -1
       this.office.name = ''
       this.office.email = ''
+      this.office.web = ''
       this.office.contacts = [{
         city: '',
         cp: '',
@@ -115,6 +116,9 @@ export default {
     cleanData() {
       if (!this.office.email) {
         delete this.office.email
+      }
+      if (!this.office.web) {
+        delete this.office.web
       }
       this.office.contacts.forEach(contact => {
         if (!contact.cp) {

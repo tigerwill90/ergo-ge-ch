@@ -32,6 +32,12 @@
           label="Email"
           :rules="emailRules"
         />
+        <v-text-field
+          v-model="office.web"
+          type="url"
+          label="Site web"
+          :rules="webRules"
+        />
       </div>
       <p>
         Ajouter un ou plusieur nouveau lieu au cabinet.
@@ -171,6 +177,12 @@ export default {
       ],
       emailRules: [
         v => (!v || (/.+@.+/.test(v) && /\.[A-z]+$/.test(v))) || 'L\'email doit être valide.',
+        v => (!v || v.toString().length <= 250) || 'Maximum 250 caractères.'
+      ],
+      webRules: [
+        v => (!v || v.toString().length >= 5) || 'Minimum 5 caractères.',
+        v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.',
+        v => (!v || /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/.test(v)) || 'L\'url pour ce site n\'est pas valide. Ex: www.sea.ch ou https://sea.ch',
         v => (!v || v.toString().length <= 250) || 'Maximum 250 caractères.'
       ],
       streetRules: [
