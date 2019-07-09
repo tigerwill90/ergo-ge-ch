@@ -85,6 +85,24 @@ const router = new Router({
       }
     },
     {
+      path: '/reset',
+      name: 'reset',
+      component: () => import('./views/Reset.vue'),
+      meta: {
+        title: 'Réinitialisation du mot de passe',
+        header: 'Réinitialisation'
+      }
+    },
+    {
+      path: '/forgotten',
+      name: 'forgotten',
+      component: () => import('./views/PasswordForgotten.vue'),
+      meta: {
+        title: 'Vérification de l\'email',
+        header: 'Vérification'
+      }
+    },
+    {
       path: '*',
       redirect: '/'
     }

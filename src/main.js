@@ -20,14 +20,14 @@ if (browser && browser.name === 'ie' /* && parseInt(browser.version) < 11 */) {
 } else {
   loadApp().catch(err => {
     if (process.env.NODE_ENV === 'development') {
-      console.log(err.message)
+      console.warn(err.message)
     }
   })
 }
 
 async function loadApp() {
   if (process.env.NODE_ENV === 'production') {
-    console.log(
+    console.warn(
       '%cAttention ! En utilisant cette console, vous vous exposez au risque que des personnes malveillantes ' +
         'se fassent passer pour vous et volent vos informations grâce à une attaque appelée Self-XSS. ' +
         'Ne saisissez pas et ne copiez pas du code que vous ne comprenez pas.',
@@ -49,7 +49,12 @@ async function loadApp() {
 
     Vue.config.productionTip = false
     Vue.use(VueAxios, axios)
-    Vue.use(VueReCaptcha, { siteKey: process.env.VUE_APP_RECAPTCHA_PUBLIC_KEY })
+    Vue.use(VueReCaptcha, {
+      siteKey: process.env.VUE_APP_RECAPTCHA_PUBLIC_KEY,
+      loaderOptions: {
+        autoHideBadge: true
+      }
+    })
 
     new Vue({
       router,

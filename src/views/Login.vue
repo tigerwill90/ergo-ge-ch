@@ -43,7 +43,7 @@
           >
             Se connecter
           </v-btn>
-          <a href="">Mot de passe oublié ?</a>
+          <a @click="$router.push({name: 'forgotten'})">Mot de passe oublié ?</a>
         </div>
       </v-form>
     </article>
