@@ -54,7 +54,7 @@
                     v-if="isAdmin() && $store.getters.windowSize.x >= 500"
                     color="warning"
                     class="text-none"
-                    @click="remove(office, i)"
+                    @click="openDialog(office, i)"
                   >
                     Supprimer
                   </v-btn>
@@ -62,7 +62,7 @@
                     v-if="isAdmin() && $store.getters.windowSize.x < 500"
                     icon
                     color="warning"
-                    @click="remove(office, i)"
+                    @click="openDialog(office, i)"
                   >
                     <v-icon>delete</v-icon>
                   </v-btn>
@@ -84,6 +84,37 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-card>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="300"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Supprimer le cabinet {{ officeToDelete.name }}
+        </v-card-title>
+        <v-card-text>
+          Seuls les cabinets qui ne contiennent aucun ergothérapeute peuvent être supprimé. Cette opération est irréversible.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary text-none"
+            flat
+            @click="dialog = false"
+          >
+            Annuler
+          </v-btn>
+          <v-btn
+            color="warning text-none"
+            flat
+            @click="remove()"
+          >
+            Supprimer
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -100,23 +131,32 @@ export default {
   },
   data() {
     return {
-      panel: [true]
+      panel: [true],
+      dialog: false,
+      officeToDelete: -1,
+      rowIdToDelete: -1
     }
   },
   methods: {
-    remove(office, id) {
-      this.$http.delete(`${process.env.VUE_APP_API_URL}/offices/${office.id}`, {
+    remove() {
+      this.$http.delete(`${process.env.VUE_APP_API_URL}/offices/${this.officeToDelete.id}`, {
         headers: {
           Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
         }
       })
         .then(() => {
-          this.$emit('remove-office', id)
-          this.$store.commit('notification', { status: 200, message: `Le cabinet ${office.name} a bien été supprimé` })
+          this.dialog = false
+          this.$emit('remove-office', this.rowIdToDelete)
+          this.$store.commit('notification', { status: 200, message: `Le cabinet ${this.officeToDelete.name} a bien été supprimé` })
         })
         .catch(err => {
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
+    },
+    openDialog(office, id) {
+      this.dialog = true
+      this.officeToDelete = office
+      this.rowIdToDelete = id
     }
   }
 }
@@ -132,7 +172,6 @@ export default {
         margin: 10px 20px 10px 20px;
         display: flex;
     }
-
     .office-list-action {
         flex: 1;
         display: flex;
