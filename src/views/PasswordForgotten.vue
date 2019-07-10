@@ -51,10 +51,9 @@
         </v-stepper-step>
         <v-stepper-content step="2">
           <p>
-            Si cet email existe, vous recevrez dans quelque instant un email contenant les instructions pour réinitialiser votre mot de passe.
-            Vous devrez suivre un lien de redirection pour procéder au changement.
+            Si <strong>****{{ hidePartialEmail() }}</strong> est un email valide, vous recevrez dans quelque instant un message contenant les instructions pour modifier votre mot de passe.
+            Vous devrez suivre le lien de redirection pour procéder au changement.
           </p>
-          <span>Adresse email : <strong>{{ email }}</strong></span>
         </v-stepper-content>
         <v-stepper-step
           step="3"
@@ -102,6 +101,14 @@ export default {
     }
   },
   methods: {
+    hidePartialEmail() {
+      const arobaseIndex = this.email.indexOf('@')
+      const charBeforeArobase = 2
+      if (this.email.substring(0, arobaseIndex).length > charBeforeArobase) {
+        return this.email.substring(this.email.indexOf('@') - charBeforeArobase, this.email.length)
+      }
+      return this.email.substring(this.email.indexOf('@'), this.email.length)
+    },
     submit() {
       if (this.$refs.form.validate()) {
         this.disabled = true
