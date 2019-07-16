@@ -55,7 +55,7 @@
           class="subheading"
           style="word-break: break-all;"
         >
-          <a :href="office.web">{{ office.web }}</a>
+          <a :href="webUrl()">{{ office.web }}</a>
         </span>
       </div>
       <div
@@ -173,6 +173,12 @@ export default {
       if (this.$store.getters.windowSize.x < 960) {
         this.dialog = !this.dialog
       }
+    },
+    webUrl() {
+      if (!this.office.web.match(/^http?:\/\//i) || !this.office.web.match(/^https?:\/\//i)) {
+        return 'http://' + this.office.web
+      }
+      return this.office.web
     }
   }
 }
