@@ -175,7 +175,7 @@ export default {
       }
     },
     webUrl() {
-      if (!this.office.web.match(/^http?:\/\//i) || !this.office.web.match(/^https?:\/\//i)) {
+      if (!/^(http|https):\/\//.test(this.office.web)) {
         return 'http://' + this.office.web
       }
       return this.office.web
