@@ -9,12 +9,12 @@
       class="form-input-box"
     >
       <p v-if="isAdmin()">
-        Un ergothérapeute ne fait parti que d'un seul cabinet. En temps qu'administrateur,
+        Un ergothérapeute ne fait parti que d'un seul cabinet. En tant qu'administrateur,
         vous pouvez modifier et supprimer l'ensemble des ergothérapeutes. <strong>Soyez prudent !</strong>
         Vous pouvez ajouter un même ergothérapeute plusieurs fois pour l'associer à plusieurs cabinets.
       </p>
       <p v-else>
-        En temps qu'utilisateur de la plateforme ASE - Section Genevoise,
+        En tant qu'utilisateur de la plateforme ASE - Section Genevoise,
         vous pouvez modifier les informations concernant les ergothérapeutes qui travaillent avec vous. Garder
         ces informations à jour permet aux patients de contacter un spécialiste plus facilement.
         Vous pouvez ajouter un même ergothérapeute plusieurs fois pour l'associer à plusieurs cabinets
@@ -147,7 +147,7 @@
       </div>
       <p>
         Chaque ergothérapeute est spécialisé dans un ou plusieurs domaines. Renseigner chacune de vos spécialités permet
-        au patient de touver un ergothérapeute plus facilement.
+        au patient de trouver un ergothérapeute plus facilement.
       </p>
       <div class="category-box">
         <v-icon>category</v-icon>

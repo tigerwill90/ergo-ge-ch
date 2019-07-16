@@ -33,7 +33,7 @@
             </a>
           </div>
           <div class="footer-desc">
-            <span class="text-xs-center">Accosciation Suisse des Ergothérapeutes ASE</span>
+            <span class="text-xs-center">Association Suisse des Ergothérapeutes ASE</span>
             <span class="text-xs-center">Section Genevoise</span>
             <span class="text-xs-center">info@ergotherapie-ge.ch</span>
           </div>

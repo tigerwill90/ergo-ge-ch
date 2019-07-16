@@ -32,8 +32,11 @@
             <span class="headline center-text">{{ subtitle }}</span>
           </div>
           <div class="sub-nav-button">
-            <v-btn :to="{ name: 'contact' }">
-              Contactez nous
+            <v-btn
+              class="text-none"
+              :to="{ name: 'contact' }"
+            >
+              Contactez-nous
             </v-btn>
           </div>
         </div>

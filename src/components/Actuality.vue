@@ -85,11 +85,10 @@ export default {
           text: 'Le congrès de l’ASE a lieu une fois tous les quatre ans. Pour plus d\'informations sur le prochain congrès " ergo5.0 - Stars of Daily Living" : www.ergotherapie-kongress.ch'
         },
         {
-          title: 'Journée des sections romandie',
+          title: 'Journée des sections de Suisse romande',
           imageUrl: `${process.env.VUE_APP_API_URL}/images/romandie`,
-          subtitle: 'Rencontre avec les ergothérapeutes',
           date: 'Samedi 30 novembre 2019',
-          text: 'La journée des section de Suisse romande a lieu une fois par an. Elle a pour but de permettre l’échange, la discussion et l’information entre la section et l’ASE. Tous les membres peuvent participer.'
+          text: 'La journée des section de Suisse romande a lieu une fois par an. Elle a pour but de permettre l’échange, la discussion et l’information entre les sections romandes et l’ASE. Tous les membres peuvent participer.'
         },
         {
           title: 'Assemblée des délégué-e-s 2020',

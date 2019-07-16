@@ -3,7 +3,7 @@
     <article class="header-box">
       <span class="headline">
         Bienvenue sur le site de la section genevoise de l'Association Suisse des Ergothérapeutes !
-        Nos membres peuvent se connecter pour gérer leur informations personnels
+        Nos membres peuvent se connecter pour gérer leurs informations personnelles
       </span>
       <img
         src="../assets/img/ase.svg"

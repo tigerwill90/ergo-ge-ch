@@ -1,7 +1,7 @@
 <template>
   <section class="contact-section">
     <article class="information-box">
-      <span class="app-section-title title-1">Contactez nous</span>
+      <span class="app-section-title title-1">Contactez-nous</span>
       <div class="information-content">
         <v-icon
           v-if="$store.getters.windowSize.x > 710"
@@ -12,7 +12,7 @@
           info
         </v-icon>
         <p class="information-paragraph">
-          Une question ? N'hésitez pas à nous contacter en remplissant le formulaire. Nous vous répondrons dans les plus bref délais.
+          Une question ? N'hésitez pas à nous contacter en remplissant le formulaire. Nous vous répondrons dans les plus brefs délais.
         </p>
       </div>
     </article>
@@ -25,7 +25,7 @@
         indeterminate
         class="calendar-progress"
       />
-      <span class="app-section-title title-2 cDark">Contactez nous par email</span>
+      <span class="app-section-title title-2 cDark">Contactez-nous par email</span>
       <v-form
         ref="form"
         v-model="valid"

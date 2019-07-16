@@ -9,13 +9,13 @@
       class="form-input-box"
     >
       <p v-if="isAdmin()">
-        Le nom du cabinet est un identifiant unique. En temps qu'administrateur,
-        vous pouvez modifier et supprimer l'ensemble des cabinets. <strong>Soyez prudent !</strong>
+        Le nom du cabinet est un identifiant unique.
+        En tant qu’administrateur, vous pouvez modifier et supprimer l’ensemble des cabinets. <b>Soyez prudents</b>.
       </p>
       <p v-else>
-        Le nom du cabinet est un identifiant unique. En temps qu'utilisateur de la plateforme ASE - Section Genevoise,
+        Le nom du cabinet est un identifiant unique. En tant qu'utilisateur de la plateforme ASE - Section Genevoise,
         vous pouvez modifier les informations concernant votre cabinet. Si vous souhaitez ajouter ou supprimer des cabinets,
-        merci d'envoyer une demande via le formulaire de contact.
+        merci d'envoyer une demande via <a :href="baseUrl + '/contact'">le formulaire de contact</a>.
       </p>
       <div class="information-box">
         <v-icon>contact_mail</v-icon>
@@ -40,9 +40,8 @@
         />
       </div>
       <p>
-        Ajouter un ou plusieur nouveau lieu au cabinet.
-        Chaque cabinet possède au moin un lieu. Les informations que vous renseigner
-        aide les patients à vous trouver plus facilement. <strong>Soyez précis !</strong>
+        Vous pouvez également ajouter un ou plusieurs nouveaux lieux au cabinet.
+        Chaque cabinet possède au moins une adresse. Les informations que vous renseignez permettent de vous contacter plus facilement. <strong>Soyez précis</strong>.
       </p>
       <div class="contacts-box">
         <div
@@ -168,12 +167,13 @@ export default {
     return {
       valid: false,
       disabled: false,
+      baseUrl: window.location.origin,
       nameRules: [
         v => !!v || 'Le nom du cabinet est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
-        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z- 0-9',àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]*[A-z0-9()', àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté "-", "," et "(", ")", "," en fin de nom. Ex : O-Clair9',
-        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
+        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z- 0-9',&àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]*[A-z0-9()', &àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+$/.test(v) || 'Le nom du cabinet ne doit contenir aucun caractères spéciaux, excepté "-", ",", "&" et "(", ")", "," en fin de nom. Ex : O-Clair9',
+        v => v.toString().length <= 60 || 'Maximum 60 caractères.'
       ],
       emailRules: [
         v => (!v || (/.+@.+/.test(v) && /\.[A-z]+$/.test(v))) || 'L\'email doit être valide.',

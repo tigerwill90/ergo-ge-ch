@@ -46,7 +46,7 @@
         >
           <li>Hôpitaux Universitaires de Genève</li>
           <li>Institutions spécialisées</li>
-          <li>Fondation des Services d'Aides et de Soins à Domicile (FSASD)</li>
+          <li>Institution genevoise de maintien à domicile (IMAD)</li>
           <li>Etablissements médico-sociaux (EMS)</li>
           <li>Certains services spécialisés</li>
         </ul>

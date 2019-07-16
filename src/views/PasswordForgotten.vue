@@ -23,6 +23,7 @@
           <v-form
             ref="form"
             v-model="valid"
+            @submit.prevent
           >
             <v-text-field
               v-model="email"
@@ -31,16 +32,16 @@
               required
               :rules="emailRules"
               box
-              @keyup.enter="submit"
+              @keyup.native.enter="submit"
             />
+            <v-btn
+              color="warning text-none"
+              :disabled="disabled"
+              @click="submit"
+            >
+              Changer mon mot de passe
+            </v-btn>
           </v-form>
-          <v-btn
-            color="warning text-none"
-            :disabled="disabled"
-            @click="submit"
-          >
-            Changer mon mot de passe
-          </v-btn>
         </v-stepper-content>
 
         <v-stepper-step
