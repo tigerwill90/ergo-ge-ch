@@ -59,7 +59,7 @@
             @click="goTo(item.link, subItem.to)"
           >
             <v-list-tile-content>
-              <v-list-tile-title :class="{currentLink: ('#' + subItem.to === $store.getters.selector.currentHash)}">
+              <v-list-tile-title :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}">
                 {{ subItem.title }}
               </v-list-tile-title>
             </v-list-tile-content>
