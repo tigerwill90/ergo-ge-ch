@@ -125,7 +125,7 @@ export default new Vuex.Store({
           return
         }
         const now = Math.floor(Date.now() / 1000)
-        const exp = state.authorization.expires_in - 10
+        const exp = state.authorization.expires_at - 10
         if (now >= exp) {
           dispatch('reconnect').then(() => {
             console.warn('reconnected')

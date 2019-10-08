@@ -61,6 +61,7 @@
     <v-spacer v-if="!searchBar" />
     <v-autocomplete
       v-if="searchBar"
+      placeholder="Trouver un ergothérapeute"
       autofocus
       color="white"
       flat
