@@ -1,6 +1,6 @@
 <template>
   <v-card
-    v-if="showCard"
+    v-if="showCardForCategories || showCardForOffices || showCardForTherapists"
     id="office-card"
     class="office-card"
     elevation="5"
@@ -133,6 +133,14 @@ export default {
     selectedCategories: {
       type: Array,
       required: true
+    },
+    searchedOfficesId: {
+      type: Array,
+      required: true
+    },
+    searchedTherapistsOfficeId: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -145,9 +153,17 @@ export default {
     /**
      * Foreach categories, return directly true if match with one of the selected categories
      */
-    showCard() {
-      if (this.selectedCategories.length <= 0 || this.office.categories === undefined) return true
+    showCardForCategories() {
+      if ((this.selectedCategories.length <= 0 && this.searchedOfficesId.length <= 0 && this.searchedTherapistsOfficeId <= 0) || this.office.categories === undefined) return true
       return this.office.categories.some(cat => this.selectedCategories.find(el => cat.name === el))
+    },
+    showCardForOffices() {
+      if ((this.searchedOfficesId.length <= 0 && this.selectedCategories.length <= 0 && this.searchedTherapistsOfficeId <= 0) || this.office.categories === undefined) return true
+      return this.searchedOfficesId.some(id => this.office.id === id)
+    },
+    showCardForTherapists() {
+      if ((this.searchedOfficesId.length <= 0 && this.selectedCategories.length <= 0 && this.searchedTherapistsOfficeId <= 0) || this.office.categories === undefined) return true
+      return this.searchedTherapistsOfficeId.some(id => this.office.id === id)
     }
   },
   mounted() {

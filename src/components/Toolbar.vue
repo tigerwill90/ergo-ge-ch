@@ -10,7 +10,6 @@
     <template v-if="showMenu">
       <v-toolbar-side-icon @click="handleMenuClick" />
       <v-toolbar-title
-        v-if="!searchBar"
         class="toolbar-title"
       >
         {{ header }}
@@ -30,7 +29,6 @@
         >
       </router-link>
       <v-toolbar-items
-        v-if="!searchBar"
         class="toolbar-item"
       >
         <v-btn
@@ -47,25 +45,7 @@
         </v-btn>
       </v-toolbar-items>
     </template>
-    <v-spacer v-if="!searchBar" />
-    <v-autocomplete
-      v-if="searchBar"
-      placeholder="Trouver un ergothérapeute"
-      autofocus
-      color="white"
-      flat
-      clearable
-      :loading="false"
-      hide-details
-      style="margin-left: 20px"
-      type="search"
-    />
-    <v-btn
-      icon
-      @click="showSearchBar"
-    >
-      <v-icon>search</v-icon>
-    </v-btn>
+    <v-spacer />
     <AccessiblityMenu />
     <v-btn
       v-if="!this.$store.getters.authorization"
@@ -95,7 +75,6 @@ export default {
         { id: 3, name: 'therapist', text: 'Où trouver les ergothérapeutes' },
         { id: 4, name: 'contact', text: 'Contact' }
       ],
-      searchBar: false,
       sliderValue: this.$store.getters.fontSizeMultiplier
     }
   },
@@ -110,9 +89,6 @@ export default {
   methods: {
     handleMenuClick() {
       this.$store.commit('toggleDrawer')
-    },
-    showSearchBar() {
-      this.searchBar = !this.searchBar
     },
     goTo(link) {
       this.$router.push({ name: link.name })

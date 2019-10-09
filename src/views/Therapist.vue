@@ -4,6 +4,7 @@
       <OfficesFilter
         @sort-office="sort"
         @filter-categories="filter"
+        @search="search"
       />
     </div>
     <v-divider />
@@ -14,6 +15,8 @@
         :key="i"
         :office="office"
         :selected-categories="selectedCategories"
+        :searched-offices-id="searchedOfficesId"
+        :searched-therapists-office-id="searchedTherapistsOfficeId"
       />
     </div>
   </section>
@@ -32,7 +35,9 @@ export default {
     return {
       offices: [],
       currentOrderKey: 'name',
-      selectedCategories: []
+      selectedCategories: [],
+      searchedOfficesId: [],
+      searchedTherapistsOfficeId: []
     }
   },
   mounted() {
@@ -42,26 +47,7 @@ export default {
         this.$store.dispatch('setReconnectInterval')
       }).catch(() => {})
     }
-
-    this.$http
-      .get(`${process.env.VUE_APP_API_URL}/offices`)
-      .then(response => {
-        this.offices = response.data.data
-        this.offices.forEach(office => {
-          this.$http
-            .get(`${process.env.VUE_APP_API_URL}/offices/${office.id}/categories`)
-            .then(response => {
-              this.$set(office, 'categories', response.data.data)
-              this.$set(office, 'active', true)
-            })
-            .catch(() => {
-              this.$set(office, 'active', false)
-            })
-        })
-      })
-      .catch(err => {
-        this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
-      })
+    this.fetchOffices()
   },
   methods: {
     sort(key) {
@@ -115,6 +101,31 @@ export default {
     },
     filter(selectedCategories) {
       this.selectedCategories = selectedCategories
+    },
+    search(officesId, therapistsOfficeId) {
+      this.searchedOfficesId = officesId
+      this.searchedTherapistsOfficeId = therapistsOfficeId
+    },
+    fetchOffices() {
+      this.$http
+        .get(`${process.env.VUE_APP_API_URL}/offices`)
+        .then(response => {
+          this.offices = response.data.data
+          this.offices.forEach(office => {
+            this.$http
+              .get(`${process.env.VUE_APP_API_URL}/offices/${office.id}/categories`)
+              .then(response => {
+                this.$set(office, 'categories', response.data.data)
+                this.$set(office, 'active', true)
+              })
+              .catch(() => {
+                this.$set(office, 'active', false)
+              })
+          })
+        })
+        .catch(err => {
+          this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+        })
     }
   }
 }
