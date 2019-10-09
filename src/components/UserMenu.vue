@@ -1,14 +1,3 @@
-/*
- * File: UserMenu.vue
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 22nd May 2019
- * Last Modified: 22nd May 2019
- */
 <template>
   <v-menu
     v-if="$store.getters.authorization"

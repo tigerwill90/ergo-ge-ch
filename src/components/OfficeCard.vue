@@ -1,14 +1,3 @@
-/*
- * File: OfficeCard.vue
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 27th February 2019
- * Date Modified: 29th March 2019
- */
 <template>
   <v-card
     v-if="showCard"

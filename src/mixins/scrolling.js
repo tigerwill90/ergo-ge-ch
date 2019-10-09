@@ -1,14 +1,3 @@
-/*
- * File: scrolling.js
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 22nd December 2018
- * Last Modified: 13th March 2019
- */
 export default function (route) {
   return {
     data () {

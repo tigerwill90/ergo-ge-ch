@@ -1,14 +1,3 @@
-/*
- * File: ActualityCard.vue
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 9th March 2019
- * Last Modified: 31st March 2019
- */
 <template>
   <v-card
     class="actuality-card"

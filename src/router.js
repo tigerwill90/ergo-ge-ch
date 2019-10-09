@@ -1,14 +1,3 @@
-/*
- * File: router.js
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 13th February 2019
- * Last Modified: 22nd May 2019
- */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home'

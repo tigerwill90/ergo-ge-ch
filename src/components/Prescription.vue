@@ -1,14 +1,3 @@
-/*
- * File: Prescription.vue
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 31st March 2019
- * Last Modified: 23rd May 2019
- */
 <template>
   <FlexContainer
     column

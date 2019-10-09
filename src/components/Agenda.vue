@@ -1,14 +1,3 @@
-/*
- * File: Agenda.vue
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 27th February 2019
- * Last Modified: 31st March 2019
- */
 <template>
   <FlexContainer
     v-resize="onResize"
@@ -142,7 +131,7 @@ export default {
           events(start, end, timezone, callback) {
             self.loading = true
             self.$http
-              .get(`${process.env.VUE_APP_API_URL}/events?start=${start.format()}&end=${end.format()}`)
+              .get(`${process.env.VUE_APP_API_URL}/calendars?start=${start.format()}&end=${end.format()}`)
               .then(response => {
                 self.loading = false
                 callback(response.data.data)

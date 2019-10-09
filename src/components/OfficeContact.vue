@@ -1,14 +1,3 @@
-/*
- * File: OfficeContact.vue
- * Project: Ergotherapeute
- * **********************
- * Author: Sylvain Muller
- * Email: sylvain.muller90@gmail.com
- * **********************
- * License: MIT License
- * Created Date: 29th March 2019
- * Last Modified: 2nd May 2019
- */
 <template>
   <div
     class="contacts-box"
