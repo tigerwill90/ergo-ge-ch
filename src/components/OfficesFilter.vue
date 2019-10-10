@@ -1,6 +1,20 @@
 <template>
   <div class="filter-container">
     <div
+      v-show="therapistsCount > 0 || officesCount > 0"
+      class="search-match-counter caption font-weight-medium"
+    >
+      <span>Ergothérapeutes : {{ therapistsCount }}</span>
+      <span>Cabinets : {{ officesCount }}</span>
+    </div>
+    <span
+      v-show="(therapistsCount <= 0 && officesCount <= 0) && searchBar && select"
+      class="caption font-weight-medium no-match"
+    >
+      Aucun résultat
+    </span>
+    <v-spacer />
+    <div
       v-show="!searchBar"
       class="categories-selector"
     >
@@ -44,19 +58,6 @@
         </v-list-tile>
       </v-list>
     </v-menu>
-    <div
-      v-show="therapistsCount > 0 || officesCount > 0"
-      class="search-match-counter caption font-weight-medium"
-    >
-      <span>Ergothérapeutes : {{ therapistsCount }}</span>
-      <span>Cabinets : {{ officesCount }}</span>
-    </div>
-    <span
-      v-show="(therapistsCount <= 0 && officesCount <= 0) && searchBar"
-      class="caption font-weight-medium no-match"
-    >
-      Aucun résultat
-    </span>
     <v-text-field
       v-show="searchBar"
       v-model="select"

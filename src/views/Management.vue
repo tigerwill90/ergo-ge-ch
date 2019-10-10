@@ -5,6 +5,7 @@
     :links="links"
     sub-class="reduced"
   >
+    <!-- :id => $vuetify.goTo() -->
     <OfficesManagement
       :id="links[0].to"
       :ref="links[0].to"
@@ -28,10 +29,18 @@
       :id="links[2].to"
       :ref="links[2].to"
     />
-    <CategoriesManagement
+    <EventsManagement
       v-if="links[3].show"
       :id="links[3].to"
       :ref="links[3].to"
+      :events="events"
+      @remove-event="removeEvent"
+      @create-event="createEvent"
+    />
+    <CategoriesManagement
+      v-if="links[4].show"
+      :id="links[4].to"
+      :ref="links[4].to"
     />
   </SubNav>
 </template>
@@ -43,6 +52,7 @@ import OfficesManagement from '../components/managements/offices/OfficesManageme
 import TherapistsManagement from '../components/managements/therapists/TherapistsManagement'
 import UsersManagement from '../components/managements/UsersManagement'
 import CategoriesManagement from '../components/managements/CategoriesManagement'
+import EventsManagement from '../components/managements/EventsManagement'
 import admin from '../mixins/admin'
 import store from '../store'
 export default {
@@ -52,7 +62,8 @@ export default {
     OfficesManagement,
     TherapistsManagement,
     UsersManagement,
-    CategoriesManagement
+    CategoriesManagement,
+    EventsManagement
   },
   mixins: [Scrolling('management'), HandleScroll(), admin()],
   data () {
@@ -61,10 +72,12 @@ export default {
       offices: [],
       categories: [],
       therapists: [],
+      events: [],
       links: [
         { to: 'offices', title: 'Cabinets', show: true },
         { to: 'therapists', title: 'Ergothérapeutes', show: true },
         { to: 'users', title: 'Utilisateurs', show: true },
+        { to: 'events', title: 'Évènements', show: this.isAdmin() },
         { to: 'categories', title: 'Catégories', show: this.isAdmin() }
       ],
       unsubscribe: null
@@ -128,6 +141,14 @@ export default {
       .catch(err => {
         this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
       })
+
+    // fetch events
+    this.$http.get(`${process.env.VUE_APP_API_URL}/events`)
+      .then(response => {
+        this.events = response.data.data
+      }).catch(err => {
+        this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+      })
   },
   destroyed() {
     if (this.unsubscribe) {
@@ -157,6 +178,12 @@ export default {
     updateTherapist(therapist) {
       const pos = this.therapists.map(therapist => therapist.id).indexOf(therapist.id)
       this.therapists.splice(pos, 1, therapist)
+    },
+    removeEvent(id) {
+      this.events.splice(id, 1)
+    },
+    createEvent(event) {
+      this.events.push(event)
     }
   }
 }

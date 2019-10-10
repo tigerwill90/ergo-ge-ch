@@ -1,0 +1,425 @@
+<template>
+  <FlexContainer
+    padding-left="10%"
+    padding-right="10%"
+  >
+    <article class="events-content-article">
+      <span class="app-section-title title-1">Gestion des évènements</span>
+      <div class="events-content-section">
+        <section class="events-form-section">
+          <v-form
+            ref="form"
+            v-model="valid"
+          >
+            <p>
+              En tant qu'administrateur de la plateforme ASE, vous avez la possibilité d'ajouter de nouveaux évènements.
+              Les évènements à venir sont affichés sur la page d'accueille et publiquement visible.
+            </p>
+            <div class="add-event">
+              <v-text-field
+                v-model="tempEvent.title"
+                label="Titre*"
+                type="text"
+                required
+                :rules="eventTitleRules"
+              />
+              <v-text-field
+                v-model="tempEvent.subtitle"
+                type="text"
+                label="Sous-titre"
+                :rules="eventSubtitleRule"
+              />
+              <v-text-field
+                v-model="tempEvent.url"
+                type="url"
+                label="Lien"
+                :rules="eventUrlRules"
+              />
+              <v-checkbox
+                v-model="addDate"
+                color="blue"
+                label="Ajouter une date"
+              />
+              <v-date-picker
+                v-if="addDate"
+                v-model="picker"
+                :landscape="$store.getters.windowSize.x >= 1010"
+                locale="fr-ch"
+                full-width
+                style="margin: 20px 0 20px 0"
+              />
+              <v-textarea
+                v-model="tempEvent.description"
+                label="Description de l'évènement*"
+                type="text"
+                :counter="350"
+                :rules="eventDescriptionRules"
+                auto-grow
+                required
+              />
+            </div>
+            <p>
+              Afin d'améliorer l'expérience utilisateur, chaque évènement doit être accompagné d'une image repérsentative.
+              <b>Seul les formats d'images suivant sont supporté : png, jpg, jpeg et svg</b>.
+            </p>
+            <div class="list-file caption">
+              <template v-if="image">
+                <b>Image sélectionnée :</b>
+                <span>{{ imageName }} [{{ imageSize/1000 }} kB {{ imageType }}]</span>
+              </template>
+              <b
+                v-else
+                style="color: red"
+              >Auncune image sélectionnée</b>
+              <b v-if="!isImage">Format non supporté...</b>
+            </div>
+            <file-upload
+              ref="upload"
+              post-action="/post.method"
+              put-action="/put.method"
+              @input-filter="inputFilter"
+            >
+              <v-btn>
+                Téléverser
+                <v-icon
+                  right
+                  dark
+                >
+                  cloud_upload
+                </v-icon>
+              </v-btn>
+            </file-upload>
+            <div class="submit">
+              <v-btn
+                class="warning text-none"
+                @click="reset()"
+              >
+                Annuler
+              </v-btn>
+              <v-btn
+                class="primary text-none"
+                :disabled="disabled"
+                @click="create()"
+              >
+                Créer l'évènement
+              </v-btn>
+            </div>
+          </v-form>
+        </section>
+        <section class="events-list-section">
+          <v-card
+            v-if="events.length > 0"
+            max-width="500px"
+            width="100%"
+          >
+            <v-list two-line>
+              <template
+                v-for="(event, i) in events"
+              >
+                <v-list-tile
+                  :key="`${event.title}-${i}`"
+                  avatar
+                  @click="update()"
+                >
+                  <v-list-tile-avatar>
+                    <v-icon v-if="eventIsOutdated(event.date)">
+                      check
+                    </v-icon>
+                    <v-icon v-else>
+                      event
+                    </v-icon>
+                  </v-list-tile-avatar>
+
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ event.title }}</v-list-tile-title>
+                    <v-list-tile-sub-title v-if="event.date">
+                      {{ format(event.date) }}
+                    </v-list-tile-sub-title>
+                  </v-list-tile-content>
+
+                  <v-list-tile-action>
+                    <v-btn
+                      icon
+                      ripple
+                      @click="openDialog(event, i)"
+                    >
+                      <v-icon color="grey lighten-1">
+                        delete
+                      </v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-divider
+                  v-if="i < events.length - 1"
+                  :key="i"
+                />
+              </template>
+            </v-list>
+          </v-card>
+        </section>
+      </div>
+    </article>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="300"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Supprimer l'évènement {{ eventToDelete.title }} ?
+        </v-card-title>
+        <v-card-text>
+          <template v-if="eventIsOutdated(eventToDelete.date)">
+            Cet évènement à déjà eu lieu.
+          </template>
+          <template v-else-if="!eventToDelete.date">
+            Cet évènement n'a pas de date.
+          </template>
+          <b v-else>
+            Attention, cet évènement n'a pas encore eu lieu.
+          </b>
+          Cette opération est irréversible.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary text-none"
+            flat
+            @click="dialog = false"
+          >
+            Annuler
+          </v-btn>
+          <v-btn
+            color="warning text-none"
+            flat
+            @click="remove()"
+          >
+            Supprimer
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </FlexContainer>
+</template>
+
+<script>
+import FlexContainer from '../FlexContainer'
+export default {
+  name: 'EventsManagement',
+  components: {
+    FlexContainer
+  },
+  props: {
+    events: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
+    return {
+      dialog: false,
+      picker: new Date().toISOString().substr(0, 10),
+      image: null,
+      formData: null,
+      imageName: '',
+      imageSize: 0,
+      imageType: '',
+      addDate: false,
+      disabled: false,
+      eventToDelete: -1,
+      rowIdToDelete: -1,
+      valid: false,
+      tempEvent: {
+        title: '',
+        subtitle: null,
+        date: null,
+        url: null,
+        description: '',
+        img_alt: '',
+        img_name: ''
+      },
+      eventTitleRules: [
+        v => !!v || 'Le titre de l\'évènement est requis',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => v.toString().length <= 50 || 'Maximum 50 caractères'
+      ],
+      eventSubtitleRule: [
+        v => (!v || (v.toString().length >= 3 && v.toString().length <= 50)) || 'Le nombre de caractères doit être compris entre 3 et 50',
+        v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.'
+      ],
+      eventUrlRules: [
+        v => (!v || v.toString().length >= 5) || 'Minimum 5 caractères.',
+        v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.',
+        v => (!v || /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/.test(v)) || 'L\'url pour ce lien n\'est pas valide. Ex: www.google.ch ou https://google.ch',
+        v => (!v || v.toString().length <= 250) || 'Maximum 250 caractères.'
+      ],
+      eventDescriptionRules: [
+        v => !!v || 'La description de l\'évènement est requis',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères',
+        v => v.toString().length <= 350 || 'Maximum 50 caractères'
+      ],
+      isImage: true
+    }
+  },
+  methods: {
+    format(s) {
+      const date = new Date(s)
+      let mm = date.getMonth() + 1
+      if (mm.toString().length === 1) {
+        mm = '0' + mm.toString()
+      }
+      let dd = date.getDate()
+      if (dd.toString().length === 1) {
+        dd = '0' + dd.toString()
+      }
+      return dd + '.' + mm + '.' + date.getFullYear()
+    },
+    eventIsOutdated(s) {
+      const date = new Date(s)
+      const now = Date.now()
+      return s && date < now
+    },
+    remove() {
+      this.$http.delete(`${process.env.VUE_APP_API_URL}/events/${this.eventToDelete.id}`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+        }
+      })
+        .then(() => {
+          this.dialog = false
+          this.$emit('remove-event', this.rowIdToDelete)
+          this.$store.commit('notification', { status: 200, message: `L'évènement ${this.eventToDelete.title} a bien été supprimé` })
+        })
+        .catch(err => {
+          this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+        })
+    },
+    openDialog(event, id) {
+      this.dialog = true
+      this.eventToDelete = event
+      this.rowIdToDelete = id
+    },
+    update() {},
+    create() {
+      if (this.$refs.form.validate() && this.image && this.isImage) {
+        this.disabled = true
+        if (this.addDate) {
+          this.tempEvent.date = this.picker
+        }
+        this.$http({
+          method: 'POST',
+          url: `${process.env.VUE_APP_API_URL}/events`,
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+          },
+          data: this.tempEvent
+        })
+          .then(response => {
+            this.disabled = false
+            const event = response.data.data
+            this.$emit('create-event', event)
+            this.$store.commit('notification', { status: response.status, message: 'Évènement ajouté' })
+
+            this.$http({
+              method: 'POST',
+              url: `${process.env.VUE_APP_API_URL}/events/${event.id}/images`,
+              headers: {
+                Authorization: `Bearer ${this.$store.getters.authorization.access_token}`,
+                'Content-Type': 'multipart/form-data'
+              },
+              data: this.formData
+            })
+              .then(() => {
+                this.reset()
+              })
+              .catch(err => {
+                this.reset()
+                this.$store.commit('notification', { status: 400, message: err.response.data.data.user_message })
+              })
+          })
+          .catch(err => {
+            this.disabled = false
+            this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+          })
+      } else {
+        this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour créer un évènement' })
+      }
+    },
+    reset() {
+      this.$refs.form.resetValidation()
+      this.imageName = ''
+      this.imageSize = 0
+      this.imageType = ''
+      this.image = null
+      this.formData = null
+      this.isImage = true
+      this.addDate = false
+      this.picker = new Date().toISOString().substr(0, 10)
+      this.tempEvent = {
+        title: '',
+        subtitle: null,
+        date: null,
+        url: null,
+        description: '',
+        img_alt: '',
+        img_name: ''
+      }
+    },
+    inputFilter: function (newFile) {
+      if (!/\.(jpeg|jpg|png|svg)$/i.test(newFile.name)) {
+        this.isImage = false
+        this.image = null
+        this.formData = null
+        return
+      }
+
+      this.imageName = newFile.name
+      this.imageSize = newFile.size
+      this.imageType = newFile.type
+      this.image = newFile.file
+      this.isImage = true
+      this.tempEvent.img_name = this.imageName
+      this.tempEvent.img_alt = this.imageName
+      this.formData = new FormData()
+      this.formData.append('image', this.image)
+    }
+  }
+}
+</script>
+
+<style scoped>
+  .events-content-article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .events-content-section {
+    display: flex;
+    width: 100%;
+  }
+
+  .events-form-section {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-right: 25px;
+  }
+
+  .events-list-section {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .list-file {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+    padding: 5px 5px 5px 5px;
+    height: 70px;
+    background: #e0e0e0;
+  }
+</style>

@@ -385,14 +385,6 @@ export default {
         padding: 10px 10px 10px 10px;
     }
 
-    .add-email {
-        display: flex;
-        flex-direction: column;
-        border-radius: 5px;
-        padding: 10px 10px 10px 10px;
-        margin: 10px 0 25px 0;
-    }
-
     .contacts-list {
         display: flex;
         flex-direction: column;

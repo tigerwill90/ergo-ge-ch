@@ -35,6 +35,7 @@ async function loadApp() {
     const { default: store } = await import('./store')
     await import('./plugins/asyncComputed')
     const { default: App } = await import('./App')
+    const { default: VueUploadComponent } = await import('vue-upload-component')
 
     Vue.config.productionTip = false
     Vue.use(VueAxios, axios)
@@ -44,6 +45,7 @@ async function loadApp() {
         autoHideBadge: true
       }
     })
+    Vue.component('file-upload', VueUploadComponent)
 
     new Vue({
       router,
