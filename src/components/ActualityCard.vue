@@ -29,18 +29,14 @@
       >
         {{ description }}
         <br>
-        <span v-if="date"><strong>Date:</strong> {{ date }}</span>
+        <span v-if="date"><strong>Date:</strong> {{ formatDate(date) }}</span>
       </div>
-      <v-card-actions>
+      <v-card-actions v-if="link">
         <v-btn
           flat
           :color="color"
-        >
-          Partager
-        </v-btn>
-        <v-btn
-          flat
-          :color="color"
+          :href="formatUrl(link)"
+          target="_blank"
         >
           En savoir plus
         </v-btn>
@@ -83,6 +79,19 @@ export default {
         return 'white'
       }
       return 'orange'
+    }
+  },
+  methods: {
+    formatUrl(url) {
+      if (!/^(http|https):\/\//.test(url)) {
+        return 'http://' + url
+      }
+      return url
+    },
+    formatDate(s) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+      const date = new Date(s)
+      return date.toLocaleDateString('fr-ch', options)
     }
   }
 }

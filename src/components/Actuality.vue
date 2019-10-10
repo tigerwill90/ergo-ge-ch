@@ -27,8 +27,9 @@
           :title="actu.title"
           :subtitle="actu.subtitle"
           :image-url="actu.imageUrl"
-          :description="actu.text"
+          :description="actu.description"
           :date="actu.date"
+          :link="actu.url"
         />
       </div>
     </div>
@@ -66,27 +67,7 @@ export default {
       lowerBound: 0,
       upperBound: 0,
       carousels: [],
-      datas: [
-        {
-          title: 'Congrès de l\'ergothérapie',
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/knitting`,
-          date: '6 et 7 septembre 2019',
-          text: 'Le congrès de l’ASE a lieu une fois tous les quatre ans. Pour plus d\'informations sur le prochain congrès " ergo5.0 - Stars of Daily Living" : www.ergotherapie-kongress.ch'
-        },
-        {
-          title: 'Journée des sections de Suisse romande',
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/romandie`,
-          date: 'Samedi 30 novembre 2019',
-          text: 'La journée des section de Suisse romande a lieu une fois par an. Elle a pour but de permettre l’échange, la discussion et l’information entre les sections romandes et l’ASE. Tous les membres peuvent participer.'
-        },
-        {
-          title: 'Assemblée des délégué-e-s 2020',
-          imageUrl: `${process.env.VUE_APP_API_URL}/images/berne`,
-          date: 'Samedi 16 mai 2020',
-          text:
-            'L\'Assemblée des délégués est l\'organe supérieur de l’ASE. Tous les membres de l’ASE peuvent participer à l’Assemblée des délégués mais seul-e-s les délégué-e-s disposent du droit de vote.'
-        }
-      ]
+      datas: []
     }
   },
   computed: {
@@ -98,14 +79,24 @@ export default {
     }
   },
   mounted() {
-    this.$store.subscribe((mutation) => {
-      if (mutation.type === 'windowSize') {
-        this.resize(mutation.payload.x)
-      }
-    })
+    this.$http.get(`${process.env.VUE_APP_API_URL}/events`)
+      .then(response => {
+        response.data.data.forEach(event => {
+          event['imageUrl'] = `${process.env.VUE_APP_API_URL}/events/${event.id}/images`
+          this.datas.push(event)
+        })
 
-    // init
-    this.resize(this.$store.getters.windowSize.x)
+        this.$store.subscribe((mutation) => {
+          if (mutation.type === 'windowSize') {
+            this.resize(mutation.payload.x)
+          }
+        })
+
+        this.resize(this.$store.getters.windowSize.x)
+      })
+      .catch(err => {
+        this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+      })
   },
   methods: {
     next() {
