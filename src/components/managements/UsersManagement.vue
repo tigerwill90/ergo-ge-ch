@@ -3,9 +3,172 @@
     padding-left="10%"
     padding-right="10%"
   >
-    <article>
+    <article class="users-content-article">
       <span class="app-section-title title-1">Gestion des utilisateurs</span>
+      <div class="users-content-section">
+        <section class="users-form-section">
+          <v-form
+            ref="form"
+            v-model="valid"
+          >
+            <p>
+              Les utilisateurs de la plateforme ASE peuvent modifier leur information personnel ainsi que celle
+              relative à leur cabinet et aux ergothérapeute qui y travaille. Il existe deux type de privilèges : administrateur et normal.
+              Les actions que peuvent exécuter les utilisateurs normal sont restreints aux données qui les concernes.
+            </p>
+            <div>
+              <v-text-field
+                v-model="tempUser.first_name"
+                label="Prénom*"
+                type="text"
+                required
+                :rules="userFirstNameRules"
+              />
+              <v-text-field
+                v-model="tempUser.last_name"
+                label="Nom*"
+                type="text"
+                required
+                :rules="userLastNameRules"
+              />
+              <v-text-field
+                v-model="tempUser.email"
+                label="Email*"
+                type="email"
+                required
+                :rules="userEmailRules"
+              />
+              <v-select
+                v-model="selectedModelRole"
+                :items="roles"
+                label="Role*"
+                :rules="userRoleRules"
+                @change="selectedRoles"
+              />
+              <v-select
+                v-model="selectedModelOffice"
+                :items="offices"
+                label="Associer des cabinets*"
+                item-text="name"
+                return-object
+                flat
+                chips
+                multiple
+                deletable-chips
+                single-line
+                small-chips
+                @change="selectedOffices"
+              />
+            </div>
+            <div>
+              <v-btn
+                class="warning text-none"
+                @click="reset()"
+              >
+                Annuler
+              </v-btn>
+              <v-btn
+                class="primary text-none"
+                :disabled="disabled"
+                @click="create()"
+              >
+                Créer l'utilisateur
+              </v-btn>
+            </div>
+          </v-form>
+        </section>
+        <section class="users-list-section">
+          <v-card
+            v-if="users.length > 0"
+            max-width="500px"
+            width="100%"
+          >
+            <v-list two-line>
+              <template
+                v-for="(user, i) in users"
+              >
+                <v-list-tile
+                  :key="`tile-${i}`"
+                  avatar
+                  @click="update()"
+                >
+                  <v-list-tile-avatar>
+                    <v-icon v-if="user.active">
+                      person
+                    </v-icon>
+                    <v-icon v-else>
+                      person_outline
+                    </v-icon>
+                  </v-list-tile-avatar>
+
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ user.first_name }} {{ user.last_name }}</v-list-tile-title>
+                    <v-list-tile-sub-title>
+                      <b
+                        v-if="user.active"
+                        style="color: green"
+                      >Compte activé</b>
+                      <b
+                        v-else
+                        style="color: red"
+                      >Compte désactivé</b>
+                    </v-list-tile-sub-title>
+                  </v-list-tile-content>
+
+                  <v-list-tile-action>
+                    <v-btn
+                      icon
+                      ripple
+                      @click="openDialog(user, i)"
+                    >
+                      <v-icon color="grey lighten-1">
+                        delete
+                      </v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-divider
+                  v-if="i < users.length - 1"
+                  :key="i"
+                />
+              </template>
+            </v-list>
+          </v-card>
+        </section>
+      </div>
     </article>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="300"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Supprimer l'utilisateur {{ userToDelete.first_name }} {{ userToDelete.last_name }} ?
+        </v-card-title>
+        <v-card-text>
+          Les données relatives au cabinet de cet utilisateur seront conservées mais il ne pourra plus les administrer.
+          Cette opération est irréversible.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary text-none"
+            flat
+            @click="dialog = false"
+          >
+            Annuler
+          </v-btn>
+          <v-btn
+            color="warning text-none"
+            flat
+            @click="remove()"
+          >
+            Supprimer
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </FlexContainer>
 </template>
 <script>
@@ -16,9 +179,159 @@ export default {
   components: {
     FlexContainer
   },
-  mixins: [admin()]
+  props: {
+    users: {
+      type: Array,
+      required: true
+    },
+    offices: {
+      type: Array,
+      required: true
+    }
+  },
+  mixins: [admin()],
+  data() {
+    return {
+      dialog: false,
+      userToDelete: {},
+      rowIdToDelete: -1,
+      valid: false,
+      roles: ['Administrateur', 'Utilisateur'],
+      disabled: false,
+      tempUser: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        roles: [],
+        offices_id: null
+      },
+      selectedModelOffice: null,
+      selectedModelRole: '',
+      userFirstNameRules: [
+        v => !!v || 'Le prénom de l\'utilisateur est requis.',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z-' àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]*[A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]$/.test(v) || 'Le prénom ne doit contenir aucun caractères spéciaux, excepté "-" et "\'". Ex: Jean-Luc.',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
+      ],
+      userLastNameRules: [
+        v => !!v || 'Le nom de l\'utilisateur est requis.',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères.',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => /^[A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ][A-z-' àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]+[A-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]$/.test(v) || 'Le nom ne doit contenir aucun caractères spéciaux, excepté "-" et "\'". Ex: Alain.',
+        v => v.toString().length <= 45 || 'Maximum 45 caractères.'
+      ],
+      userEmailRules: [
+        v => !!v || 'Email requis',
+        v => (/.+@.+/.test(v) && /\.[A-z]+$/.test(v)) || 'L\'email doit être valide.',
+        v => (v.toString().length <= 250 && v.toString().length >= 5) || 'Le nombre de caractères doit être compris entre 5 et 250.'
+      ],
+      userRoleRules: [
+        v => v.length > 0 || 'Vous devez sélectionner un role'
+      ]
+    }
+  },
+  methods: {
+    openDialog(user, id) {
+      this.dialog = true
+      this.userToDelete = user
+      this.rowIdToDelete = id
+    },
+    update() {},
+    create() {
+      if (this.$refs.form.validate()) {
+        this.disabled = true
+        if (this.tempUser.offices_id === null) {
+          delete this.tempUser.offices_id
+        }
+        this.$http({
+          method: 'POST',
+          url: `${process.env.VUE_APP_API_URL}/users`,
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+          },
+          data: this.tempUser
+        }).then(response => {
+          this.disabled = false
+          this.$emit('create-user', response.data.data)
+          this.reset()
+          this.$store.commit('notification', { status: response.status, message: 'Utilisateur ajouté' })
+        }).catch(err => {
+          console.log(err.response)
+          this.disabled = false
+          this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+        })
+      } else {
+        this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour créer l\'utilisateur' })
+      }
+    },
+    reset() {
+      this.$refs.form.resetValidation()
+      this.tempUser = {
+        first_name: '',
+        last_name: '',
+        email: '',
+        roles: [],
+        offices_id: null
+      }
+      this.selectedModelOffice = null
+      this.selectedModelRole = ''
+    },
+    remove() {
+      this.$http.delete(`${process.env.VUE_APP_API_URL}/users/${this.userToDelete.id}`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+        }
+      })
+        .then(() => {
+          this.dialog = false
+          this.$emit('remove-user', this.rowIdToDelete)
+          this.$store.commit('notification', { status: 200, message: `L'utilisateur ${this.userToDelete.first_name} ${this.userToDelete.last_name} a bien été supprimé` })
+        })
+        .catch(err => {
+          this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+        })
+    },
+    selectedOffices(offices) {
+      if (offices && offices.length > 0) {
+        this.tempUser.offices_id = offices.map(office => office.id)
+        return
+      }
+      this.tempUser.offices_id = null
+    },
+    selectedRoles(role) {
+      if (role === 'Administrateur') {
+        this.tempUser.roles.push('admin')
+      } else {
+        this.tempUser.roles.push('user')
+      }
+    }
+  }
 }
 </script>
 <style scoped>
+  .users-content-article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 
+  .users-content-section {
+    display: flex;
+    width: 100%;
+  }
+
+  .users-form-section {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-right: 25px;
+  }
+
+  .users-list-section {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: start;
+  }
 </style>

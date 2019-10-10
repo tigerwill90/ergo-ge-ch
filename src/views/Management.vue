@@ -28,6 +28,10 @@
     <UsersManagement
       :id="links[2].to"
       :ref="links[2].to"
+      :users="users"
+      :offices="offices"
+      @remove-user="removeUser"
+      @create-user="createUser"
     />
     <EventsManagement
       v-if="links[3].show"
@@ -73,10 +77,11 @@ export default {
       categories: [],
       therapists: [],
       events: [],
+      users: [],
       links: [
         { to: 'offices', title: 'Cabinets', show: true },
         { to: 'therapists', title: 'Ergothérapeutes', show: true },
-        { to: 'users', title: 'Utilisateurs', show: true },
+        { to: 'users', title: 'Utilisateurs', show: this.isAdmin() },
         { to: 'events', title: 'Évènements', show: this.isAdmin() },
         { to: 'categories', title: 'Catégories', show: this.isAdmin() }
       ],
@@ -149,6 +154,19 @@ export default {
       }).catch(err => {
         this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
       })
+
+    // fetch users
+    this.$http.get(`${process.env.VUE_APP_API_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+      }
+    })
+      .then(response => {
+        this.users = response.data.data
+      })
+      .catch(err => {
+        this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+      })
   },
   destroyed() {
     if (this.unsubscribe) {
@@ -184,6 +202,12 @@ export default {
     },
     createEvent(event) {
       this.events.push(event)
+    },
+    removeUser(id) {
+      this.users.splice(id, 1)
+    },
+    createUser(user) {
+      this.users.push(user)
     }
   }
 }

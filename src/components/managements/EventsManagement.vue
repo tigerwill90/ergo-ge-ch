@@ -15,7 +15,7 @@
               En tant qu'administrateur de la plateforme ASE, vous avez la possibilité d'ajouter de nouveaux évènements.
               Les évènements à venir sont affichés sur la page d'accueille et publiquement visible.
             </p>
-            <div class="add-event">
+            <div>
               <v-text-field
                 v-model="tempEvent.title"
                 label="Titre*"
@@ -89,7 +89,7 @@
                 </v-icon>
               </v-btn>
             </file-upload>
-            <div class="submit">
+            <div>
               <v-btn
                 class="warning text-none"
                 @click="reset()"
@@ -226,7 +226,7 @@ export default {
       imageType: '',
       addDate: false,
       disabled: false,
-      eventToDelete: -1,
+      eventToDelete: {},
       rowIdToDelete: -1,
       valid: false,
       tempEvent: {
