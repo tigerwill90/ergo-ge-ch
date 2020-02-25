@@ -307,6 +307,11 @@ export default {
         if (this.addDate) {
           this.tempEvent.date = this.picker
         }
+        Object.keys(this.tempEvent).forEach(key => {
+          if (!this.tempEvent[key]) {
+            this.tempEvent[key] = null
+          }
+        })
         this.$http({
           method: 'POST',
           url: `${process.env.VUE_APP_API_URL}/events`,
@@ -316,7 +321,6 @@ export default {
           data: this.tempEvent
         })
           .then(response => {
-            this.disabled = false
             const event = response.data.data
             this.$emit('create-event', event)
             this.$store.commit('notification', { status: response.status, message: 'Évènement ajouté' })
@@ -331,9 +335,11 @@ export default {
               data: this.formData
             })
               .then(() => {
+                this.disabled = false
                 this.reset()
               })
               .catch(err => {
+                this.disabled = false
                 this.reset()
                 this.$store.commit('notification', { status: 400, message: err.response.data.data.user_message })
               })
@@ -411,7 +417,7 @@ export default {
     display: flex;
     flex: 1;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
   }
 
   .list-file {

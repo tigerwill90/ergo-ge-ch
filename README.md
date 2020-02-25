@@ -1,4 +1,4 @@
-<h1 align="center">Bienvenue to Association Suisse des ergothérapeutes - Section Genevoise 👋</h1>
+<h1 align="center">Welcome to Association Suisse des ergothérapeutes - Section Genevoise 👋</h1>
 <p>
   <img src="https://img.shields.io/badge/version-0.0.3-blue.svg?cacheSeconds=2592000" />
 </p>

@@ -31,7 +31,10 @@
         <br>
         <span v-if="date"><strong>Date:</strong> {{ formatDate(date) }}</span>
       </div>
-      <v-card-actions v-if="link">
+      <v-card-actions
+        v-if="link"
+        class="card-button"
+      >
         <v-btn
           flat
           :color="color"
@@ -97,29 +100,35 @@ export default {
 }
 </script>
 <style scoped>
-.actuality-card {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+  .actuality-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-.actuality-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
+  .actuality-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 
-.title-box {
-  margin: 10px 5px 10px 5px;
-}
+  .title-box {
+    margin: 10px 15px 10px 15px;
+  }
 
-.subtitle-box {
-  margin: 0 5px 10px 5px;
-}
+  .subtitle-box {
+    margin: 0 15px 10px 15px;
+  }
 
-.description-box {
-  margin: 0 5px 10px 5px;
-  flex: 1;
-}
+  .description-box {
+    margin: 0 15px 10px 15px;
+    flex: 1;
+  }
+
+  .card-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 </style>

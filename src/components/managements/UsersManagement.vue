@@ -179,6 +179,7 @@ export default {
   components: {
     FlexContainer
   },
+  mixins: [admin()],
   props: {
     users: {
       type: Array,
@@ -189,7 +190,6 @@ export default {
       required: true
     }
   },
-  mixins: [admin()],
   data() {
     return {
       dialog: false,
@@ -257,7 +257,6 @@ export default {
           this.reset()
           this.$store.commit('notification', { status: response.status, message: 'Utilisateur ajouté' })
         }).catch(err => {
-          console.log(err.response)
           this.disabled = false
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
         })
@@ -332,6 +331,6 @@ export default {
     display: flex;
     flex: 1;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
   }
 </style>
