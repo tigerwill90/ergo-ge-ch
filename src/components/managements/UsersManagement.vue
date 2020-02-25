@@ -18,21 +18,21 @@
             </p>
             <div>
               <v-text-field
-                v-model="tempUser.first_name"
+                v-model="targetUser.first_name"
                 label="Prénom*"
                 type="text"
                 required
                 :rules="userFirstNameRules"
               />
               <v-text-field
-                v-model="tempUser.last_name"
+                v-model="targetUser.last_name"
                 label="Nom*"
                 type="text"
                 required
                 :rules="userLastNameRules"
               />
               <v-text-field
-                v-model="tempUser.email"
+                v-model="targetUser.email"
                 label="Email*"
                 type="email"
                 required
@@ -68,11 +68,20 @@
                 Annuler
               </v-btn>
               <v-btn
+                v-if="!this.updateMode"
                 class="primary text-none"
                 :disabled="disabled"
                 @click="create()"
               >
                 Créer l'utilisateur
+              </v-btn>
+              <v-btn
+                v-else
+                class="primary text-none"
+                :disabled="disabled"
+                @click="update()"
+              >
+                Modifier l'utilisateur
               </v-btn>
             </div>
           </v-form>
@@ -90,10 +99,13 @@
                 <v-list-tile
                   :key="`tile-${i}`"
                   avatar
-                  @click="update()"
+                  @click="prepareUpdate(user)"
                 >
                   <v-list-tile-avatar>
-                    <v-icon v-if="user.active">
+                    <v-icon
+                      v-if="user.active"
+                      :color="user.roles[0] === 'admin' ? '#b71c1c' : ''"
+                    >
                       person
                     </v-icon>
                     <v-icon v-else>
@@ -198,7 +210,7 @@ export default {
       valid: false,
       roles: ['Administrateur', 'Utilisateur'],
       disabled: false,
-      tempUser: {
+      targetUser: {
         first_name: '',
         last_name: '',
         email: '',
@@ -207,6 +219,7 @@ export default {
       },
       selectedModelOffice: null,
       selectedModelRole: '',
+      updateMode: false,
       userFirstNameRules: [
         v => !!v || 'Le prénom de l\'utilisateur est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
@@ -237,12 +250,47 @@ export default {
       this.userToDelete = user
       this.rowIdToDelete = id
     },
-    update() {},
+    prepareUpdate(user) {
+      this.reset()
+      this.updateMode = true
+      this.targetUser = JSON.parse(JSON.stringify(user))
+      if (this.targetUser.roles.some(role => role === 'admin')) {
+        this.selectedModelRole = 'Administrateur'
+      } else {
+        this.selectedModelRole = 'Utilisateur'
+      }
+      this.selectedModelOffice = this.offices.filter(office => user.offices_id && user.offices_id.includes(office.id))
+    },
+    update() {
+      if (this.$refs.form.validate()) {
+        this.disabled = true
+        if (this.targetUser.offices_id === null) {
+          delete this.targetUser.offices_id
+        }
+        this.$http({
+          method: 'PATCH',
+          url: `${process.env.VUE_APP_API_URL}/users/${this.targetUser.id}`,
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+          },
+          data: this.targetUser
+        }).then(response => {
+          this.disabled = false
+          this.$emit('update-user', response.data.data)
+          this.reset()
+        }).catch(err => {
+          this.disabled = false
+          this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+        })
+      } else {
+        this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour modifier l\'utilisateur' })
+      }
+    },
     create() {
       if (this.$refs.form.validate()) {
         this.disabled = true
-        if (this.tempUser.offices_id === null) {
-          delete this.tempUser.offices_id
+        if (this.targetUser.offices_id === null) {
+          delete this.targetUser.offices_id
         }
         this.$http({
           method: 'POST',
@@ -250,7 +298,7 @@ export default {
           headers: {
             Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
           },
-          data: this.tempUser
+          data: this.targetUser
         }).then(response => {
           this.disabled = false
           this.$emit('create-user', response.data.data)
@@ -266,7 +314,7 @@ export default {
     },
     reset() {
       this.$refs.form.resetValidation()
-      this.tempUser = {
+      this.targetUser = {
         first_name: '',
         last_name: '',
         email: '',
@@ -275,6 +323,7 @@ export default {
       }
       this.selectedModelOffice = null
       this.selectedModelRole = ''
+      this.updateMode = false
     },
     remove() {
       this.$http.delete(`${process.env.VUE_APP_API_URL}/users/${this.userToDelete.id}`, {
@@ -293,16 +342,16 @@ export default {
     },
     selectedOffices(offices) {
       if (offices && offices.length > 0) {
-        this.tempUser.offices_id = offices.map(office => office.id)
+        this.targetUser.offices_id = offices.map(office => office.id)
         return
       }
-      this.tempUser.offices_id = null
+      this.targetUser.offices_id = null
     },
     selectedRoles(role) {
       if (role === 'Administrateur') {
-        this.tempUser.roles.push('admin')
+        this.targetUser.roles = ['admin']
       } else {
-        this.tempUser.roles.push('user')
+        this.targetUser.roles = ['user']
       }
     }
   }

@@ -32,6 +32,7 @@
       :offices="offices"
       @remove-user="removeUser"
       @create-user="createUser"
+      @update-user="updateUser"
     />
     <EventsManagement
       v-if="links[3].show"
@@ -155,7 +156,7 @@ export default {
         this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
       })
 
-    // fetch users
+    // fetch users and user office
     this.$http.get(`${process.env.VUE_APP_API_URL}/users`, {
       headers: {
         Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
@@ -163,6 +164,17 @@ export default {
     })
       .then(response => {
         this.users = response.data.data
+        this.users.forEach(user => {
+          this.$http.get(`${process.env.VUE_APP_API_URL}/users/${user.id}/offices`)
+            .then(response => {
+              this.$set(user, 'offices_id', response.data.data.map(office => office.id))
+            })
+            .catch(err => {
+              if (err.response.status !== 404) {
+                this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+              }
+            })
+        })
       })
       .catch(err => {
         this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
@@ -208,6 +220,10 @@ export default {
     },
     createUser(user) {
       this.users.push(user)
+    },
+    updateUser(user) {
+      const pos = this.users.map(user => user.id).indexOf(user.id)
+      this.users.splice(pos, 1, user)
     }
   }
 }
