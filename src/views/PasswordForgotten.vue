@@ -93,12 +93,12 @@ export default {
       store.dispatch('reconnect').then(user => {
         store.commit('notification', { status: 200, message: `Vous êtes déjà connecter en tant que ${user.first_name} ${user.last_name}` })
         store.dispatch('setReconnectInterval')
-        next(vm => vm.$router.push({ name: 'home' }))
+        next(vm => vm.$router.push({ name: 'home' }).catch(() => {}))
       }).catch(() => {
         next()
       })
     } else {
-      next(vm => vm.$router.push({ name: 'home' }))
+      next(vm => vm.$router.push({ name: 'home' }).catch(() => {}))
     }
   },
   methods: {

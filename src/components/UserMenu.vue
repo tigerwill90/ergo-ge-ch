@@ -91,7 +91,7 @@ export default {
         })
     },
     goToManagement() {
-      this.$router.push({ name: 'management' })
+      this.$router.push({ name: 'management' }).catch(() => {})
       this.menu = false
     }
   }

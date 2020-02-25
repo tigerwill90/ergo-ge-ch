@@ -91,7 +91,7 @@ export default {
       this.$store.commit('toggleDrawer')
     },
     goTo(link) {
-      this.$router.push({ name: link.name })
+      this.$router.push({ name: link.name }).catch(() => {})
       this.$store.commit('setHashSelector', null)
       this.$store.commit('setActiveLinkIndex', null)
     }

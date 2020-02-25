@@ -215,7 +215,7 @@ export default {
   },
   methods: {
     goTo(link, to) {
-      this.$router.push({ name: link })
+      this.$router.push({ name: link }).catch(() => {})
       const hash = to === undefined ? null : '#' + to
       this.$store.commit('selector', {
         hash,

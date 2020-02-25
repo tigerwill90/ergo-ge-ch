@@ -48,7 +48,7 @@
               <v-select
                 v-model="selectedModelOffice"
                 :items="offices"
-                label="Associer des cabinets*"
+                label="Associer des cabinets"
                 item-text="name"
                 return-object
                 flat
@@ -104,7 +104,7 @@
                   <v-list-tile-avatar>
                     <v-icon
                       v-if="user.active"
-                      :color="user.roles[0] === 'admin' ? '#b71c1c' : ''"
+                      :color="userIconColor(user)"
                     >
                       person
                     </v-icon>
@@ -353,6 +353,12 @@ export default {
       } else {
         this.targetUser.roles = ['user']
       }
+    },
+    userIconColor(user) {
+      if (user.roles.includes('admin')) {
+        return '#b71c1c'
+      }
+      return '#9E9E9E'
     }
   }
 }

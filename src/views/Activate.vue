@@ -122,18 +122,18 @@ export default {
       store.dispatch('reconnect').then(user => {
         store.commit('notification', { status: 200, message: `Vous êtes déjà connecter en tant que ${user.first_name} ${user.last_name}. Déconnecter vous avant de créer un nouveau compte !` })
         store.dispatch('setReconnectInterval')
-        next(vm => vm.$router.push({ name: 'home' }))
+        next(vm => vm.$router.push({ name: 'home' }).catch(() => {}))
       }).catch(() => {
         next()
       })
     } else {
-      next(vm => vm.$router.push({ name: 'home' }))
+      next(vm => vm.$router.push({ name: 'home' }).catch(() => {}))
     }
   },
   created() {
     this.token = new URLSearchParams(window.location.search).get('token')
     if (!this.token) {
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'home' }).catch(() => {})
     }
   },
   destroyed() {
@@ -158,7 +158,7 @@ export default {
             this.$store.commit('user', response.data.data)
             this.timeout = setTimeout(() => {
               this.disabled = false
-              this.$router.push({ name: 'login' })
+              this.$router.push({ name: 'login' }).catch(() => {})
             }, 2000)
           })
           .catch(err => {

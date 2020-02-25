@@ -26,6 +26,7 @@
       @update-therapist="updateTherapist"
     />
     <UsersManagement
+      v-if="links[2].show"
       :id="links[2].to"
       :ref="links[2].to"
       :users="users"
@@ -105,7 +106,7 @@ export default {
   mounted() {
     // If client is unauthenticated, go to login
     if (!this.$store.getters.authorization) {
-      this.$router.push({ name: 'login' })
+      this.$router.push({ name: 'login' }).catch(() => {})
       return
     }
 
@@ -113,7 +114,7 @@ export default {
     this.unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'authorization' && !mutation.payload) {
         this.unsubscribe()
-        this.$router.push({ name: 'login' })
+        this.$router.push({ name: 'login' }).catch(() => {})
       }
     })
 
@@ -157,28 +158,30 @@ export default {
       })
 
     // fetch users and user office
-    this.$http.get(`${process.env.VUE_APP_API_URL}/users`, {
-      headers: {
-        Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
-      }
-    })
-      .then(response => {
-        this.users = response.data.data
-        this.users.forEach(user => {
-          this.$http.get(`${process.env.VUE_APP_API_URL}/users/${user.id}/offices`)
-            .then(response => {
-              this.$set(user, 'offices_id', response.data.data.map(office => office.id))
-            })
-            .catch(err => {
-              if (err.response.status !== 404) {
-                this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
-              }
-            })
+    if (this.isAdmin()) {
+      this.$http.get(`${process.env.VUE_APP_API_URL}/users`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+        }
+      })
+        .then(response => {
+          this.users = response.data.data
+          this.users.forEach(user => {
+            this.$http.get(`${process.env.VUE_APP_API_URL}/users/${user.id}/offices`)
+              .then(response => {
+                this.$set(user, 'offices_id', response.data.data.map(office => office.id))
+              })
+              .catch(err => {
+                if (err.response.status !== 404) {
+                  this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+                }
+              })
+          })
         })
-      })
-      .catch(err => {
-        this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
-      })
+        .catch(err => {
+          this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+        })
+    }
   },
   destroyed() {
     if (this.unsubscribe) {

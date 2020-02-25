@@ -17,7 +17,8 @@
         En tant qu'utilisateur de la plateforme ASE - Section Genevoise,
         vous pouvez modifier les informations concernant les ergothérapeutes qui travaillent avec vous. Garder
         ces informations à jour permet aux patients de contacter un spécialiste plus facilement.
-        Vous pouvez ajouter un même ergothérapeute plusieurs fois pour l'associer à plusieurs cabinets
+        Si vous souhaitez ajouter un ergothérapeute à votre cabinets, merci de formuler votre demande via
+        <a :href="baseUrl + '/contact'">le formulaire de contact</a>.
       </p>
       <div class="information-box">
         <v-icon>person</v-icon>
@@ -25,11 +26,13 @@
           v-model="therapist.first_name"
           label="Prénom*"
           type="text"
+          :disabled="!this.isAdmin()"
           required
           :rules="firstNameRules"
         />
         <v-text-field
           v-model="therapist.last_name"
+          :disabled="!this.isAdmin()"
           type="text"
           label="Nom*"
           required
@@ -38,6 +41,7 @@
         <div class="combo-box">
           <v-select
             v-model="therapist.title"
+            :disabled="!this.isAdmin()"
             :items="titles"
             label="Titre*"
             style="margin-right: 10px; width: 20px;"
@@ -205,7 +209,7 @@
           Modifier l'ergothérapeute
         </v-btn>
         <v-btn
-          v-else
+          v-if="!updateMode && this.isAdmin()"
           class="primary text-none"
           :disabled="disabled"
           @click="createTherapist()"
@@ -246,6 +250,7 @@ export default {
       phonesType: ['Tel.', 'Fax.', 'Pro.'],
       valid: false,
       disabled: false,
+      baseUrl: window.location.origin,
       firstNameRules: [
         v => !!v || 'Le prénom de l\'ergothérapeute est requis.',
         v => v.toString().length >= 3 || 'Minimum 3 caractères.',
