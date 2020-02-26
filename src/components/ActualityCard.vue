@@ -29,7 +29,17 @@
       >
         {{ description }}
         <br>
-        <span v-if="date"><strong>Date:</strong> {{ formatDate(date) }}</span>
+        <div
+          v-if="dates.length > 0"
+          class="actuality-date"
+        >
+          <strong>Date:</strong>
+          <span
+            v-for="(date, i) in dates"
+            :key="i"
+          > {{ formatDate(date) }}</span>
+        </div>
+        <template />
       </div>
       <v-card-actions
         v-if="link"
@@ -59,9 +69,9 @@ export default {
       type: String,
       default: null
     },
-    date: {
-      type: String,
-      default: null
+    dates: {
+      type: Array,
+      default: () => []
     },
     imageUrl: {
       type: String,
@@ -130,5 +140,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+
+  .actuality-date {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
   }
 </style>

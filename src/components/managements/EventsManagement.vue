@@ -99,11 +99,20 @@
                 Annuler
               </v-btn>
               <v-btn
+                v-if="!updateMode"
                 class="primary text-none"
                 :disabled="disabled"
                 @click="create()"
               >
                 Créer l'évènement
+              </v-btn>
+              <v-btn
+                v-else
+                class="primary text-none"
+                :disabled="disabled"
+                @click="update()"
+              >
+                Modifier l'évènement
               </v-btn>
             </div>
           </v-form>
@@ -121,7 +130,7 @@
                 <v-list-tile
                   :key="`${event.title}-${i}`"
                   avatar
-                  @click="update()"
+                  @click="prepareUpdate(event)"
                 >
                   <v-list-tile-avatar>
                     <v-icon v-if="datesAreOutdated(event.dates)">
@@ -277,7 +286,8 @@ export default {
         v => v.toString().length <= 350 || 'Maximum 50 caractères'
       ],
       isSupportedFileType: true,
-      isValidImageName: true
+      isValidImageName: true,
+      updateMode: false
     }
   },
   methods: {
@@ -320,7 +330,60 @@ export default {
       this.eventToDelete = event
       this.rowIdToDelete = id
     },
-    update() {},
+    update() {
+      if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName) {
+        this.disabled = true
+        if (this.addDate) {
+          this.tempEvent.dates = this.picker
+        }
+        Object.keys(this.tempEvent).forEach(key => {
+          if (!this.tempEvent[key]) {
+            this.tempEvent[key] = null
+          }
+        })
+        this.$http({
+          method: 'PUT',
+          url: `${process.env.VUE_APP_API_URL}/events/${this.tempEvent.id}`,
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.authorization.access_token}`
+          },
+          data: this.tempEvent
+        })
+          .then(response => {
+            this.disabled = false
+            const event = response.data.data
+            this.$emit('update-event', event)
+            this.$store.commit('notification', { status: response.status, message: 'Évènement modifié' })
+          })
+          .catch(err => {
+            this.disabled = false
+            this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
+          })
+      } else {
+        this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour créer un évènement' })
+      }
+    },
+    prepareUpdate(event) {
+      this.reset()
+      this.updateMode = true
+      this.tempEvent = JSON.parse(JSON.stringify(event))
+      if (this.tempEvent.dates.length > 0) {
+        this.addDate = true
+        this.tempEvent.dates.forEach(date => this.picker.push(date.substr(0, 10)))
+      }
+
+      this.$http.get(`${process.env.VUE_APP_API_URL}/events/${event.id}/images`)
+        .then(response => {
+          const file = new File([''], this.tempEvent.img_alt)
+          this.image = file
+          this.imageSize = response.data.length
+          this.imageType = response.headers['content-type']
+          this.imageName = this.tempEvent.img_alt
+        })
+        .catch(err => {
+          this.$store.commit('notification', { status: 400, message: err.response.data.data.user_message })
+        })
+    },
     create() {
       if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName) {
         this.disabled = true
@@ -392,6 +455,7 @@ export default {
         img_alt: '',
         img_name: ''
       }
+      this.updateMode = false
     },
     inputFilter: function (newFile) {
       if (!/\.(jpeg|jpg|png|svg)$/i.test(newFile.name)) {
@@ -407,6 +471,8 @@ export default {
         this.formData = null
         return
       }
+
+      console.log(newFile)
 
       this.imageName = newFile.name
       this.imageSize = newFile.size

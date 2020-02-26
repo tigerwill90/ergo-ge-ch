@@ -42,6 +42,7 @@
       :events="events"
       @remove-event="removeEvent"
       @create-event="createEvent"
+      @update-event="updateEvent"
     />
     <CategoriesManagement
       v-if="links[4].show"
@@ -227,6 +228,10 @@ export default {
     updateUser(user) {
       const pos = this.users.map(user => user.id).indexOf(user.id)
       this.users.splice(pos, 1, user)
+    },
+    updateEvent(event) {
+      const pos = this.events.map(event => event.id).indexOf(event.id)
+      this.events.splice(pos, 1, event)
     }
   }
 }

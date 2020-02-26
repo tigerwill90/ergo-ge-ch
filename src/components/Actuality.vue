@@ -28,7 +28,7 @@
           :subtitle="actu.subtitle"
           :image-url="actu.imageUrl"
           :description="actu.description"
-          :date="actu.date"
+          :dates="actu.dates"
           :link="actu.url"
         />
       </div>
