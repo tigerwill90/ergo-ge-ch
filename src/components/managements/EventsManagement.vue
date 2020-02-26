@@ -350,10 +350,32 @@ export default {
           data: this.tempEvent
         })
           .then(response => {
-            this.disabled = false
             const event = response.data.data
             this.$emit('update-event', event)
             this.$store.commit('notification', { status: response.status, message: 'Évènement modifié' })
+
+            if (typeof this.image !== 'boolean') {
+              this.$http({
+                method: 'POST',
+                url: `${process.env.VUE_APP_API_URL}/events/${event.id}/images`,
+                headers: {
+                  Authorization: `Bearer ${this.$store.getters.authorization.access_token}`,
+                  'Content-Type': 'multipart/form-data'
+                },
+                data: this.formData
+              })
+                .then(() => {
+                  this.disabled = false
+                  this.reset()
+                })
+                .catch(err => {
+                  this.disabled = false
+                  this.reset()
+                  this.$store.commit('notification', { status: 400, message: err.response.data.data.user_message })
+                })
+            } else {
+              this.disabled = false
+            }
           })
           .catch(err => {
             this.disabled = false
@@ -374,8 +396,7 @@ export default {
 
       this.$http.get(`${process.env.VUE_APP_API_URL}/events/${event.id}/images`)
         .then(response => {
-          const file = new File([''], this.tempEvent.img_alt)
-          this.image = file
+          this.image = true
           this.imageSize = response.data.length
           this.imageType = response.headers['content-type']
           this.imageName = this.tempEvent.img_alt
@@ -471,8 +492,6 @@ export default {
         this.formData = null
         return
       }
-
-      console.log(newFile)
 
       this.imageName = newFile.name
       this.imageSize = newFile.size
