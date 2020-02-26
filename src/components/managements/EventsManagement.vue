@@ -43,6 +43,7 @@
               <v-date-picker
                 v-if="addDate"
                 v-model="picker"
+                multiple
                 :landscape="$store.getters.windowSize.x >= 1010"
                 locale="fr-ch"
                 full-width
@@ -71,7 +72,8 @@
                 v-else
                 style="color: red"
               >Auncune image sélectionnée</b>
-              <b v-if="!isImage">Format non supporté...</b>
+              <b v-if="!isSupportedFileType">Format non supporté...</b>
+              <b v-if="!isValidImageName">Aucun espace ou caractères spéciaux autorisés</b>
             </div>
             <file-upload
               ref="upload"
@@ -122,7 +124,7 @@
                   @click="update()"
                 >
                   <v-list-tile-avatar>
-                    <v-icon v-if="eventIsOutdated(event.date)">
+                    <v-icon v-if="datesAreOutdated(event.dates)">
                       check
                     </v-icon>
                     <v-icon v-else>
@@ -132,8 +134,15 @@
 
                   <v-list-tile-content>
                     <v-list-tile-title>{{ event.title }}</v-list-tile-title>
-                    <v-list-tile-sub-title v-if="event.date">
-                      {{ format(event.date) }}
+                    <v-list-tile-sub-title
+                      v-if="event.dates.length === 1"
+                    >
+                      {{ format(event.dates[0]) }}
+                    </v-list-tile-sub-title>
+                    <v-list-tile-sub-title
+                      v-if="event.dates.length > 1"
+                    >
+                      {{ format(event.dates[0]) }} ({{ event.dates.length - 1 }} dates supplémentaires)
                     </v-list-tile-sub-title>
                   </v-list-tile-content>
 
@@ -169,10 +178,10 @@
           Supprimer l'évènement {{ eventToDelete.title }} ?
         </v-card-title>
         <v-card-text>
-          <template v-if="eventIsOutdated(eventToDelete.date)">
+          <template v-if="datesAreOutdated(eventToDelete.dates)">
             Cet évènement à déjà eu lieu.
           </template>
-          <template v-else-if="!eventToDelete.date">
+          <template v-else-if="eventToDelete.dates.length === 0">
             Cet évènement n'a pas de date.
           </template>
           <b v-else>
@@ -218,7 +227,7 @@ export default {
   data() {
     return {
       dialog: false,
-      picker: new Date().toISOString().substr(0, 10),
+      picker: [],
       image: null,
       formData: null,
       imageName: '',
@@ -226,13 +235,21 @@ export default {
       imageType: '',
       addDate: false,
       disabled: false,
-      eventToDelete: {},
+      eventToDelete: {
+        title: '',
+        subtitle: null,
+        dates: [],
+        url: null,
+        description: '',
+        img_alt: '',
+        img_name: ''
+      },
       rowIdToDelete: -1,
       valid: false,
       tempEvent: {
         title: '',
         subtitle: null,
-        date: null,
+        dates: [],
         url: null,
         description: '',
         img_alt: '',
@@ -259,7 +276,8 @@ export default {
         v => v.toString().length >= 3 || 'Minimum 3 caractères',
         v => v.toString().length <= 350 || 'Maximum 50 caractères'
       ],
-      isImage: true
+      isSupportedFileType: true,
+      isValidImageName: true
     }
   },
   methods: {
@@ -275,10 +293,12 @@ export default {
       }
       return dd + '.' + mm + '.' + date.getFullYear()
     },
-    eventIsOutdated(s) {
-      const date = new Date(s)
-      const now = Date.now()
-      return s && date < now
+    datesAreOutdated(dates) {
+      return dates.every(date => {
+        const d = new Date(date)
+        const now = Date.now()
+        return date && d < now
+      })
     },
     remove() {
       this.$http.delete(`${process.env.VUE_APP_API_URL}/events/${this.eventToDelete.id}`, {
@@ -302,10 +322,10 @@ export default {
     },
     update() {},
     create() {
-      if (this.$refs.form.validate() && this.image && this.isImage) {
+      if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName) {
         this.disabled = true
         if (this.addDate) {
-          this.tempEvent.date = this.picker
+          this.tempEvent.dates = this.picker
         }
         Object.keys(this.tempEvent).forEach(key => {
           if (!this.tempEvent[key]) {
@@ -359,13 +379,14 @@ export default {
       this.imageType = ''
       this.image = null
       this.formData = null
-      this.isImage = true
+      this.isSupportedFileType = true
+      this.isValidImageName = true
       this.addDate = false
-      this.picker = new Date().toISOString().substr(0, 10)
+      this.picker = []
       this.tempEvent = {
         title: '',
         subtitle: null,
-        date: null,
+        dates: [],
         url: null,
         description: '',
         img_alt: '',
@@ -374,7 +395,14 @@ export default {
     },
     inputFilter: function (newFile) {
       if (!/\.(jpeg|jpg|png|svg)$/i.test(newFile.name)) {
-        this.isImage = false
+        this.isSupportedFileType = false
+        this.image = null
+        this.formData = null
+        return
+      }
+
+      if (!/^[A-z0-9_-]+\.(jpeg|jpg|png|svg)$/i.test(newFile.name)) {
+        this.isValidImageName = false
         this.image = null
         this.formData = null
         return
@@ -384,7 +412,8 @@ export default {
       this.imageSize = newFile.size
       this.imageType = newFile.type
       this.image = newFile.file
-      this.isImage = true
+      this.isSupportedFileType = true
+      this.isValidImageName = true
       this.tempEvent.img_name = this.imageName
       this.tempEvent.img_alt = this.imageName
       this.formData = new FormData()
