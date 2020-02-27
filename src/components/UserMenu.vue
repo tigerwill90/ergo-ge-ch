@@ -82,6 +82,7 @@ export default {
         }
       })
         .then(response => {
+          this.$store.commit('notification', { status: response.status, message: `Au revoir ${this.$store.getters.user.first_name} ${this.$store.getters.user.last_name}` })
           this.$store.commit('user', null)
           this.$store.commit('authorization', null)
           this.menu = false
