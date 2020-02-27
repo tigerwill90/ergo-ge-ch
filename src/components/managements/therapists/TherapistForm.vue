@@ -26,13 +26,13 @@
           v-model="therapist.first_name"
           label="Prénom*"
           type="text"
-          :disabled="!this.isAdmin()"
+          :disabled="!isAdmin()"
           required
           :rules="firstNameRules"
         />
         <v-text-field
           v-model="therapist.last_name"
-          :disabled="!this.isAdmin()"
+          :disabled="!isAdmin()"
           type="text"
           label="Nom*"
           required
@@ -41,7 +41,7 @@
         <div class="combo-box">
           <v-select
             v-model="therapist.title"
-            :disabled="!this.isAdmin()"
+            :disabled="!isAdmin()"
             :items="titles"
             label="Titre*"
             style="margin-right: 10px; width: 20px;"
@@ -209,7 +209,7 @@
           Modifier l'ergothérapeute
         </v-btn>
         <v-btn
-          v-if="!updateMode && this.isAdmin()"
+          v-if="!updateMode && isAdmin()"
           class="primary text-none"
           :disabled="disabled"
           @click="createTherapist()"

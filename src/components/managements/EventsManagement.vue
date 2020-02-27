@@ -456,6 +456,12 @@ export default {
         this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour créer un évènement' })
       }
     },
+    goTo(to) {
+      this.$store.commit('selector', {
+        hash: '#' + to,
+        routeName: this.$router.currentRoute.name
+      })
+    },
     reset() {
       this.$refs.form.resetValidation()
       this.imageName = ''
@@ -477,6 +483,7 @@ export default {
         img_name: ''
       }
       this.updateMode = false
+      this.goTo('events')
     },
     inputFilter: function (newFile) {
       if (!/\.(jpeg|jpg|png|svg)$/i.test(newFile.name)) {

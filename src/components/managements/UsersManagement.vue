@@ -3,7 +3,10 @@
     padding-left="10%"
     padding-right="10%"
   >
-    <article class="users-content-article">
+    <article
+      id="userForm"
+      class="users-content-article"
+    >
       <span class="app-section-title title-1">Gestion des utilisateurs</span>
       <div class="users-content-section">
         <section class="users-form-section">
@@ -63,12 +66,12 @@
             <div>
               <v-btn
                 class="warning text-none"
-                @click="reset()"
+                @click="reset('users')"
               >
                 Annuler
               </v-btn>
               <v-btn
-                v-if="!this.updateMode"
+                v-if="!updateMode"
                 class="primary text-none"
                 :disabled="disabled"
                 @click="create()"
@@ -251,7 +254,7 @@ export default {
       this.rowIdToDelete = id
     },
     prepareUpdate(user) {
-      this.reset()
+      this.reset('userForm')
       this.updateMode = true
       this.targetUser = JSON.parse(JSON.stringify(user))
       if (this.targetUser.roles.some(role => role === 'admin')) {
@@ -277,7 +280,7 @@ export default {
         }).then(response => {
           this.disabled = false
           this.$emit('update-user', response.data.data)
-          this.reset()
+          this.reset('users')
         }).catch(err => {
           this.disabled = false
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
@@ -302,7 +305,7 @@ export default {
         }).then(response => {
           this.disabled = false
           this.$emit('create-user', response.data.data)
-          this.reset()
+          this.reset('users')
           this.$store.commit('notification', { status: response.status, message: 'Utilisateur ajouté' })
         }).catch(err => {
           this.disabled = false
@@ -312,7 +315,7 @@ export default {
         this.$store.commit('notification', { status: 400, message: 'Toutes les données doivent être valide pour créer l\'utilisateur' })
       }
     },
-    reset() {
+    reset(to) {
       this.$refs.form.resetValidation()
       this.targetUser = {
         first_name: '',
@@ -324,6 +327,7 @@ export default {
       this.selectedModelOffice = null
       this.selectedModelRole = ''
       this.updateMode = false
+      this.goTo(to)
     },
     remove() {
       this.$http.delete(`${process.env.VUE_APP_API_URL}/users/${this.userToDelete.id}`, {
@@ -359,6 +363,12 @@ export default {
         return '#b71c1c'
       }
       return '#9E9E9E'
+    },
+    goTo(to) {
+      this.$store.commit('selector', {
+        hash: '#' + to,
+        routeName: this.$router.currentRoute.name
+      })
     }
   }
 }
