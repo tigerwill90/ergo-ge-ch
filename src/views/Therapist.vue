@@ -52,7 +52,7 @@ export default {
   methods: {
     sort(key) {
       // Offices can be directly sorted
-      if (this.offices[0].hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(this.offices[0], key)) {
         if (this.currentOrderKey === key) {
           this.offices.reverse()
         } else {

@@ -82,7 +82,7 @@ export default {
     this.$http.get(`${process.env.VUE_APP_API_URL}/events`)
       .then(response => {
         response.data.data.forEach(event => {
-          event['imageUrl'] = `${process.env.VUE_APP_API_URL}/events/${event.id}/images`
+          event.imageUrl = `${process.env.VUE_APP_API_URL}/events/${event.id}/images`
           this.datas.push(event)
         })
 

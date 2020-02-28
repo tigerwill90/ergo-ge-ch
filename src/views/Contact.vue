@@ -139,11 +139,14 @@ export default {
     }
   },
   mounted() {
+    // Prefilled input for authenticated user
     if (this.$store.getters.user) {
       this.name = `${this.$store.getters.user.first_name} ${this.$store.getters.user.last_name}`
       this.email = this.$store.getters.user.email
       this.authenticated = true
     }
+
+    // In case of disconnection, reset form
     this.unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'user' && !state.user) {
         this.name = ''
@@ -152,6 +155,8 @@ export default {
         this.$refs.form.resetValidation()
       }
     })
+
+    // Subject can be prefilled
     const subject = new URLSearchParams(window.location.search).get('subject')
     if (subject) {
       this.subject = subject

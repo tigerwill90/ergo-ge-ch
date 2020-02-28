@@ -24,35 +24,31 @@ async function loadApp() {
     )
   }
 
-  try {
-    const { default: Vue } = await import('vue')
-    await import('./plugins/vuetify')
-    await import('./global-components')
-    const { default: VueAxios } = await import('./plugins/vueaxios')
-    const { default: axios } = await import('axios')
-    const { VueReCaptcha } = await import('vue-recaptcha-v3')
-    const { default: router } = await import('./router')
-    const { default: store } = await import('./store')
-    await import('./plugins/asyncComputed')
-    const { default: App } = await import('./App')
-    const { default: VueUploadComponent } = await import('vue-upload-component')
+  const { default: Vue } = await import('vue')
+  await import('./plugins/vuetify')
+  await import('./global-components')
+  const { default: VueAxios } = await import('./plugins/vueaxios')
+  const { default: axios } = await import('axios')
+  const { VueReCaptcha } = await import('vue-recaptcha-v3')
+  const { default: router } = await import('./router')
+  const { default: store } = await import('./store')
+  await import('./plugins/asyncComputed')
+  const { default: App } = await import('./App')
+  const { default: VueUploadComponent } = await import('vue-upload-component')
 
-    Vue.config.productionTip = false
-    Vue.use(VueAxios, axios)
-    Vue.use(VueReCaptcha, {
-      siteKey: process.env.VUE_APP_RECAPTCHA_PUBLIC_KEY,
-      loaderOptions: {
-        autoHideBadge: true
-      }
-    })
-    Vue.component('file-upload', VueUploadComponent)
+  Vue.config.productionTip = false
+  Vue.use(VueAxios, axios)
+  Vue.use(VueReCaptcha, {
+    siteKey: process.env.VUE_APP_RECAPTCHA_PUBLIC_KEY,
+    loaderOptions: {
+      autoHideBadge: true
+    }
+  })
+  Vue.component('file-upload', VueUploadComponent)
 
-    new Vue({
-      router,
-      store,
-      render: h => h(App)
-    }).$mount('#app')
-  } catch (e) {
-    throw e
-  }
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
 }
