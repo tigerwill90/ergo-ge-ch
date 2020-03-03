@@ -31,7 +31,7 @@
               label="Email"
               required
               :rules="emailRules"
-              box
+              filled
               @keyup.native.enter="submit"
             />
             <v-btn

@@ -28,9 +28,9 @@
         <div
           class="address"
         >
-          <span class="subheading"><strong>Rue :</strong> {{ contact.street }}</span>
-          <span class="subheading"><strong>Ville :</strong> {{ contact.npa }} {{ contact.city }}</span>
-          <span class="subheading"><strong>C.p. :</strong> {{ contact.cp }} </span>
+          <span class="subtitle-1"><strong>Rue :</strong> {{ contact.street }}</span>
+          <span class="subtitle-1"><strong>Ville :</strong> {{ contact.npa }} {{ contact.city }}</span>
+          <span class="subtitle-1"><strong>C.p. :</strong> {{ contact.cp }} </span>
         </div>
       </div>
       <div class="phone-wrapper">
@@ -44,13 +44,13 @@
         <div class="phone">
           <span
             v-if="contact.phone"
-            class="subheading"
+            class="subtitle-1"
           ><strong>Tél :</strong>
             <a :href="'tel:'+ contact.phone"> {{ contact.phone }}</a>
           </span>
           <span
             v-if="contact.fax"
-            class="subheading"
+            class="subtitle-1"
           ><strong>Fax :</strong>
             <a :href="'tel:'+ contact.fax"> {{ contact.fax }}</a>
           </span>

@@ -67,8 +67,8 @@
             access_time
           </v-icon>
           <div class="info-time-box">
-            <span class="subheading">{{ moment(selectedEvent.start).format("dddd, Do MMMM YYYY, H:mm") }}</span>
-            <span class="subheading">{{ moment(selectedEvent.end).format("dddd, Do MMMM YYYY, H:mm") }}</span>
+            <span class="subtitle-1">{{ moment(selectedEvent.start).format("dddd, Do MMMM YYYY, H:mm") }}</span>
+            <span class="subtitle-1">{{ moment(selectedEvent.end).format("dddd, Do MMMM YYYY, H:mm") }}</span>
           </div>
         </div>
         <v-divider v-if="selectedEvent.location" />
@@ -79,7 +79,7 @@
           <v-icon class="event-icon">
             location_on
           </v-icon>
-          <span class="subheading">{{ selectedEvent.location }}</span>
+          <span class="subtitle-1">{{ selectedEvent.location }}</span>
         </div>
         <v-divider v-if="selectedEvent.description" />
         <div
@@ -89,7 +89,7 @@
           <v-icon class="event-icon">
             description
           </v-icon>
-          <p class="subheading">
+          <p class="subtitle-1">
             {{ selectedEvent.description }}
           </p>
         </div>
@@ -100,7 +100,7 @@
           </v-icon>
           <span
             v-if="selectedEvent.organizer"
-            class="subheading"
+            class="subtitle-1"
           >{{ selectedEvent.organizer.name || selectedEvent.organizer.email }}</span>
         </div>
       </v-card>

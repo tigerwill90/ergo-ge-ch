@@ -25,7 +25,7 @@ async function loadApp() {
   }
 
   const { default: Vue } = await import('vue')
-  await import('./plugins/vuetify')
+  const { createVuetify } = await import('./plugins/vuetify')
   await import('./global-components')
   const { default: VueAxios } = await import('./plugins/vueaxios')
   const { default: axios } = await import('axios')
@@ -35,6 +35,8 @@ async function loadApp() {
   await import('./plugins/asyncComputed')
   const { default: App } = await import('./App')
   const { default: VueUploadComponent } = await import('vue-upload-component')
+
+  const vuetify = createVuetify()
 
   Vue.config.productionTip = false
   Vue.use(VueAxios, axios)
@@ -47,6 +49,7 @@ async function loadApp() {
   Vue.component('file-upload', VueUploadComponent)
 
   new Vue({
+    vuetify,
     router,
     store,
     render: h => h(App)

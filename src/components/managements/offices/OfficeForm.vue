@@ -123,14 +123,16 @@
       </div>
       <div class="submit">
         <v-btn
-          class="warning text-none"
+          class="text-none ma-1"
+          color="warning"
           @click="reset()"
         >
           Annuler
         </v-btn>
         <v-btn
           v-if="updateMode"
-          class="primary text-none"
+          class="text-none ma-1"
+          color="primary"
           :disabled="disabled"
           @click="updateOffice()"
         >
@@ -138,7 +140,8 @@
         </v-btn>
         <v-btn
           v-else
-          class="primary text-none"
+          class="text-none ma-1"
+          color="primary"
           :disabled="disabled"
           @click="createOffice()"
         >

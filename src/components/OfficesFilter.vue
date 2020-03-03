@@ -40,22 +40,24 @@
       transition="scale-transition"
       offset-y
     >
-      <v-btn
-        slot="activator"
-        flat
-        icon
-        color="blue"
-      >
-        <v-icon>sort_by_alpha</v-icon>
-      </v-btn>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          text
+          icon
+          color="blue"
+          v-on="on"
+        >
+          <v-icon>sort_by_alpha</v-icon>
+        </v-btn>
+      </template>
       <v-list>
-        <v-list-tile
+        <v-list-item
           v-for="({ name, key }, i) in sortables"
           :key="i"
           @click="sort(key)"
         >
-          <v-list-tile-title>{{ name }}</v-list-tile-title>
-        </v-list-tile>
+          <v-list-item-title>{{ name }}</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
     <v-text-field
@@ -70,7 +72,7 @@
     />
     <v-btn
       icon
-      flat
+      text
       class="search-btn"
       @click="showSearchBar"
     >

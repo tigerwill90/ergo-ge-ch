@@ -93,14 +93,16 @@
             </file-upload>
             <div>
               <v-btn
-                class="warning text-none"
+                color="warning"
+                class="text-none ma-1"
                 @click="reset()"
               >
                 Annuler
               </v-btn>
               <v-btn
                 v-if="!updateMode"
-                class="primary text-none"
+                color="primary"
+                class="text-none ma-1"
                 :disabled="disabled"
                 @click="create()"
               >
@@ -108,7 +110,8 @@
               </v-btn>
               <v-btn
                 v-else
-                class="primary text-none"
+                color="primary"
+                class="text-none ma-1"
                 :disabled="disabled"
                 @click="update()"
               >
@@ -127,35 +130,34 @@
               <template
                 v-for="(event, i) in events"
               >
-                <v-list-tile
+                <v-list-item
                   :key="`${event.title}-${i}`"
-                  avatar
                   @click="prepareUpdate(event)"
                 >
-                  <v-list-tile-avatar>
+                  <v-list-item-avatar>
                     <v-icon v-if="datesAreOutdated(event.dates)">
                       check
                     </v-icon>
                     <v-icon v-else>
                       event
                     </v-icon>
-                  </v-list-tile-avatar>
+                  </v-list-item-avatar>
 
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ event.title }}</v-list-tile-title>
-                    <v-list-tile-sub-title
+                  <v-list-item-content>
+                    <v-list-item-title>{{ event.title }}</v-list-item-title>
+                    <v-list-item-subtitle
                       v-if="event.dates.length === 1"
                     >
                       {{ format(event.dates[0]) }}
-                    </v-list-tile-sub-title>
-                    <v-list-tile-sub-title
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle
                       v-if="event.dates.length > 1"
                     >
                       {{ format(event.dates[0]) }} ({{ event.dates.length - 1 }} dates supplémentaires)
-                    </v-list-tile-sub-title>
-                  </v-list-tile-content>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
 
-                  <v-list-tile-action>
+                  <v-list-item-action>
                     <v-btn
                       icon
                       ripple
@@ -165,8 +167,8 @@
                         delete
                       </v-icon>
                     </v-btn>
-                  </v-list-tile-action>
-                </v-list-tile>
+                  </v-list-item-action>
+                </v-list-item>
                 <v-divider
                   v-if="i < events.length - 1"
                   :key="i"
@@ -201,15 +203,17 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            color="primary text-none"
-            flat
+            class="text-none ma-1"
+            color="primary"
+            text
             @click="dialog = false"
           >
             Annuler
           </v-btn>
           <v-btn
-            color="warning text-none"
-            flat
+            class="text-none ma-1"
+            color="warning"
+            text
             @click="remove()"
           >
             Supprimer

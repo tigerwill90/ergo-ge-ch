@@ -47,7 +47,7 @@
               label="Mot de passe"
               required
               :rules="passwordRules"
-              box
+              filled
               @keyup.enter="submit"
             />
             <v-text-field
@@ -56,7 +56,7 @@
               label="Confirmation du mot de passe"
               required
               :rules="repeatPasswordRule"
-              box
+              filled
               @keyup.enter="submit"
             />
           </v-form>

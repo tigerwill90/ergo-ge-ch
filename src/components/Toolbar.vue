@@ -1,14 +1,14 @@
 <template>
-  <v-toolbar
+  <v-app-bar
     id="toolbar"
     dark
-    class="teal lighten-2 toolbar"
     fixed
+    class="teal lighten-2 toolbar"
     height="64"
     :flat="$store.getters.flatToolbar"
   >
     <template v-if="showMenu">
-      <v-toolbar-side-icon @click="handleMenuClick" />
+      <v-app-bar-nav-icon @click="handleMenuClick" />
       <v-toolbar-title
         class="toolbar-title"
       >
@@ -34,10 +34,10 @@
         <v-btn
           v-for="link in links"
           :key="link.id"
-          flat
+          text
           exact
           ripple
-          class="text-none subheading"
+          class="text-none subtitle-1"
           :class="{currentLink: link.name === $store.getters.selector.routeName}"
           @click="goTo(link)"
         >
@@ -55,7 +55,7 @@
       <v-icon>perm_identity</v-icon>
     </v-btn>
     <UserMenu />
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>

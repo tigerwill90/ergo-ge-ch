@@ -5,6 +5,7 @@
       <span v-else>Membre du cabinet</span>
     </span>
     <v-tabs
+      v-model="tab"
       show-arrows
       :color="tabHeaderColor"
       :style="{
@@ -19,7 +20,7 @@
       >
         {{ therapist.title }} {{ therapist.last_name }}
       </v-tab>
-      <v-tabs-items>
+      <v-tabs-items v-model="tab">
         <v-tab-item
           v-for="(therapist, i) in therapists"
           :key="i"
@@ -73,7 +74,7 @@
                     <span
                       v-for="(email, j) in therapist.emails"
                       :key="j"
-                      class="subheading"
+                      class="subtitle-1"
                       style="word-break: break-all;"
                     ><a :href="'mailto:' + email">{{ email }}</a></span>
                   </div>
@@ -92,7 +93,7 @@
                     <span
                       v-for="(phone, j) in therapist.phones"
                       :key="j"
-                      class="subheading"
+                      class="subtitle-1"
                     >{{ phone.type }} <a :href="'tel:'+ phone.number">{{ phone.number }}</a></span>
                   </div>
                 </div>
@@ -145,6 +146,7 @@ export default {
   },
   data() {
     return {
+      tab: null,
       therapists: []
     }
   },
@@ -154,9 +156,7 @@ export default {
       .then(response => {
         this.therapists = response.data.data
       })
-      .catch(error => {
-        throw new Error(error.message)
-      })
+      .catch(() => {})
   }
 }
 </script>

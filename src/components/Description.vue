@@ -74,7 +74,7 @@
         :class="{'text-white': $store.getters.invertBrightness}"
       >
         <div class="section-title">
-          <span class="title text-xs-center">{{ item.title }}</span>
+          <span class="title text-center">{{ item.title }}</span>
         </div>
         <div
           :class="{ 'section-content': !item.download }"

@@ -11,25 +11,13 @@
         @change="selected"
       />
       <v-card>
-        <v-expansion-panel
-          v-model="panel"
-          expand
-        >
-          <v-expansion-panel-content
+        <v-expansion-panels v-model="panel">
+          <v-expansion-panel
             v-for="(therapist,i) in therapists"
             :key="i"
           >
-            <template v-slot:actions>
-              <v-icon>
-                $vuetify.icons.expand
-              </v-icon>
-            </template>
-            <template v-slot:header>
-              <div>
-                {{ therapist.title }} {{ therapist.first_name }} {{ therapist.last_name }}
-              </div>
-            </template>
-            <v-card>
+            <v-expansion-panel-header>{{ therapist.title }} {{ therapist.first_name }} {{ therapist.last_name }}</v-expansion-panel-header>
+            <v-expansion-panel-content>
               <div class="therpist-box">
                 <div
                   v-if="$store.getters.windowSize.x >= 450"
@@ -48,7 +36,8 @@
                 <div class="action">
                   <v-btn
                     v-if="$store.getters.windowSize.x >= 500"
-                    class="primary text-none"
+                    class="text-none ma-1"
+                    color="primary"
                     @click="prepareUpdate(therapist)"
                   >
                     Modifier
@@ -63,7 +52,8 @@
                   </v-btn>
                   <v-btn
                     v-if="$store.getters.windowSize.x >= 500"
-                    class="warning text-none"
+                    class="text-none ma-1"
+                    color="warning"
                     @click="remove(therapist, i)"
                   >
                     Supprimer
@@ -78,9 +68,9 @@
                   </v-btn>
                 </div>
               </div>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-card>
     </div>
   </div>
@@ -101,7 +91,7 @@ export default {
   },
   data() {
     return {
-      panel: [true]
+      panel: []
     }
   },
   methods: {

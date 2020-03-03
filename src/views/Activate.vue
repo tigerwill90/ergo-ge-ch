@@ -8,7 +8,7 @@
   >
     <article class="activation-box">
       <div class="title-box">
-        <span class="headline text-xs-center">
+        <span class="headline text-center">
           Bienvenue sur la plateforme en ligne de l'ASE - Section Genevoise
         </span>
         <img
@@ -16,7 +16,7 @@
           alt="ase"
           class="image"
         >
-        <p class="subheading text-xs-center">
+        <p class="subtitle-1 text-center">
           En tant que membre de la Section Genevoise de l'Association Suisse des ergothérapeutes, vous pouvez modifier les informations relatives
           à vos cabinets et aux ergothérapeutes qui y travaillent. Pour accéder à votre compte vous devez créer un nouveau mot de passe. Nous vous conseillons
           d'inventer un mot de passe unique pour ce compte et de mixer chiffres, lettres et caractères spéciaux.
@@ -63,7 +63,7 @@
               label="Mot de passe"
               required
               :rules="passwordRules"
-              box
+              filled
               @keyup.enter="submit"
             />
             <v-text-field
@@ -72,7 +72,7 @@
               label="Confirmation du mot de passe"
               required
               :rules="repeatPasswordRule"
-              box
+              filled
               @keyup.enter="submit"
             />
           </v-form>

@@ -28,7 +28,7 @@
       class="section column"
     >
       <p
-        class="text-xs-center headline"
+        class="text-center headline"
         :class="{'text-white': $store.getters.invertBrightness}"
       >
         <strong :class="{'text-teal': !$store.getters.invertBrightness}">La section genevoise de l’ASE</strong> est composée de tous les ergothérapeutes

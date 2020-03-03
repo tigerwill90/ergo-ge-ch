@@ -46,7 +46,7 @@
         class="card-button"
       >
         <v-btn
-          flat
+          text
           :color="color"
           :href="formatUrl(link)"
           target="_blank"

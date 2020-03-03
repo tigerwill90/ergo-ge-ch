@@ -5,6 +5,7 @@
     class="nav-drawer"
     app
     temporary
+    width="300"
     disable-resize-watcher
   >
     <header class="nav-header">
@@ -29,60 +30,52 @@
           :prepend-icon="item.icon"
           no-action
         >
-          <v-list-tile
-            slot="activator"
-            exact
-            :class="{currentLink: (item.link === $store.getters.selector.routeName)}"
-            @click="goTo(item.link)"
-          >
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <template v-slot:activator>
+            <v-list-item-content
+              :class="{currentLink: (item.link === $store.getters.selector.routeName)}"
+              @click="goTo(item.link)"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </template>
 
-          <v-list-tile
+          <v-list-item
             v-for="(subItem, i) in item.items"
             v-show="subItem.show"
             :key="i"
             :disabled="subItem.active"
             @click="goTo(item.link, subItem.to)"
           >
-            <v-list-tile-content>
-              <v-list-tile-title :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}">
+            <v-list-item-content>
+              <v-list-item-title :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}">
                 {{ subItem.title }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
       </v-list>
       <v-list class="nav-list">
-        <v-list-tile
-          :class="{currentLink: ('therapist' === $store.getters.selector.routeName)}"
-          @click="goTo('therapist')"
-        >
-          <v-list-tile-action>
+        <v-list-item @click="goTo('therapist')">
+          <v-list-item-action>
             <v-icon>place</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Ergothérapeute</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-action>
+          <v-list-item-content :class="{currentLink: ('therapist' === $store.getters.selector.routeName)}">
+            <v-list-item-title>Ergothérapeute</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
       <v-list class="nav-list">
-        <v-list-tile
-          :class="{currentLink: ('contact' === $store.getters.selector.routeName)}"
-          @click="goTo('contact')"
-        >
-          <v-list-tile-action>
+        <v-list-item @click="goTo('contact')">
+          <v-list-item-action>
             <v-icon>phone</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Contact</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-action>
+          <v-list-item-content :class="{currentLink: ('contact' === $store.getters.selector.routeName)}">
+            <v-list-item-title>Contact</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
       <v-subheader>Liens utiles</v-subheader>
-      <div class="nav-link">
+      <div class="nav-link subtitle-2">
         <a
           v-for="(link, i) in links"
           :key="i"
@@ -97,7 +90,7 @@
       <div class="nav-bottom-connexion">
         <v-btn
           color="red"
-          outline
+          outlined
           class="white--text"
           :disabled="!!$store.getters.authorization"
           @click="goTo('login')"
@@ -111,8 +104,8 @@
           </v-icon>
         </v-btn>
       </div>
-      <div class="nav-bottom-footer">
-        <span>&copy;{{ date.getFullYear() }} —&nbsp;<strong>www.ergo-ge-independants.ch</strong></span>
+      <div class="nav-bottom-footer subtitle-2">
+        <span>&copy;{{ date.getFullYear() }} —&nbsp;<strong>ergotherapie-ge.ch</strong></span>
       </div>
     </footer>
   </v-navigation-drawer>
@@ -250,6 +243,20 @@ export default {
   color: white;
 }
 
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  margin-bottom: 20px;
+}
+
+.nav-footer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 125px;
+}
+
 .center-text {
   text-align: center;
 }
@@ -258,13 +265,6 @@ export default {
   height: 80px;
   margin-bottom: 15px;
   cursor: pointer;
-}
-
-.nav-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  margin-bottom: 20px;
 }
 
 .nav-list {
@@ -279,13 +279,6 @@ export default {
 
 .nav-ref {
   margin-bottom: 5px;
-}
-
-.nav-footer {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  height: 125px;
 }
 
 .nav-bottom-connexion {

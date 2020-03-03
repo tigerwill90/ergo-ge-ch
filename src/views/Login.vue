@@ -23,7 +23,7 @@
           label="Email"
           required
           :rules="emailRules"
-          box
+          filled
           @keyup.enter="submit"
         />
         <v-text-field
@@ -32,13 +32,15 @@
           label="Mot de passe"
           required
           :rules="passwordRules"
-          box
+          filled
           @keyup.enter="submit"
         />
         <div class="submit-button">
           <v-btn
             large
-            color="primary text-none"
+            raised
+            color="primary"
+            class="text-none"
             @click="submit"
           >
             Se connecter

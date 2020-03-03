@@ -6,7 +6,7 @@
     <div class="btn-box">
       <v-btn
         v-show="previousArrow"
-        flat
+        text
         icon
         color="indigo"
         large
@@ -36,7 +36,7 @@
     <div class="btn-box">
       <v-btn
         v-show="nextArrow"
-        flat
+        text
         icon
         large
         color="indigo"

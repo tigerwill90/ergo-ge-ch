@@ -4,14 +4,14 @@
     id="office-card"
     class="office-card"
     elevation="5"
-    @click="openDialog"
+    @click.native="openDialog"
   >
     <div
       v-if="$store.getters.windowSize.x > 775 && office.categories"
       class="office-card-title"
     >
       <span
-        class="subheading"
+        class="subtitle-1"
       >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
     </div>
     <div
@@ -19,7 +19,7 @@
       class="office-small-categories"
     >
       <span
-        class="subheading"
+        class="subtitle-1"
       >{{ office.categories.map(cat => cat.name).join(', ') }}</span>
     </div>
     <div class="office-content">
@@ -34,14 +34,14 @@
         </span>
         <span
           v-if="office.email"
-          class="subheading"
+          class="subtitle-1"
           style="word-break: break-all;"
         >
           <a :href="'mailto:' + office.email">{{ office.email }}</a>
         </span>
         <span
           v-if="office.web"
-          class="subheading"
+          class="subtitle-1"
           style="word-break: break-all;"
         >
           <a :href="webUrl()">{{ office.web }}</a>
@@ -54,7 +54,7 @@
         <v-icon class="icon">
           location_city
         </v-icon>
-        <div class="list subheading">
+        <div class="list subtitle-1">
           <span
             v-for="(contact, i) in office.contacts"
             :key="i"
@@ -62,29 +62,26 @@
         </div>
       </div>
     </div>
-    <v-expansion-panel
+    <v-expansion-panels
       v-if="$vuetify.breakpoint.mdAndUp"
-      class="expansion-panel"
+      flat
     >
-      <v-expansion-panel-content lazy>
-        <div
-          slot="header"
-          class="expansion-panel-title"
-        >
+      <v-expansion-panel>
+        <v-expansion-panel-header class="expansion-panel-title">
           Plus de détails
-        </div>
-        <div class="panel-box">
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class="panel-box">
           <OfficeContact :contacts="office.contacts" />
           <TherapistTab :id="office.id" />
-        </div>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
     <v-dialog
       v-else
       v-model="dialog"
       fullscreen
       hide-overlay
-      lazy
+      y
       attach="#office-card"
       class="dialog"
     >
@@ -94,7 +91,7 @@
             {{ office.name }}
           </div>
           <v-btn
-            flat
+            text
             color="white"
             icon
             @click="openDialog"
@@ -248,12 +245,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.expansion-panel {
-  border: none;
-  box-shadow: none;
-  padding: 0 5px 0 5px;
 }
 
 .expansion-panel-title {

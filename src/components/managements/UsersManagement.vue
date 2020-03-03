@@ -65,14 +65,16 @@
             </div>
             <div>
               <v-btn
-                class="warning text-none"
+                class="text-none ma-1"
+                color="warning"
                 @click="reset('users')"
               >
                 Annuler
               </v-btn>
               <v-btn
                 v-if="!updateMode"
-                class="primary text-none"
+                class="text-none ma-1"
+                color="primary"
                 :disabled="disabled"
                 @click="create()"
               >
@@ -80,7 +82,8 @@
               </v-btn>
               <v-btn
                 v-else
-                class="primary text-none"
+                color="primary"
+                class="text-none ma-1"
                 :disabled="disabled"
                 @click="update()"
               >
@@ -99,12 +102,12 @@
               <template
                 v-for="(user, i) in users"
               >
-                <v-list-tile
+                <v-list-item
                   :key="`tile-${i}`"
-                  avatar
+                  r
                   @click="prepareUpdate(user)"
                 >
-                  <v-list-tile-avatar>
+                  <v-list-item-avatar>
                     <v-icon
                       v-if="user.active"
                       :color="userIconColor(user)"
@@ -114,11 +117,11 @@
                     <v-icon v-else>
                       person_outline
                     </v-icon>
-                  </v-list-tile-avatar>
+                  </v-list-item-avatar>
 
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ user.first_name }} {{ user.last_name }}</v-list-tile-title>
-                    <v-list-tile-sub-title>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ user.first_name }} {{ user.last_name }}</v-list-item-title>
+                    <v-list-item-subtitle>
                       <b
                         v-if="user.active"
                         style="color: green"
@@ -127,10 +130,10 @@
                         v-else
                         style="color: red"
                       >Compte désactivé</b>
-                    </v-list-tile-sub-title>
-                  </v-list-tile-content>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
 
-                  <v-list-tile-action>
+                  <v-list-item-action>
                     <v-btn
                       icon
                       ripple
@@ -140,8 +143,8 @@
                         delete
                       </v-icon>
                     </v-btn>
-                  </v-list-tile-action>
-                </v-list-tile>
+                  </v-list-item-action>
+                </v-list-item>
                 <v-divider
                   v-if="i < users.length - 1"
                   :key="i"
@@ -168,15 +171,17 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            color="primary text-none"
-            flat
+            color="primary"
+            class="text-none ma-1"
+            text
             @click="dialog = false"
           >
             Annuler
           </v-btn>
           <v-btn
-            color="warning text-none"
-            flat
+            color="warning"
+            class="text-none ma-1"
+            text
             @click="remove()"
           >
             Supprimer

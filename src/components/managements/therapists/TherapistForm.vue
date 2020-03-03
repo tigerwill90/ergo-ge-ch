@@ -195,14 +195,16 @@
       </div>
       <div class="submit">
         <v-btn
-          class="warning text-none"
+          class="text-none ma-1"
+          color="warning"
           @click="reset()"
         >
           Annuler
         </v-btn>
         <v-btn
           v-if="updateMode"
-          class="primary text-none"
+          class="text-none ma-1"
+          color="primary"
           :disabled="disabled"
           @click="updateTherapist()"
         >
@@ -210,7 +212,8 @@
         </v-btn>
         <v-btn
           v-if="!updateMode && isAdmin()"
-          class="primary text-none"
+          class="text-none ma-1"
+          color="primary "
           :disabled="disabled"
           @click="createTherapist()"
         >

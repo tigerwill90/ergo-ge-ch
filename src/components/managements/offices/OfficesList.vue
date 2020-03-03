@@ -1,25 +1,13 @@
 <template>
   <div class="list-office">
     <v-card>
-      <v-expansion-panel
-        v-model="panel"
-        expand
-      >
-        <v-expansion-panel-content
+      <v-expansion-panels v-model="panel">
+        <v-expansion-panel
           v-for="(office,i) in offices"
           :key="i"
         >
-          <template v-slot:actions>
-            <v-icon>
-              $vuetify.icons.expand
-            </v-icon>
-          </template>
-          <template v-slot:header>
-            <div>
-              {{ office.name }}
-            </div>
-          </template>
-          <v-card>
+          <v-expansion-panel-header>{{ office.name }}</v-expansion-panel-header>
+          <v-expansion-panel-content>
             <div class="office-list-box">
               <div class="office-list-action">
                 <div
@@ -37,7 +25,7 @@
                   <v-btn
                     v-if="$store.getters.windowSize.x >= 500"
                     color="primary"
-                    class="text-none"
+                    class="text-none ma-1"
                     @click="$emit('prepare-update', office)"
                   >
                     Modifier
@@ -53,7 +41,7 @@
                   <v-btn
                     v-if="isAdmin() && $store.getters.windowSize.x >= 500"
                     color="warning"
-                    class="text-none"
+                    class="text-none ma-1"
                     @click="openDialog(office, i)"
                   >
                     Supprimer
@@ -80,9 +68,9 @@
                 </span>
               </div>
             </div>
-          </v-card>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-card>
     <v-dialog
       v-model="dialog"
@@ -100,14 +88,14 @@
           <v-spacer />
           <v-btn
             color="primary text-none"
-            flat
+            text
             @click="dialog = false"
           >
             Annuler
           </v-btn>
           <v-btn
             color="warning text-none"
-            flat
+            text
             @click="remove()"
           >
             Supprimer
@@ -131,7 +119,7 @@ export default {
   },
   data() {
     return {
-      panel: [true],
+      panel: [],
       dialog: false,
       officeToDelete: -1,
       rowIdToDelete: -1

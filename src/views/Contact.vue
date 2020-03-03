@@ -39,7 +39,7 @@
           :rules="nameRules"
           :counter="45"
           :disabled="authenticated"
-          box
+          filled
         />
         <v-text-field
           v-model="email"
@@ -49,7 +49,7 @@
           :counter="250"
           required
           :disabled="authenticated"
-          box
+          filled
         />
         <v-text-field
           v-model="subject"
@@ -59,7 +59,7 @@
           :counter="100"
           :rules="subjectRules"
           :disabled="templateSubject"
-          box
+          filled
         />
         <v-textarea
           v-model="message"
@@ -69,13 +69,14 @@
           :rules="messageRules"
           auto-grow
           required
-          box
+          filled
         />
         <div class="submit-button">
           <v-btn
             large
             color="primary"
             :disabled="loading"
+            class="text-none"
             @click="submit"
           >
             Envoyer

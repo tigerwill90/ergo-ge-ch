@@ -2,18 +2,19 @@
   <v-footer
     dark
     height="auto"
+    padless
   >
     <v-card
       class="flex"
-      flat
+      text
       tile
     >
-      <v-card-title class="teal lighten-2">
+      <v-card-title class="teal lighten-2 subtitle-1">
         <div class="footer">
           <div class="footer-version">
-            <span class="text-xs-center">Version {{ version }}</span>
+            <span class="text-center">Version {{ version }}</span>
             <a
-              class="text-xs-center footer-link"
+              class="text-center footer-link"
               href="https://www.sylvainmuller.ch"
               target="_blank"
             >
@@ -22,9 +23,9 @@
             </a>
           </div>
           <div class="footer-desc">
-            <span class="text-xs-center">Association Suisse des Ergothérapeutes ASE</span>
-            <span class="text-xs-center">Section Genevoise</span>
-            <span class="text-xs-center">info@ergotherapie-ge.ch</span>
+            <span class="text-center">Association Suisse des Ergothérapeutes ASE</span>
+            <span class="text-center">Section Genevoise</span>
+            <span class="text-center">info@ergotherapie-ge.ch</span>
           </div>
         </div>
       </v-card-title>
@@ -36,13 +37,12 @@
       v-model="snackbar"
       bottom
       left
-      auto-height
       :timeout="6000"
     >
       {{ message }}
       <v-btn
         color="teal"
-        flat
+        text
         class="text-none"
         @click="snackbar = false"
       >

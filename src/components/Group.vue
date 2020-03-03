@@ -13,7 +13,7 @@
       Où travaillent les ergothérapeutes ?
     </div>
     <p
-      class="group-desc text-xs-center"
+      class="group-desc text-center"
       :style="{'font-size': (1.4 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
     >
       Les ergothérapeutes travaillent dans des institutions
@@ -23,7 +23,7 @@
     <div class="group-list">
       <div class="group-public">
         <h1
-          class="app-section-title text-xs-center"
+          class="app-section-title text-center"
           :style="{'font-size': (1.5 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
         >
           Secteur public et semi-public (subventionné)
@@ -42,7 +42,7 @@
       </div>
       <div class="group-private">
         <h1
-          class="app-section-title text-xs-center"
+          class="app-section-title text-center"
           :style="{'font-size': (1.5 + ($store.getters.fontSizeMultiplier/100)) + 'em'}"
         >
           Secteur privé

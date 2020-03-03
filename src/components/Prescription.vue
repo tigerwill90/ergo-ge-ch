@@ -7,7 +7,7 @@
     :background-color="background"
   >
     <p
-      class="headline text-xs-center paragraph"
+      class="headline text-center paragraph"
       :class="{'text-white': $store.getters.invertBrightness}"
     >
       Le traitement d'ergothérapie est pris en charge par <strong :class="{'text-teal': !$store.getters.invertBrightness}">les assurances sociales</strong> (AI, AA, AM)
@@ -23,7 +23,7 @@
       </v-icon>
       <div class="document-list">
         <a
-          class="subheading"
+          class="subtitle-1"
           :href="prescriptionUrl"
           target="_blank"
           :class="{'text-white': $store.getters.invertBrightness}"
@@ -31,7 +31,7 @@
           Ordonnance pour l'Ergothérapie (pdf)
         </a>
         <a
-          class="subheading"
+          class="subtitle-1"
           :href="indicationUrl"
           target="_blank"
           :class="{'text-white': $store.getters.invertBrightness}"

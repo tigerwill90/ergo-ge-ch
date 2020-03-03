@@ -12,7 +12,7 @@
         <!-- HEADER## -->
         <div v-show="extendedHeader">
           <div class="sub-nav-title">
-            <span class="display-2 center-text">{{ title }}</span>
+            <span class="display-1 center-text">{{ title }}</span>
           </div>
           <div
             v-if="subtitle"
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div v-show="!extendedHeader">
-          <div class="sub-nav-title-only display-2">
+          <div class="sub-nav-title-only display-1">
             {{ title }}
           </div>
         </div>
@@ -46,9 +46,9 @@
           v-show="link.show"
           :key="i"
           color="white"
-          flat
+          text
           exact
-          class="text-none subheading"
+          class="text-none subtitle-1"
           :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}"
           @click="goTo(link, i)"
         >
