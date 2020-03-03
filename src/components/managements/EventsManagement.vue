@@ -378,6 +378,7 @@ export default {
                   this.$store.commit('notification', { status: 400, message: err.response.data.data.user_message })
                 })
             } else {
+              this.reset()
               this.disabled = false
             }
           })
