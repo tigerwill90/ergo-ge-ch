@@ -81,8 +81,6 @@
       v-model="dialog"
       fullscreen
       hide-overlay
-      y
-      attach="#office-card"
       class="dialog"
     >
       <article class="dialog-content">
@@ -105,7 +103,7 @@
         />
         <TherapistTab
           :id="office.id"
-          tab-header-color="#fafafa"
+          tab-header-color="black"
           margin="0 15px 10px 15px"
         />
       </article>

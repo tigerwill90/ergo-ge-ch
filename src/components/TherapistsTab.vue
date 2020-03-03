@@ -8,6 +8,7 @@
       v-model="tab"
       show-arrows
       :color="tabHeaderColor"
+      :background-color="tabBackgroundColor"
       :style="{
         margin: margin
       }"
@@ -139,6 +140,10 @@ export default {
       type: String,
       default: 'none'
     },
+    tabBackgroundColor: {
+      type: String,
+      default: 'transparent'
+    },
     margin: {
       type: String,
       default: '0'
@@ -175,6 +180,7 @@ export default {
   margin: 20px 15px 15px 15px;
   display: flex;
   flex-direction: column;
+  background-color: #fafafa;
 }
 
 .therapist-title {
