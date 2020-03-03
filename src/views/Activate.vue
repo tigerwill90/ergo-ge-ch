@@ -77,7 +77,8 @@
             />
           </v-form>
           <v-btn
-            color="primary text-none"
+            color="primary"
+            class="text-none"
             :disabled="disabled"
             @click="submit"
           >

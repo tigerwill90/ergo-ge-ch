@@ -35,7 +35,8 @@
               @keyup.native.enter="submit"
             />
             <v-btn
-              color="warning text-none"
+              color="warning"
+              class="text-none"
               :disabled="disabled"
               @click="submit"
             >

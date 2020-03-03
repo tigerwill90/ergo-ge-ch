@@ -43,7 +43,8 @@
           <span style="font-size: 1em">{{ $store.getters.user.email }}</span>
           <v-btn
             small
-            color="primary text-none"
+            class="text-none ma-1"
+            color="primary"
             @click="goToManagement"
           >
             Gestion des données
@@ -54,7 +55,7 @@
       <div class="connect-box">
         <v-btn
           small
-          class="text-none"
+          class="text-none ma-1"
           @click="disconnect"
         >
           Déconnexion
