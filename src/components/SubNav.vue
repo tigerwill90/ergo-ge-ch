@@ -37,7 +37,7 @@
       </div>
       <!-- ##HEADER -->
       <div
-        v-if="showLinks"
+        v-show="showLinks"
         class="sub-nav-links"
         :class="linksClass"
       >
