@@ -286,6 +286,7 @@ export default {
           this.disabled = false
           this.$emit('update-user', response.data.data)
           this.reset('users')
+          this.$store.commit('notification', { status: response.status, message: 'Utilisateur modifié' })
         }).catch(err => {
           this.disabled = false
           this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
