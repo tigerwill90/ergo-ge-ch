@@ -43,6 +43,7 @@
           >
             <v-text-field
               v-model="password"
+              autocomplete="current-password"
               type="password"
               label="Mot de passe"
               required
@@ -52,6 +53,7 @@
             />
             <v-text-field
               v-model="repeatPassword"
+              autocomplete="new-password"
               type="password"
               label="Confirmation du mot de passe"
               required

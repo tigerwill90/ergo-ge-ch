@@ -27,6 +27,7 @@
           >
             <v-text-field
               v-model="email"
+              autocomplete="username"
               type="email"
               label="Email"
               required

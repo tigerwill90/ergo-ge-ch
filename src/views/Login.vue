@@ -19,6 +19,7 @@
       >
         <v-text-field
           v-model="email"
+          autocomplete="username"
           type="email"
           label="Email"
           required
@@ -28,6 +29,7 @@
         />
         <v-text-field
           v-model="password"
+          autocomplete="current-password"
           type="password"
           label="Mot de passe"
           required

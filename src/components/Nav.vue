@@ -2,112 +2,115 @@
   <v-navigation-drawer
     v-if="forceHide"
     v-model="drawer"
-    class="nav-drawer"
     app
     temporary
     width="300"
     disable-resize-watcher
   >
-    <header class="nav-header">
-      <img
-        src="../assets/img/ase.svg"
-        alt="ase"
-        class="nav-img"
-        @click="goTo('home')"
-      >
-      <span class="title center-text">Association Suisse des Ergothérapeutes</span>
-    </header>
-    <v-divider />
-    <div class="nav-content">
-      <v-subheader>Information</v-subheader>
-      <v-list
-        class="nav-list"
-        expand
-      >
-        <v-list-group
-          v-for="item in items"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          no-action
+    <div class="drawer">
+      <header class="header">
+        <img
+          src="../assets/img/ase.svg"
+          alt="ase"
+          class="nav-img"
+          @click="goTo('home')"
         >
-          <template v-slot:activator>
-            <v-list-item-content
-              :class="{currentLink: (item.link === $store.getters.selector.routeName)}"
-              @click="goTo(item.link)"
+        <span class="title center-text">Association Suisse des Ergothérapeutes</span>
+      </header>
+      <v-divider />
+      <div class="content">
+        <div class="nav-content">
+          <v-subheader>Information</v-subheader>
+          <v-list
+            class="nav-list"
+            expand
+          >
+            <v-list-group
+              v-for="item in items"
+              :key="item.title"
+              :prepend-icon="item.icon"
+              no-action
             >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </template>
+              <template v-slot:activator>
+                <v-list-item-content
+                  :class="{currentLink: (item.link === $store.getters.selector.routeName)}"
+                  @click="goTo(item.link)"
+                >
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+              </template>
 
-          <v-list-item
-            v-for="(subItem, i) in item.items"
-            v-show="subItem.show"
-            :key="i"
-            :disabled="subItem.active"
-            @click="goTo(item.link, subItem.to)"
-          >
-            <v-list-item-content>
-              <v-list-item-title :class="{currentLink: (i === $store.getters.selector.activeLinkIndex)}">
-                {{ subItem.title }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
-      <v-list class="nav-list">
-        <v-list-item @click="goTo('therapist')">
-          <v-list-item-action>
-            <v-icon>place</v-icon>
-          </v-list-item-action>
-          <v-list-item-content :class="{currentLink: ('therapist' === $store.getters.selector.routeName)}">
-            <v-list-item-title>Ergothérapeute</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-list class="nav-list">
-        <v-list-item @click="goTo('contact')">
-          <v-list-item-action>
-            <v-icon>phone</v-icon>
-          </v-list-item-action>
-          <v-list-item-content :class="{currentLink: ('contact' === $store.getters.selector.routeName)}">
-            <v-list-item-title>Contact</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-subheader>Liens utiles</v-subheader>
-      <div class="nav-link subtitle-2">
-        <a
-          v-for="(link, i) in links"
-          :key="i"
-          class="nav-ref"
-          :href="link.url"
-          target="_blank"
-        >{{ link.title }}</a>
+              <v-list-item
+                v-for="(subItem, i) in item.items"
+                v-show="subItem.show"
+                :key="i"
+                :disabled="subItem.active"
+                @click="goTo(item.link, subItem.to)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title :class="{currentLink: (i === $store.getters.selector.activeLinkIndex && item.link === $store.getters.selector.routeName)}">
+                    {{ subItem.title }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-group>
+          </v-list>
+          <v-list class="nav-list">
+            <v-list-item @click="goTo('therapist')">
+              <v-list-item-action>
+                <v-icon>place</v-icon>
+              </v-list-item-action>
+              <v-list-item-content :class="{currentLink: ('therapist' === $store.getters.selector.routeName)}">
+                <v-list-item-title>Ergothérapeute</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list class="nav-list">
+            <v-list-item @click="goTo('contact')">
+              <v-list-item-action>
+                <v-icon>phone</v-icon>
+              </v-list-item-action>
+              <v-list-item-content :class="{currentLink: ('contact' === $store.getters.selector.routeName)}">
+                <v-list-item-title>Contact</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-subheader>Liens utiles</v-subheader>
+          <div class="nav-link subtitle-2">
+            <a
+              v-for="(link, i) in links"
+              :key="i"
+              class="nav-ref"
+              :href="link.url"
+              target="_blank"
+            >{{ link.title }}</a>
+          </div>
+        </div>
       </div>
+      <v-divider />
+      <footer class="footer">
+        <div class="nav-bottom-connexion">
+          <v-btn
+            color="red"
+            outlined
+            class="white&#45;&#45;text"
+            :disabled="!!$store.getters.authorization"
+            @click="goTo('login')"
+          >
+            Connexion
+            <v-icon
+              right
+              dark
+            >
+              account_circle
+            </v-icon>
+          </v-btn>
+        </div>
+        <div class="nav-bottom-footer subtitle-2">
+          <span>&copy;{{ date.getFullYear() }} —&nbsp;<strong>ergotherapie-ge.ch</strong></span>
+        </div>
+      </footer>
     </div>
-    <v-divider />
-    <footer class="nav-footer">
-      <div class="nav-bottom-connexion">
-        <v-btn
-          color="red"
-          outlined
-          class="white--text"
-          :disabled="!!$store.getters.authorization"
-          @click="goTo('login')"
-        >
-          Connexion
-          <v-icon
-            right
-            dark
-          >
-            account_circle
-          </v-icon>
-        </v-btn>
-      </div>
-      <div class="nav-bottom-footer subtitle-2">
-        <span>&copy;{{ date.getFullYear() }} —&nbsp;<strong>ergotherapie-ge.ch</strong></span>
-      </div>
-    </footer>
   </v-navigation-drawer>
 </template>
 <script>
@@ -224,23 +227,32 @@ export default {
 </script>
 
 <style scoped>
-.nav-drawer {
+
+.drawer {
   padding-top: 64px;
-  display: flex;
-  flex-direction: column;
   min-height: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.nav-header {
-  flex-shrink: 0;
+.header {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
-  padding: 35px 0 50px 0;
   background-color: #4db6ac;
+  padding: 35px 0 50px 0;
   color: white;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-content {
@@ -248,13 +260,6 @@ export default {
   flex-direction: column;
   flex: 1 0 auto;
   margin-bottom: 20px;
-}
-
-.nav-footer {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  height: 125px;
 }
 
 .center-text {
@@ -284,8 +289,8 @@ export default {
 .nav-bottom-connexion {
   display: flex;
   align-items: center;
-  flex: 1;
   justify-content: center;
+  height: 90px;
   background-color: #f5f5f5;
 }
 
