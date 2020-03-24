@@ -16,7 +16,7 @@
     >
       <strong>Information COVID-19</strong>
       <br><br>
-      En tant que profession paramédicale, l'ergothérapie à cœur la santé des gens.
+      En tant que profession paramédicale, l'ergothérapie à à cœur la santé des gens.
       En fonction des différents lieux de travail certains ergothérapeutes maintiennent leur activité, d'autres sont soumis aux règles du confinement.
       Pour autant, <strong>le lien thérapeutique doit être maintenu</strong> et de nombreuses initiatives personnelles sont prises dans ce sens.
       Nous vous invitons à rester acteur de votre santé via vos contacts habituels.
@@ -32,7 +32,7 @@
     >
       <strong>Information COVID-19</strong>
       <br><br>
-      En tant que profession paramédicale, l'ergothérapie à cœur la santé des gens.
+      En tant que profession paramédicale, l'ergothérapie à à cœur la santé des gens.
       En fonction des différents lieux de travail certains ergothérapeutes maintiennent leur activité, d'autres sont soumis aux règles du confinement.
       Pour autant, <strong>le lien thérapeutique doit être maintenu</strong> et de nombreuses initiatives personnelles sont prises dans ce sens.
       Nous vous invitons à rester acteur de votre santé via vos contacts habituels.
