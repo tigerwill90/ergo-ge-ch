@@ -2,198 +2,143 @@
   <FlexContainer
     justify-content="center"
     align-items="center"
+    column
   >
-    <div class="btn-box">
-      <v-btn
-        v-show="previousArrow"
-        text
-        icon
-        color="indigo"
-        large
-        @click="previous()"
-      >
-        <v-icon x-large>
-          navigate_before
-        </v-icon>
-      </v-btn>
-    </div>
-    <div :class="cargouselLayout">
-      <div
-        v-for="(actu, i) in carousels"
+    <v-slide-group
+      v-model="id"
+      :show-arrows="$vuetify.breakpoint.smAndUp"
+      center-active
+    >
+      <v-slide-item
+        v-for="(event, i) in events"
         :key="i"
-        class="item"
+        v-slot:default="{toggle}"
       >
-        <ActualityVue
-          :title="actu.title"
-          :subtitle="actu.subtitle"
-          :image-url="actu.imageUrl"
-          :description="actu.description"
-          :dates="actu.dates"
-          :link="actu.url"
+        <v-card
+          class="ma-4 d-flex flex-column"
+          height="450"
+          width="300"
+          max-width="300"
+          max-height="450"
+        >
+          <v-img
+            height="150"
+            max-height="150"
+            :src="event.imageUrl"
+            :alt="event.img_alt"
+          />
+          <div class="d-flex flex-column flex-grow-1">
+            <v-card-title>{{ event.title }}</v-card-title>
+            <v-card-subtitle v-if="event.subtitle">
+              {{ event.subtitle }}
+            </v-card-subtitle>
+            <v-card-text class="flex-grow-1">
+              {{ event.description }}
+            </v-card-text>
+
+            <v-card-actions v-if="event.urls.length > 0">
+              <v-btn
+                outlined
+                color="orange"
+                @click="toggleDialog(toggle)"
+              >
+                En savoir plus
+              </v-btn>
+            </v-card-actions>
+          </div>
+        </v-card>
+      </v-slide-item>
+    </v-slide-group>
+    <v-dialog
+      v-model="dialog"
+      scrollable
+      max-width="400px"
+      @click:outside="closeDialog"
+    >
+      <v-card v-if="id != null">
+        <v-img
+          height="200"
+          max-height="200"
+          :src="events[id].imageUrl"
+          :alt="events[id].img_alt"
         />
-      </div>
-    </div>
-    <div class="btn-box">
-      <v-btn
-        v-show="nextArrow"
-        text
-        icon
-        large
-        color="indigo"
-        @click="next()"
-      >
-        <v-icon x-large>
-          navigate_next
-        </v-icon>
-      </v-btn>
-    </div>
+        <template v-if="events[id].dates.length > 0">
+          <v-card-title>Dates :</v-card-title>
+          <v-card-text>
+            <span
+              v-for="(date, k) in events[id].dates"
+              :key="k"
+            >{{ formatDate(date) }}</span>
+          </v-card-text>
+        </template>
+        <template v-if="events[id].urls.length > 0">
+          <v-card-title>Liens utiles :</v-card-title>
+          <v-card-text>
+            <a
+              v-for="(url, k) in events[id].urls"
+              :key="k"
+              :href="formatUrl(url)"
+              target="_blank"
+            >{{ formatUrl(url) }}</a>
+          </v-card-text>
+        </template>
+        <v-divider />
+        <v-card-actions>
+          <v-btn
+            text
+            @click="closeDialog"
+          >
+            Fermer
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </FlexContainer>
 </template>
 
 <script>
-import ActualityVue from './ActualityCard'
 export default {
   name: 'Actuality',
-  components: {
-    ActualityVue
-  },
-  data() {
-    return {
-      cargouselLayout: {
-        'actuality-container-l': false,
-        'actuality-container-m': false,
-        'actuality-container-s': false
-      },
-      lowerBound: 0,
-      upperBound: 0,
-      carousels: [],
-      datas: []
-    }
-  },
-  computed: {
-    previousArrow() {
-      return this.lowerBound > 0
-    },
-    nextArrow() {
-      return this.upperBound < this.datas.length - 1
-    }
-  },
+  data: () => ({
+    id: null,
+    dialog: false,
+    events: []
+  }),
   mounted() {
     this.$http.get(`${process.env.VUE_APP_API_URL}/events`)
       .then(response => {
         response.data.data.forEach(event => {
           event.imageUrl = `${process.env.VUE_APP_API_URL}/events/${event.id}/images`
-          this.datas.push(event)
+          this.events.push(event)
         })
-
-        this.$store.subscribe((mutation) => {
-          if (mutation.type === 'windowSize') {
-            this.resize(mutation.payload.x)
-          }
-        })
-
-        this.resize(this.$store.getters.windowSize.x)
       })
       .catch(err => {
         this.$store.commit('notification', { status: err.response.status, message: err.response.data.data.user_message })
       })
   },
   methods: {
-    next() {
-      if (this.upperBound < this.datas.length - 1) {
-        this.lowerBound++
-        this.upperBound++
-        this.carousels.shift()
-        this.carousels.push(this.datas[this.upperBound])
-      }
+    toggleDialog(fn) {
+      fn()
+      this.dialog = !this.dialog
     },
-    previous() {
-      if (this.lowerBound > 0) {
-        this.lowerBound--
-        this.upperBound--
-        this.carousels.pop()
-        this.carousels.unshift(this.datas[this.lowerBound])
-      }
+    closeDialog() {
+      this.dialog = false
+      this.id = null
     },
-    resize(x) {
-      if (x >= 1300) {
-        if (this.datas.length >= 3) {
-          this.cargouselLayout['actuality-container-l'] = true
-          this.cargouselLayout['actuality-container-m'] = false
-          this.cargouselLayout['actuality-container-s'] = false
-        } else if (this.datas.length >= 2) {
-          this.cargouselLayout['actuality-container-l'] = false
-          this.cargouselLayout['actuality-container-m'] = true
-          this.cargouselLayout['actuality-container-s'] = false
-        } else {
-          this.cargouselLayout['actuality-container-l'] = false
-          this.cargouselLayout['actuality-container-m'] = false
-          this.cargouselLayout['actuality-container-s'] = true
-        }
-        this.lowerBound = 0
-        this.upperBound = 2
-        this.carousels = this.datas.slice(0, 3)
-      } else if (x < 1300 && x >= 900) {
-        if (this.datas.length >= 2) {
-          this.cargouselLayout['actuality-container-l'] = false
-          this.cargouselLayout['actuality-container-m'] = true
-          this.cargouselLayout['actuality-container-s'] = false
-        } else {
-          this.cargouselLayout['actuality-container-l'] = false
-          this.cargouselLayout['actuality-container-m'] = false
-          this.cargouselLayout['actuality-container-s'] = true
-        }
-        this.lowerBound = 0
-        this.upperBound = 1
-        this.carousels = this.datas.slice(0, 2)
-      } else {
-        this.cargouselLayout['actuality-container-l'] = false
-        this.cargouselLayout['actuality-container-m'] = false
-        this.cargouselLayout['actuality-container-s'] = true
-        this.lowerBound = 0
-        this.upperBound = 0
-        this.carousels = this.datas.slice(0, 1)
+    formatUrl(url) {
+      if (!/^(http|https):\/\//.test(url)) {
+        return 'http://' + url
       }
+      return url
+    },
+    formatDate(s) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+      const date = new Date(s)
+      return date.toLocaleDateString('fr-ch', options)
     }
   }
 }
 </script>
 <style scoped>
-.actuality-container-l {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(auto, 450px));
-  width: 100%;
-  grid-gap: 15px 15px;
-  justify-content: center;
-}
 
-.actuality-container-m {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(auto, 350px));
-  width: 100%;
-  grid-gap: 15px 15px;
-  justify-content: center;
-}
-
-.actuality-container-s {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(auto, 350px));
-  width: 100%;
-  grid-gap: 15px 15px;
-  justify-content: center;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 60px;
-  width: 60px;
-}
 </style>
