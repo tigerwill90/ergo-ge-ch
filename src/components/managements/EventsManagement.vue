@@ -15,7 +15,8 @@
               En tant qu'administrateur de la plateforme ASE, vous avez la possibilité d'ajouter de nouveaux évènements.
               Les évènements à venir sont affichés sur la page d'accueille et publiquement visible.
             </p>
-            <div>
+            <div class="event-box">
+              <v-icon>event</v-icon>
               <v-text-field
                 v-model="tempEvent.title"
                 label="Titre*"
@@ -29,12 +30,58 @@
                 label="Sous-titre"
                 :rules="eventSubtitleRule"
               />
-              <v-text-field
-                v-model="tempEvent.url"
-                type="url"
-                label="Lien"
-                :rules="eventUrlRules"
-              />
+            </div>
+            <v-checkbox
+              v-model="addUrls"
+              color="blue"
+              label="Ajouter des liens"
+            />
+            <template v-if="addUrls">
+              <div
+                v-for="(_, k) in tempEvent.urls"
+                :key="k"
+                class="event-box"
+              >
+                <v-icon>link</v-icon>
+                <v-btn
+                  v-if="tempEvent.urls.length > 1"
+                  icon
+                  @click="tempEvent.urls.splice(k, 1)"
+                >
+                  <v-icon>
+                    delete
+                  </v-icon>
+                </v-btn>
+                <div
+                  class="d-flex flex-column"
+                >
+                  <v-text-field
+                    v-model="tempEvent.urls[k].name"
+                    type="text"
+                    label="Nom du lien"
+                    required
+                    :rules="eventUrlNameRules"
+                  />
+                  <v-text-field
+                    v-model="tempEvent.urls[k].url"
+                    type="url"
+                    label="Lien"
+                    required
+                    :rules="eventUrlRules"
+                  />
+                </div>
+              </div>
+              <div class="d-flex add-link">
+                <span class="flex-grow-1">Ajouter un nouveau lien</span>
+                <v-btn
+                  icon
+                  @click="tempEvent.urls.push({name: '', url: ''})"
+                >
+                  <v-icon>add</v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <div>
               <v-checkbox
                 v-model="addDate"
                 color="blue"
@@ -247,12 +294,13 @@ export default {
       imageSize: 0,
       imageType: '',
       addDate: false,
+      addUrls: false,
       disabled: false,
       eventToDelete: {
         title: '',
         subtitle: null,
         dates: [],
-        url: null,
+        urls: [],
         description: '',
         img_alt: '',
         img_name: ''
@@ -263,7 +311,7 @@ export default {
         title: '',
         subtitle: null,
         dates: [],
-        url: null,
+        urls: [{ name: '', url: '' }],
         description: '',
         img_alt: '',
         img_name: ''
@@ -278,10 +326,17 @@ export default {
         v => (!v || (v.toString().length >= 3 && v.toString().length <= 50)) || 'Le nombre de caractères doit être compris entre 3 et 50',
         v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.'
       ],
+      eventUrlNameRules: [
+        v => !!v || 'Le nom du lien est requis',
+        v => v.toString().length >= 3 || 'Minimum 3 caractères',
+        v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
+        v => v.toString().length <= 100 || 'Maximum 100 caractères'
+      ],
       eventUrlRules: [
+        v => !!v || 'Le lien ne peut pas être vide.',
         v => (!v || v.toString().length >= 5) || 'Minimum 5 caractères.',
         v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.',
-        v => (!v || /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/.test(v)) || 'L\'url pour ce lien n\'est pas valide. Ex: www.google.ch ou https://google.ch',
+        v => (!v || /(^|[\s.:;?\-\]<(])(https?:\/\/[-\w;/?:@&=+$|_.!~*|'()[\]%#,☺]+[\w/#](\(\))?)(?=$|[\s',|().:;?\-[\]>)])/.test(v)) || 'L\'url pour ce lien n\'est pas valide. Ex: www.google.ch ou https://google.ch',
         v => (!v || v.toString().length <= 250) || 'Maximum 250 caractères.'
       ],
       eventDescriptionRules: [
@@ -340,11 +395,15 @@ export default {
         if (this.addDate) {
           this.tempEvent.dates = this.picker
         }
+        if (!this.addUrls) {
+          this.tempEvent.urls = null
+        }
         Object.keys(this.tempEvent).forEach(key => {
           if (!this.tempEvent[key]) {
             this.tempEvent[key] = null
           }
         })
+
         this.$http({
           method: 'PUT',
           url: `${process.env.VUE_APP_API_URL}/events/${this.tempEvent.id}`,
@@ -398,6 +457,11 @@ export default {
         this.addDate = true
         this.tempEvent.dates.forEach(date => this.picker.push(date.substr(0, 10)))
       }
+      if (this.tempEvent.urls.length > 0) {
+        this.addUrls = true
+      } else {
+        this.tempEvent.urls.push({ name: '', url: '' })
+      }
 
       this.$http.get(`${process.env.VUE_APP_API_URL}/events/${event.id}/images`)
         .then(response => {
@@ -415,6 +479,9 @@ export default {
         this.disabled = true
         if (this.addDate) {
           this.tempEvent.dates = this.picker
+        }
+        if (!this.addUrls) {
+          this.tempEvent.urls = null
         }
         Object.keys(this.tempEvent).forEach(key => {
           if (!this.tempEvent[key]) {
@@ -482,7 +549,7 @@ export default {
         title: '',
         subtitle: null,
         dates: [],
-        url: null,
+        urls: [{ name: '', url: '' }],
         description: '',
         img_alt: '',
         img_name: ''
@@ -521,6 +588,18 @@ export default {
 </script>
 
 <style scoped>
+  .event-box {
+    background: #bbdefb;
+    border-radius: 5px;
+    margin: 10px 0 10px 0;
+    padding: 10px 10px 10px 10px;
+  }
+  .add-link {
+    background: #cfd8dc;
+    align-items: center;
+    padding: 0 0 0 10px;
+  }
+
   .events-content-article {
     display: flex;
     flex-direction: column;

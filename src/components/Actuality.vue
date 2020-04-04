@@ -36,7 +36,7 @@
               {{ event.description }}
             </v-card-text>
 
-            <v-card-actions v-if="event.urls.length > 0">
+            <v-card-actions v-if="event.urls.length > 0 || event.dates.length > 0">
               <v-btn
                 outlined
                 color="orange"
@@ -62,26 +62,37 @@
           :src="events[id].imageUrl"
           :alt="events[id].img_alt"
         />
-        <template v-if="events[id].dates.length > 0">
-          <v-card-title>Dates :</v-card-title>
-          <v-card-text>
-            <span
-              v-for="(date, k) in events[id].dates"
-              :key="k"
-            >{{ formatDate(date) }}</span>
-          </v-card-text>
-        </template>
-        <template v-if="events[id].urls.length > 0">
-          <v-card-title>Liens utiles :</v-card-title>
-          <v-card-text>
-            <a
-              v-for="(url, k) in events[id].urls"
-              :key="k"
-              :href="formatUrl(url)"
-              target="_blank"
-            >{{ formatUrl(url) }}</a>
-          </v-card-text>
-        </template>
+        <v-card-title>
+          {{ events[id].title }}
+        </v-card-title>
+        <v-card-text style="max-height: 250px;">
+          <template v-if="events[id].dates.length > 0">
+            <v-card-subtitle>Dates :</v-card-subtitle>
+            <ul>
+              <li
+                v-for="(date, k) in events[id].dates"
+                :key="k"
+              >
+                <span>{{ formatDate(date) }}</span>
+              </li>
+            </ul>
+          </template>
+          <template v-if="events[id].urls.length > 0">
+            <v-card-subtitle>Liens utiles :</v-card-subtitle>
+            <ul>
+              <li
+                v-for="(url, k) in events[id].urls"
+                :key="k"
+              >
+                <a
+
+                  :href="formatUrl(url.url)"
+                  target="_blank"
+                >{{ url.name }}</a>
+              </li>
+            </ul>
+          </template>
+        </v-card-text>
         <v-divider />
         <v-card-actions>
           <v-btn
@@ -140,5 +151,8 @@ export default {
 }
 </script>
 <style scoped>
-
+  ul {
+    list-style-type: circle;
+    border-left: none;
+  }
 </style>
