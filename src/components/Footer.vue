@@ -15,10 +15,10 @@
             <span class="text-center">Version {{ version }}</span>
             <a
               class="text-center footer-link"
-              href="https://www.sylvainmuller.ch"
+              href="https://sylvainmuller.ch"
               target="_blank"
             >
-              <strong>www.sylvainmuller.ch</strong>&nbsp;
+              <strong>sylvainmuller.ch</strong>&nbsp;
               <v-icon small>open_in_new</v-icon>
             </a>
           </div>
