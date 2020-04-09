@@ -28,7 +28,9 @@
             :alt="event.img_alt"
           />
           <div class="d-flex flex-column flex-grow-1">
-            <v-card-title>{{ event.title }}</v-card-title>
+            <v-card-title style="word-break: break-word">
+              {{ event.title }}
+            </v-card-title>
             <v-card-subtitle v-if="event.subtitle">
               {{ event.subtitle }}
             </v-card-subtitle>
@@ -62,7 +64,7 @@
           :src="events[id].imageUrl"
           :alt="events[id].img_alt"
         />
-        <v-card-title>
+        <v-card-title style="word-break: break-word">
           {{ events[id].title }}
         </v-card-title>
         <v-card-text style="max-height: 250px;">

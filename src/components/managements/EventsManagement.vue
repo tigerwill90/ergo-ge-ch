@@ -319,16 +319,20 @@ export default {
       eventTitleRules: [
         v => !!v || 'Le titre de l\'évènement est requis',
         v => v.toString().length >= 3 || 'Minimum 3 caractères',
+        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\-'(),& ]+$/.test(v) || 'Le titre de l\'évènement ne doit contenir aucun caractères spéciaux, excepté "-\'(),&"',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
         v => v.toString().length <= 50 || 'Maximum 50 caractères'
       ],
       eventSubtitleRule: [
-        v => (!v || (v.toString().length >= 3 && v.toString().length <= 50)) || 'Le nombre de caractères doit être compris entre 3 et 50',
-        v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.'
+        v => (!v || v.toString().length >= 3) || 'Minimum 3 caractères',
+        v => (!v || /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\-:'(),& ]+$/.test(v) || 'Le sous-titre de l\'évènement ne doit contenir aucun caractères spéciaux, excepté "-:\'(),&"'),
+        v => (!v || !/\s+$/.test(v)) || 'Espace en fin de champ interdit.',
+        v => (!v || v.toString().length <= 50) || 'Maximum 50 caractères'
       ],
       eventUrlNameRules: [
         v => !!v || 'Le nom du lien est requis',
         v => v.toString().length >= 3 || 'Minimum 3 caractères',
+        v => /^[A-z0-9àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\-'(),& ]+$/.test(v) || 'Le nom de lien ne doit contenir aucun caractères spéciaux, excepté "-\'(),&"',
         v => !/\s+$/.test(v) || 'Espace en fin de champ interdit.',
         v => v.toString().length <= 100 || 'Maximum 100 caractères'
       ],
