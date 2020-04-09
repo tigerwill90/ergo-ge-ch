@@ -121,6 +121,7 @@
               >Auncune image sélectionnée</b>
               <b v-if="!isSupportedFileType">Format non supporté...</b>
               <b v-if="!isValidImageName">Aucun espace ou caractères spéciaux autorisés</b>
+              <b v-if="!isValidImageSize">L'image fait plus de 2mo</b>
             </div>
             <file-upload
               ref="upload"
@@ -253,7 +254,7 @@
             class="text-none ma-1"
             color="primary"
             text
-            @click="dialog = false"
+            @click="closeDialog()"
           >
             Annuler
           </v-btn>
@@ -350,6 +351,7 @@ export default {
       ],
       isSupportedFileType: true,
       isValidImageName: true,
+      isValidImageSize: true,
       updateMode: false
     }
   },
@@ -380,7 +382,7 @@ export default {
         }
       })
         .then(() => {
-          this.dialog = false
+          this.closeDialog()
           this.$emit('remove-event', this.rowIdToDelete)
           this.$store.commit('notification', { status: 200, message: `L'évènement ${this.eventToDelete.title} a bien été supprimé` })
         })
@@ -393,8 +395,12 @@ export default {
       this.eventToDelete = event
       this.rowIdToDelete = id
     },
+    closeDialog() {
+      this.dialog = false
+      this.reset()
+    },
     update() {
-      if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName) {
+      if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName && this.isValidImageSize) {
         this.disabled = true
         if (this.addDate) {
           this.tempEvent.dates = this.picker
@@ -479,7 +485,7 @@ export default {
         })
     },
     create() {
-      if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName) {
+      if (this.$refs.form.validate() && this.image && this.isSupportedFileType && this.isValidImageName && this.isValidImageSize) {
         this.disabled = true
         if (this.addDate) {
           this.tempEvent.dates = this.picker
@@ -547,6 +553,7 @@ export default {
       this.formData = null
       this.isSupportedFileType = true
       this.isValidImageName = true
+      this.isValidImageSize = true
       this.addDate = false
       this.picker = []
       this.tempEvent = {
@@ -576,12 +583,20 @@ export default {
         return
       }
 
+      if (newFile.size >= 2000000) {
+        this.isValidImageSize = false
+        this.image = null
+        this.formData = null
+        return
+      }
+
       this.imageName = newFile.name
       this.imageSize = newFile.size
       this.imageType = newFile.type
       this.image = newFile.file
       this.isSupportedFileType = true
       this.isValidImageName = true
+      this.isValidImageSize = true
       this.tempEvent.img_name = this.imageName
       this.tempEvent.img_alt = this.imageName
       this.formData = new FormData()
@@ -636,5 +651,21 @@ export default {
     padding: 5px 5px 5px 5px;
     height: 70px;
     background: #e0e0e0;
+  }
+
+  @media screen and (max-width: 1280px) {
+    .events-content-section {
+      display: flex;
+      flex-direction: column-reverse;
+      width: 100%;
+    }
+
+    .events-list-section {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
   }
 </style>
