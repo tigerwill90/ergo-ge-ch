@@ -46,7 +46,6 @@
       </v-toolbar-items>
     </template>
     <v-spacer />
-    <AccessiblityMenu />
     <v-btn
       v-if="!this.$store.getters.authorization"
       icon
@@ -59,12 +58,10 @@
 </template>
 
 <script>
-import AccessiblityMenu from './AccessiblityMenu'
 import UserMenu from './UserMenu'
 export default {
   name: 'Toolbar',
   components: {
-    AccessiblityMenu,
     UserMenu
   },
   data() {

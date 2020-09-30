@@ -2,9 +2,9 @@
   <v-app v-resize="onResize">
     <Nav />
     <Toolbar />
-    <v-content class="app-main">
+    <v-main class="app-main">
       <router-view />
-    </v-content>
+    </v-main>
     <Footer />
   </v-app>
 </template>

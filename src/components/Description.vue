@@ -5,40 +5,6 @@
     padding-right="10%"
     column
   >
-    <v-alert
-      v-if="$vuetify.breakpoint.smAndUp"
-      color="primary"
-      style="margin-bottom: 60px"
-      dark
-      icon="info"
-      border="left"
-      prominent
-    >
-      <strong>Information COVID-19</strong>
-      <br><br>
-      En tant que profession paramédicale, l'ergothérapie à à cœur la santé des gens.
-      En fonction des différents lieux de travail certains ergothérapeutes maintiennent leur activité, d'autres sont soumis aux règles du confinement.
-      Pour autant, <strong>le lien thérapeutique doit être maintenu</strong> et de nombreuses initiatives personnelles sont prises dans ce sens.
-      Nous vous invitons à rester acteur de votre santé via vos contacts habituels.
-      <br><br>
-      Le comité de la section genevoise de l'ASE
-    </v-alert>
-    <v-alert
-      v-else
-      color="primary"
-      style="margin-bottom: 60px"
-      dark
-      dense
-    >
-      <strong>Information COVID-19</strong>
-      <br><br>
-      En tant que profession paramédicale, l'ergothérapie à à cœur la santé des gens.
-      En fonction des différents lieux de travail certains ergothérapeutes maintiennent leur activité, d'autres sont soumis aux règles du confinement.
-      Pour autant, <strong>le lien thérapeutique doit être maintenu</strong> et de nombreuses initiatives personnelles sont prises dans ce sens.
-      Nous vous invitons à rester acteur de votre santé via vos contacts habituels.
-      <br><br>
-      Le comité de la section genevoise de l'ASE
-    </v-alert>
     <v-timeline
       v-if="!$vuetify.breakpoint.xs"
       :dense="$vuetify.breakpoint.smAndDown"

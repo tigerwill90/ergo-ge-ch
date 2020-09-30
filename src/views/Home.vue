@@ -27,6 +27,22 @@
       :id="links[3].to"
       :ref="links[3].to"
     />
+    <div
+      v-if="!$vuetify.breakpoint.xs"
+      class="alert"
+      @click="expand = !expand"
+    >
+      <div class="alert-title">
+        <strong>Covid-19 restons vigilants</strong>
+      </div>
+      <v-expand-transition>
+        <v-img
+          v-show="expand"
+          :src="img"
+          content
+        />
+      </v-expand-transition>
+    </div>
   </SubNav>
 </template>
 
@@ -52,6 +68,8 @@ export default {
     return {
       title: 'La section genevoise de l\'Association Suisse des Ergothérapeutes\xa0!',
       subtitle: 'ergotherapie-ge.ch',
+      expand: false,
+      img: `${process.env.VUE_APP_API_URL}/images/covid`,
       links: [
         { to: 'desc', title: "L'ergothérapie", show: true },
         { to: 'prescription', title: "L'ordonnance", show: true },
@@ -70,3 +88,27 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .alert {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    width: 450px;
+    flex-direction: column;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #424242;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    cursor: pointer;
+  }
+
+  .alert-title {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+  }
+</style>
