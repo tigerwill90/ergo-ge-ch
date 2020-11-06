@@ -13,7 +13,9 @@
         margin: margin
       }"
     >
-      <v-tabs-slider color="teal" />
+      <v-tabs-slider
+        color="teal"
+      />
       <v-tab
         v-for="(therapist, i) in therapists"
         :key="i"
@@ -180,7 +182,7 @@ export default {
   margin: 20px 15px 15px 15px;
   display: flex;
   flex-direction: column;
-  background-color: #fafafa;
+  background-color: transparent;
 }
 
 .therapist-title {
